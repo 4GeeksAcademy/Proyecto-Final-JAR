@@ -1,3 +1,13 @@
- .custom-navbar{
-    background-color: #004A7C;
+.custom-navbar {
+  background-color: #004a7c;
 }
+
+.custom-footer {
+  background-color: #004a7c;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 60px; 
+}
+
+
