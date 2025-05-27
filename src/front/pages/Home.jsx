@@ -33,20 +33,29 @@ export const Home = () => {
 	}, [])
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
+		<div className="container1">
+			<div className="image-wrapper">
+				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
+				<h1 className="title">Get more dates with Freelancers</h1>
+				<input type="text" className="search-input" placeholder="Search Any Services" />
 			</div>
+
+
+			<div class="features-section">
+				<div class="feature-box">
+					<span  className="fa-solid fa-lightbulb fa-10x  "/>
+						<h3>You don’t need to do it all yourself</h3>
+						<p>Spend more time on what you do best & start getting more done</p>
+				</div>
+
+				<div class="feature-box">
+					<span class="fa-regular fa-id-card fa-10x"/>
+						<h3>Don’t regret a bad hire</h3>
+						<p>Read reviews from real people and know you’re getting the best</p>
+				</div>
+			</div>
+			
+
 		</div>
 	);
 }; 
