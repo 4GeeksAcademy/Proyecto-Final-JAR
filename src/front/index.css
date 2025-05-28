@@ -11,6 +11,7 @@
 }
 
 .signup-container {
+  background-color: #004a7c;
   width: 80%;
   max-width: 900px;
   height: 500px;
@@ -22,6 +23,6 @@
 }
 
 .signup-form {
-  flex: 2;
+  flex: 3;
   border-radius: 0 1rem 1rem 0;
 }
