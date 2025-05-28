@@ -10,4 +10,7 @@
   padding: 60px; 
 }
 
-
+.signup-container {
+  max-width: 1000px;
+  height: 500px;
+}
