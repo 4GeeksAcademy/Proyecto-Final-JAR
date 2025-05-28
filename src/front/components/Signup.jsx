@@ -5,22 +5,23 @@ export const Signup = () => {
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
       <div className="d-flex shadow rounded overflow-hidden signup-container">
         
-        {/* Imagen a la izquierda */}
-        <div className="signup-image d-none d-md-block">
+       
+        <div className="signup-image d-none d-md-block text-muted  ">
+            <p className="fw-bold position-absolute"> Step 1: Basic Info </p>
           <img
-            src="https://via.placeholder.com/400x400" // reemplazá por tu imagen real
-            alt="Step 1: Basic Info"
+            src="https://picsum.photos/200/300" // reemplazá por tu imagen real
+            alt="photo-work"
             className="img-fluid w-100 h-100 object-fit-cover"
           />
         </div>
 
-        {/* Formulario a la derecha */}
+        {/*Formulario de registro del usuario */}
         <div className="signup-form bg-primary text-white p-4">
           <h4 className="fw-bold">Let’s Get Started</h4>
           <p className="mb-4">Join our community</p>
 
           <form>
-            <div className="mb-3">
+            <div className="mb-5">
               <label htmlFor="email" className="form-label">Email:</label>
               <input type="email" className="form-control rounded-pill" id="email" />
             </div>

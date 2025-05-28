@@ -11,6 +11,17 @@
 }
 
 .signup-container {
-  max-width: 1000px;
+  width: 80%;
+  max-width: 900px;
   height: 500px;
+  border-radius: 1rem;
+}
+
+.signup-image {
+  flex: 1;
+}
+
+.signup-form {
+  flex: 2;
+  border-radius: 0 1rem 1rem 0;
 }
