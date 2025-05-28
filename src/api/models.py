@@ -12,7 +12,7 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_professional: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    registration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now())
+    registration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now(), nullable=False)
     firstname: Mapped[str] = mapped_column(String(50), nullable=False)
     lastname1: Mapped[str] = mapped_column(String(50), nullable=False)
     lastname2: Mapped[str] = mapped_column(String(50), nullable=True)  
@@ -71,7 +71,7 @@ class Client(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "user": self.user.serialize() if self.user else None,
-            "posts": [p.serialize() for p in self.post],  # Serialize list of posts
+            "posts": [p.serialize() for p in self.posts],  # Serialize list of posts
             "ratings": [r.serialize() for r in self.ratings],
             "comments": [c.serialize() for c in self.comments]
         }
@@ -170,7 +170,7 @@ class Payment(db.Model):
     __tablename__ = "payments"
     id: Mapped[int] = mapped_column(primary_key=True) 
     payment_amount: Mapped[float] = mapped_column(Float, nullable=False) #All payments in same currency (EUR) for simplicity
-    payment_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now())
+    payment_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now(), nullable=False)
 
     #connection with foreign key
     professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id")) #as one to many 
@@ -196,8 +196,8 @@ class Premium_type(enum.Enum):
 class Premium(db.Model):
     __tablename__ = "premiums"
     id: Mapped[int] = mapped_column(primary_key=True) 
-    renewal_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now())
-    expiration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now())
+    renewal_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now(), nullable=False)
+    expiration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now(), nullable=False)
     auto_renewal: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     premium_types: Mapped[Premium_type] = mapped_column(Enum(Premium_type), nullable=False)
     
@@ -238,7 +238,7 @@ class Post(db.Model):
     
     #relationships 
     client: Mapped["Client"] = relationship(back_populates="posts") #one to many
-    agreement: Mapped["Agreement"] = relationship(back_populates="post, uselist=False") #one to one
+    agreement: Mapped["Agreement"] = relationship(back_populates="post", uselist=False) #one to one
     candidatures: Mapped[list["Candidature"]] = relationship(back_populates="post") #many to one
     cathegory: Mapped["Cathegory"] = relationship(back_populates="posts") #one to many
 
@@ -258,10 +258,10 @@ class Post(db.Model):
             "post_date": self.post_date.isoformat() if self.post_date else None,
             "client_id": self.client_id,
             "cathegory_id": self.cathegory_id,
-            "client": self.client.serialize() if self.client else None,
-            "agreement": self.agreement.serialize() if self.agreement else None,
-            "candidatures": [c.serialize() for c in self.candidatures],
-            "cathegory": self.cathegory.serialize() if self.cathegory else None            
+            "client": self.client.id if self.client else None,
+            "agreement": self.agreement.id if self.agreement else None,
+            "candidature_ids": [c.id for c in self.candidatures],
+            "cathegory": self.cathegory.id if self.cathegory else None        
         }      
 
 class Agreement(db.Model):
