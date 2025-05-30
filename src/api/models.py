@@ -32,7 +32,6 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "password": self.password, #DO NOT EXPOSE IN PRODUCTION
             "is_professional": self.is_professional,
             "registration_date": self.registration_date.isoformat() if self.registration_date else None,
             "firstname": self.firstname,
@@ -62,6 +61,7 @@ class Client(db.Model):
     ratings: Mapped[list["Rating"]] = relationship(back_populates="client") #one client to many ratings
     agreements: Mapped[list["Agreement"]] = relationship(back_populates="client") #one to many
     comments: Mapped[list["Comment"]] = relationship(back_populates="client") #one client to many comments
+    candidatures: Mapped[list["Candidature"]] = relationship(back_populates="client")
 
     def serialize(self):
         return {
@@ -132,7 +132,7 @@ class Post(db.Model):
     client: Mapped["Client"] = relationship(back_populates="posts") #one to many
     agreement: Mapped["Agreement"] = relationship(back_populates="post", uselist=False) #one to one
     candidatures: Mapped[list["Candidature"]] = relationship(back_populates="post") #one post to many candidatures
-    cathegory: Mapped["Cathegory"] = relationship(back_populates="posts") #one cathegory to many posts
+    category: Mapped["Category"] = relationship(back_populates="posts") #one category to many posts
 
     def serialize(self):
         return {
@@ -156,24 +156,50 @@ class CandidatureStatus(enum.Enum):
     ACCEPTED = 2
     REJECTED = 3
 
+
+class Agreement(db.Model):
+    __tablename__ = "agreements"
+    id: Mapped[int] = mapped_column(primary_key=True) 
+    agreement_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
+    agreement_status: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    candidature_id: Mapped[int] = mapped_column(ForeignKey("candidatures.id", ondelete="CASCADE"), nullable=False)
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
+    professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id", ondelete="CASCADE"), nullable=False)
+    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=False)
+
+    # Relación uno a uno con Candidature
+    candidature: Mapped["Candidature"] = relationship("Candidature", back_populates="agreement", uselist=False)
+    post: Mapped["Post"] = relationship(back_populates="agreement", uselist=False) #one to one
+    professional: Mapped["Professional"] = relationship(back_populates="agreements") #many to one
+    client: Mapped["Client"] = relationship(back_populates="agreements") #many to one
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "agreement_date": self.agreement_date.isoformat() if self.agreement_date else None,
+            "agreement_status": self.agreement_status,
+            "candidature_id": self.candidature_id,
+            "post_id": self.post_id,
+            "professional_id": self.professional_id,
+            "client_id": self.client_id          
+        }
+    
+
 class Candidature(db.Model):
     __tablename__ = "candidatures"
     id: Mapped[int] = mapped_column(primary_key=True)
     candidature_message: Mapped[str] = mapped_column(String(500), nullable=False)
     candidature_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
     candidature_status: Mapped[CandidatureStatus] = mapped_column(Enum(CandidatureStatus), nullable=False)
-
-    #connection with foreign key
     post_id: Mapped[int] = mapped_column(ForeignKey("posts.id"))
-    agreement_id: Mapped[int]= mapped_column(ForeignKey("agreements.id"))
     professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id"))
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=False)
 
-    #relationships 
+    # Relación uno a uno con Agreement
+    agreement: Mapped["Agreement"] = relationship("Agreement", back_populates="candidature", uselist=False)
     post: Mapped["Post"] = relationship(back_populates="candidatures") #Scalar. Each candidature is linked to one post.
-    agreement: Mapped["Agreement"] = relationship(back_populates="candidature", uselist=False)
     professional: Mapped["Professional"] = relationship(back_populates="candidatures")
-    client: Mapped["Client"] = relationship(back_populates="agreements")
+    client: Mapped["Client"] = relationship(back_populates="candidatures")
 
 
     def serialize(self):
@@ -287,14 +313,14 @@ class Premium(db.Model):
             "professional_id": self.professional_id
         }
 
-class Cathegory(db.Model): #Javier mentioned that we should only create table with main cathegories
+class Category(db.Model): #Javier mentioned that we should only create table with main cathegories
     __tablename__ = "cathegories"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(80), nullable=False)
     #foreing key connection goes in the many side (Post)
 
     #relationships 
-    posts: Mapped[list["Post"]] = relationship(back_populates="cathegory") #one cathegory to many posts
+    posts: Mapped[list["Post"]] = relationship(back_populates="category") #one category to many posts
 
     def serialize(self):
         return {
@@ -303,33 +329,4 @@ class Cathegory(db.Model): #Javier mentioned that we should only create table wi
             "post_ids": [post.id for post in self.posts]
         }    
 
-class Agreement(db.Model):
-    __tablename__ = "agreements"
-    id: Mapped[int] = mapped_column(primary_key=True) 
-    agreement_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
-    agreement_status: Mapped[bool] = mapped_column(Boolean(), nullable=False) #discussed with Javier
-
-    #connection with foreign key
-    candidature_id: Mapped[int] = mapped_column(ForeignKey("candidatures.id", ondelete="CASCADE"), nullable=False)
-    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
-    professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id", ondelete="CASCADE"), nullable=False)
-    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=False)
-
-    #relationships
-    candidature: Mapped["Candidature"] = relationship(back_populates="agreement") #one to one
-    post: Mapped["Post"] = relationship(back_populates="agreement", uselist=False) #one to one
-    professional: Mapped["Professional"] = relationship(back_populates="agreements") #many to one
-    client: Mapped["Client"] = relationship(back_populates="agreements") #many to one
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "agreement_date": self.agreement_date.isoformat() if self.agreement_date else None,
-            "agreement_status": self.agreement_status,
-            "candidature_id": self.candidature_id,
-            "post_id": self.post_id,
-            "professional_id": self.professional_id,
-            "client_id": self.client_id          
-        }
-    
 #CORREO ELECTRÓNICO COMO NOTIFICACION. JAVIER NOS AYUDARÁ A IMPLEMENTARLO.

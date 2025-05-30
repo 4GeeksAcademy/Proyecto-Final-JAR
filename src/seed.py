@@ -4,8 +4,8 @@ from datetime import datetime
 from faker import Faker
 from sqlalchemy.exc import IntegrityError
 from app import app, db
-from models import (
-    User, Client, Professional, Cathegory, Post, 
+from api.models import (
+    User, Client, Professional, Category, Post, 
     Candidature, Agreement, Rating, Comment, Payment, Premium,
     CandidatureStatus, PremiumType, RatingValue
 )
@@ -66,7 +66,7 @@ def seed_cathegories():
     print("Seeding categories...")
     categories = []
     for _ in range(10):
-        category = Cathegory(name=fake.word().capitalize())
+        category = Category(name=fake.word().capitalize())
         categories.append(category)
         db.session.add(category)
     db.session.commit()
@@ -126,10 +126,6 @@ def seed_agreements(candidatures):
         )
         agreements.append(agreement)
         db.session.add(agreement)
-    
-    # Update candidatures with agreement IDs
-    for candidature, agreement in zip(candidatures, agreements):
-        candidature.agreement_id = agreement.id
     db.session.commit()
     return agreements
 
