@@ -9,7 +9,7 @@ from api.models import (
     Candidature, Agreement, Rating, Comment, Payment, Premium,
     CandidatureStatus, PremiumType, RatingValue
 )
-
+#modulo que se tiene que instalar!
 fake = Faker()
 
 def seed_users():
