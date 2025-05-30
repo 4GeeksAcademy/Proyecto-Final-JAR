@@ -11,7 +11,7 @@
 }
 
 
-.container1 {
+.container-one {
   display: flex;
   flex-direction: column; /* de vertical arriba a abajo */
   align-items: center;
@@ -86,3 +86,10 @@
 .feature-box span {
   color: #004A7C; 
 }
+
+
+
+
+
+
+
