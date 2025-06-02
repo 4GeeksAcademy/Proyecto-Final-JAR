@@ -13,16 +13,16 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     is_professional: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     registration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
-    firstname: Mapped[str] = mapped_column(String(50), nullable=False)
-    lastname1: Mapped[str] = mapped_column(String(50), nullable=False)
-    lastname2: Mapped[str] = mapped_column(String(50), nullable=True)  
-    address_street: Mapped[str] = mapped_column(String(50), nullable=False)
-    address_city: Mapped[str] = mapped_column(String(50), nullable=False)
+    firstname: Mapped[str] = mapped_column(String(150), nullable=False)
+    lastname1: Mapped[str] = mapped_column(String(150), nullable=False)
+    lastname2: Mapped[str] = mapped_column(String(150), nullable=True)  
+    address_street: Mapped[str] = mapped_column(String(150), nullable=False)
+    address_city: Mapped[str] = mapped_column(String(150), nullable=False)
     address_postcode: Mapped[str] = mapped_column(String(20), nullable=False)
-    address_county: Mapped[str] = mapped_column(String(50), nullable=False)
-    address_country: Mapped[str] = mapped_column(String(50), nullable=False)
+    address_county: Mapped[str] = mapped_column(String(150), nullable=False)
+    address_country: Mapped[str] = mapped_column(String(150), nullable=False)
     tax_number: Mapped[str] = mapped_column(String(15), nullable=False)
-    geo_dir: Mapped[str] = mapped_column(String(50), nullable=False)
+    geo_dir: Mapped[str] = mapped_column(String(150), nullable=False)
 
     #Relationships with other tables
     client: Mapped["Client"] = relationship(back_populates="user", uselist=False) #one to one -CHECK BACKPOPULATES "user" (que es lo que esta populating) y Singular/plural
@@ -76,7 +76,7 @@ class Client(db.Model):
 class Professional(db.Model): #reviewed
     __tablename__ = "professionals"
     id: Mapped[int] = mapped_column(primary_key=True)   
-    prof_experience: Mapped[str] = mapped_column(String(5000), nullable=False)
+    prof_experience: Mapped[str] = mapped_column(String(15000), nullable=False)
     prof_url: Mapped[str] = mapped_column(String(80), nullable=True, unique=True)
     is_premium: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     #RATING? Tabla separada (muchos a muchos). Enlace professional y cliente (DONE)
@@ -114,10 +114,10 @@ class Post(db.Model):
     __tablename__ = "posts"
     id: Mapped[int] = mapped_column(primary_key=True) 
     remote_project: Mapped[bool] = mapped_column(Boolean(), nullable=False)  
-    project_city: Mapped[str] = mapped_column(String(50), nullable=False)
-    project_county: Mapped[str] = mapped_column(String(50), nullable=False)
-    project_country: Mapped[str] = mapped_column(String(50), nullable=False)
-    post_description: Mapped[str] = mapped_column(String(500), nullable=False) 
+    project_city: Mapped[str] = mapped_column(String(150), nullable=False)
+    project_county: Mapped[str] = mapped_column(String(150), nullable=False)
+    project_country: Mapped[str] = mapped_column(String(150), nullable=False)
+    post_description: Mapped[str] = mapped_column(String(1500), nullable=False) 
     estimated_budged: Mapped[str] = mapped_column(String(100), nullable=True)
     post_open: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     post_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
@@ -188,7 +188,7 @@ class Agreement(db.Model):
 class Candidature(db.Model):
     __tablename__ = "candidatures"
     id: Mapped[int] = mapped_column(primary_key=True)
-    candidature_message: Mapped[str] = mapped_column(String(500), nullable=False)
+    candidature_message: Mapped[str] = mapped_column(String(1500), nullable=False)
     candidature_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
     candidature_status: Mapped[CandidatureStatus] = mapped_column(Enum(CandidatureStatus), nullable=False)
     post_id: Mapped[int] = mapped_column(ForeignKey("posts.id"))
