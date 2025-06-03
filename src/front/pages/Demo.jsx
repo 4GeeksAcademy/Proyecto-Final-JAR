@@ -1,5 +1,6 @@
 // Import necessary components from react-router-dom and other parts of the application.
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { Signup } from "../components/Signup";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
 
 export const Demo = () => {
@@ -8,10 +9,7 @@ export const Demo = () => {
 
   return (
     <div className="container">
-      
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
-      </Link>
+      <Signup/>
     </div>
   );
 };
