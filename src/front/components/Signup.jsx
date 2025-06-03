@@ -1,5 +1,6 @@
 import { Navbar } from "./Navbar"
 
+import signupCSS from  "../../front/signup.css"
 
 export const Signup = () => {
     return (
