@@ -1,13 +1,18 @@
 import { Navbar } from "./Navbar"
 
 import "../about.css";
-
+import imagenLogo from "../assets/img/LogoStarGig.png"
 
 export const About = () => {
+
+
+    const handleSubmit = e=> {
+        e.preventDefault()
+    }
     return (
         <div className="container about-container">
 
-            <img src="https://via.assets.so/img.jpg?w=400&h=150&tc=blue&bg=#cecece" alt="" />
+            <img src={imagenLogo} alt="" />
 
 
 
@@ -27,9 +32,9 @@ export const About = () => {
 
 
 
-            <div className="  container form-container m-5">
+            <div className="  container form-container ">
                 <h2 className="form-tittle">Contact Form </h2>
-                <form className=" row from-text">
+                <form className=" row from-text" onSubmit={handleSubmit}>
                     <div class=" col-6 mb-3">
                         <label for="exampleInputEmail1" className="form-label ">Email </label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />

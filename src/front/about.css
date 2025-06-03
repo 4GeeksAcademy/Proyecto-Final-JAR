@@ -3,6 +3,8 @@
     background-color: #EDF9FC;
     text-align: center;
     justify-items: center;
+    padding-bottom: 20%;
+    
 }
 
 .about-container img{
@@ -18,18 +20,18 @@
 }
 
 .form-container {
-    width: 800px;
+    width: 60%;
     background-color: #004A7C;
-
     padding: 40px; /* Más espacio interno dentro del formulario */
     border-radius: 10px; /* Bordes redondeados opcionales */
     color: white;
+    margin-top: 15%;
 }
 
 
 
 .form-tittle{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-size: 36px;
 }
 /* Aumentar los márgenes en los elementos individuales */
