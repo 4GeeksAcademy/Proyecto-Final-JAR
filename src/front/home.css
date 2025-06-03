@@ -1,0 +1,39 @@
+.image-wrapper {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+
+.img-title {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+
+.search-input {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

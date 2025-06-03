@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
+
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import styles from "../../front/landing.css"
+
 import { Search, ClipboardList, Monitor } from "lucide-react"
 
 
@@ -43,7 +43,7 @@ export const Home = () => {
 
 
 	return (
-		<div className="container-one">
+		<div className="container-fluid container-all">
 			<div className="image-wrapper">
 				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
 				<h1 className="title">Get more dates with Freelancers</h1>
@@ -51,7 +51,7 @@ export const Home = () => {
 			</div>
 
 
-			<div class="full-width-bg">
+			<div class="features-content">
 				<div class="content-wrapper features-section">
 					<div class="feature-box">
 						<span className="fa-solid fa-lightbulb fa-10x"></span>
@@ -117,12 +117,12 @@ export const Home = () => {
 			</div>
 
 
-			<div className="published full-width-bg">
+			<div className="published-projects ">
 
 				<h2>Latest published projects</h2>
 				<div className="">
 
-					<nav aria-label="Page navigation example">
+					<nav >
 						<ul class="pagination">
 							<li class="page-item">
 								<a class="page-link" href="#" aria-label="Previous">
@@ -145,9 +145,9 @@ export const Home = () => {
 				</div>
 
 				<div className="published_cards">
-					<div className="card mb-3" >
+					<div className="card published_card mb-3" >
 						<div class="card-body">
-							<h5 class="card-title">Build bbq</h5>
+							<h5 class="card-tittle">Build bbq</h5>
 							<p class="custom-text">Building</p>
 							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
@@ -155,25 +155,25 @@ export const Home = () => {
 					</div>
 
 
-					<div className="card mb-3" >
+					<div className="card  published_card mb-3" >
 						<div class="card-body">
-							<h5 class="card-title">Build bbq</h5>
+							<h5 class="card-tittle">Build bbq</h5>
 							<p class="custom-text">Building</p>
 							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
-					<div className="card mb-3" >
+					<div className="card published_card mb-3" >
 						<div class="card-body">
-							<h5 class="card-title">Build bbq</h5>
+							<h5 class="card-tittle">Build bbq</h5>
 							<p class="custom-text">Building</p>
 							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
-					<div className="card mb-3" >
+					<div className="card  published_card mb-3" >
 						<div class="card-body">
 							<h5 class="card-title">Build bbq</h5>
 							<p class="custom-text">Building</p>
@@ -192,7 +192,7 @@ export const Home = () => {
 			<div className="row mb-4 ">
 
 
-				<div className="col-md-4">
+				<div className="col-md-12 col-sm-12 col-lg-4 d-flex justify-content-center py-4">
 					<div className="card card_how_works border-2 border-primary-subtle">
 						<div className="card-body y text-center">
 							<Search className="w-16 h-16 text-gray-600 mb-3 custom-icon " />
@@ -202,21 +202,21 @@ export const Home = () => {
 					</div>
 				</div>
 
-				<div className="col-md-4">
+				<div className="col-md-12 col-sm-12 col-lg-4 d-flex justify-content-center py-4">
 					<div className="card card_how_works border-2 border-primary-subtle">
 						<div className="card-body text-center">
 							<ClipboardList className="w-16 h-16 text-gray-600 mb-3 custom-icon" />
-							<h5 className="card-title">Find Your Orbit</h5>
+							<h5 className="card-tittle">Find Your Orbit</h5>
 							<p className="card-text">Narrow results by skills, languages, or reviews</p>
 						</div>
 					</div>
 				</div>
 
-				<div className="col-md-4">
+				<div className="col-md-12 col-sm-12 col-lg-4 d-flex justify-content-center py-4">
 					<div className="card card_how_works border-2 border-primary-subtle">
 						<div className="card-body text-center">
 							<Monitor className="w-16 h-16 text-gray-600 mb-3 custom-icon" />
-							<h5 className="card-title">Orbit with Peace of Mind</h5>
+							<h5 className="card-tittle">Orbit with Peace of Mind</h5>
 							<p className="card-text">Safe payments, clear communication, and stellar results</p>
 						</div>
 					</div>
