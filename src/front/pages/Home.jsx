@@ -4,6 +4,8 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 import { Search, ClipboardList, Monitor } from "lucide-react"
 
+import Homecss from "../../front/home.css"
+
 
 export const Home = () => {
 
