@@ -1,12 +1,16 @@
+/* css navbar */
+
 .custom-navbar {
   background-color: #004a7c;
 }
 
+/*css footer*/
 .custom-footer {
   background-color: #004a7c;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 60px; 
+  padding: 60px;
 }
+
 

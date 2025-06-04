@@ -1,0 +1,222 @@
+/*css home*/
+.container-all {
+  display: flex;
+  flex-direction: column; /* de vertical arriba a abajo */
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 40px 20px;
+}
+.scroll-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+}
+.service-grid-container {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  scrollbar-width: none;
+}
+.service-grid-container::-webkit-scrollbar {
+  display: none;
+}
+.scroll-btn {
+  background-color: #004a7c;
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 40px;
+  height: 180px;
+  z-index: 10;
+  transition: background 0.2s ease;
+  border-radius: 6px;
+}
+.scroll-btn:hover {
+  background-color: #003355;
+}
+.scroll-btn.left {
+  margin-right: 10px;
+}
+.scroll-btn.right {
+  margin-left: 10px;
+}
+/* Tarjeta de servicio */
+.service-card {
+  flex: 0 0 auto;
+  width: 280px;
+  height: 300px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #004a7c;
+}
+.service-card h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: white;
+}
+
+
+.service-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Este cambio permite que el borde redondeado se vea mejor */
+  border-radius: 8px;
+}
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.service-img-container {
+  overflow: hidden;
+  border-radius: 15px;
+}
+.service-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.published_card {
+  width: 60%;
+  min-width: 350px;
+}
+
+
+.features-content{
+  background-color: #edf9fc;
+  width: 100%;
+  justify-items: center;
+
+}
+.card {
+  width: 50%;
+}
+.card-tittle {
+  margin-top: 20px;
+}
+.search_filter {
+  width: 50%;
+}
+.published_cards {
+  justify-items: center;
+}
+.how_works {
+  background-color: black;
+}
+.card_how_works {
+  width: 18rem;
+}
+.custom-icon {
+  width: 64px;
+  height: 64px;
+  color: #004a7c;
+  transition: color 0.3s ease-in-out;
+}
+.custom-icon:hover {
+  color: #023353;
+}
+.card_how_works {
+  display: flex;
+  width: 18rem;
+  height: 18rem;
+  min-height: 18rem; /* Evita que las tarjetas sean más pequeñas */
+}
+.div card-body {
+  padding: 15px;
+}
+.published_cards .custom-text {
+  position: absolute; /* Lo posiciona dentro de la tarjeta / bottom: 80px; / Lo acerca más a la parte inferior / right: 150px; / Lo alinea a la derecha / font-weight: bold; color: #004a7c; / Color personalizado */
+}
+.published-projects {
+  background-color: #edf9fc;
+  justify-items: center;
+  margin-bottom: 50px;
+}
+.content-wrapper {
+  max-width: 900px; /* Limita el ancho de los elementos / margin: 0 auto; / Centra el contenido */
+}
+.card-text {
+  margin-top: 20px;
+}
+
+
+.search-input {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.features-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.feature-box {
+  flex: 1 1 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.feature-box img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+}
+.feature-box span {
+  color: #004a7c;
+}
+
+.image-wrapper {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.title {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
