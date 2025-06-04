@@ -173,10 +173,10 @@ form {
 
 .submit-button-container {
   margin-top: 1rem;
-  display: flex;        /* Asegura que sea flex */
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;  /* Centra verticalmente (por si acaso) */
-  width: 100%;         /* Ocupa todo el ancho disponible */
+  display: flex;        
+  justify-content: center; 
+  align-items: center;  
+  width: 100%;        
 }
 
 .submit-button {
@@ -188,11 +188,11 @@ form {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  width: 50%;          /* Ancho del 50% de su contenedor */
+  width: 50%;         
   font-size: 1rem;
-  text-align: center;  /* Centra el texto dentro del botón */
-  display: block;      /* Para que text-align funcione */
-  margin: 0 auto;      /* Centrado adicional como respaldo */
+  text-align: center;  
+  display: block;     
+  margin: 0 auto;      
 }
 
 .submit-button:hover {
