@@ -1,15 +1,15 @@
 .about-container {
-    
     background-color: #EDF9FC;
-    text-align: center;
     justify-items: center;
     padding-bottom: 20%;
-    
+    text-align: center;
 }
 
 .about-container img{
     margin-top: 100px;
+    max-width:50%;
 }
+
 
 
 .about-text{
@@ -21,14 +21,13 @@
 
 .form-container {
     width: 60%;
+    min-width:400px;
     background-color: #004A7C;
     padding: 40px; /* Más espacio interno dentro del formulario */
     border-radius: 10px; /* Bordes redondeados opcionales */
     color: white;
-    margin-top: 15%;
+    margin-top: 10%;
 }
-
-
 
 .form-tittle{
     margin-bottom: 15px;
@@ -49,12 +48,14 @@
 
 /* Ajustar el botón */
 .form-container form button {
-    width: 100%;
     padding: 15px;
     font-size: 18px;
- 
 }
 
 .message-form{
     margin-top: 20px;
+}
+
+.about-text{
+    text-align: center;
 }
