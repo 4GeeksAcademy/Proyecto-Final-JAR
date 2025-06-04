@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean, ForeignKey, DateTime, Enum, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
+from datetime import datetime, timedelta
 import enum
 
 db = SQLAlchemy()
@@ -32,6 +32,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "password": self.password, #DO NOT SERIALIZE IN PRODUCTION
             "is_professional": self.is_professional,
             "registration_date": self.registration_date.isoformat() if self.registration_date else None,
             "firstname": self.firstname,
@@ -73,12 +74,12 @@ class Client(db.Model):
             "comment_ids": [c.id for c in self.comments]
         }
         
-class Professional(db.Model): #reviewed
+class Professional(db.Model): 
     __tablename__ = "professionals"
     id: Mapped[int] = mapped_column(primary_key=True)   
-    prof_experience: Mapped[str] = mapped_column(String(15000), nullable=False)
-    prof_url: Mapped[str] = mapped_column(String(80), nullable=True, unique=True)
-    is_premium: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    prof_experience: Mapped[str] = mapped_column(String(15000), nullable=True)
+    prof_url: Mapped[str] = mapped_column(String(80), nullable=True)
+    is_premium: Mapped[bool] = mapped_column(Boolean(), nullable=True)
     #RATING? Tabla separada (muchos a muchos). Enlace professional y cliente (DONE)
 
     #connection with foreign keys
@@ -113,16 +114,16 @@ class Professional(db.Model): #reviewed
 class Post(db.Model):
     __tablename__ = "posts"
     id: Mapped[int] = mapped_column(primary_key=True) 
-    remote_project: Mapped[bool] = mapped_column(Boolean(), nullable=False)  
-    project_city: Mapped[str] = mapped_column(String(150), nullable=False)
-    project_county: Mapped[str] = mapped_column(String(150), nullable=False)
-    project_country: Mapped[str] = mapped_column(String(150), nullable=False)
-    post_description: Mapped[str] = mapped_column(String(1500), nullable=False) 
+    remote_project: Mapped[bool] = mapped_column(Boolean(), nullable=True)  
+    project_city: Mapped[str] = mapped_column(String(150), nullable=True)
+    project_county: Mapped[str] = mapped_column(String(150), nullable=True)
+    project_country: Mapped[str] = mapped_column(String(150), nullable=True)
+    post_description: Mapped[str] = mapped_column(String(1500), nullable=True) 
     estimated_budged: Mapped[str] = mapped_column(String(100), nullable=True)
-    post_open: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    post_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    post_completed: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    post_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
+    post_open: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+    post_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+    post_completed: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+    post_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=True)
  
     #connection with foreign key 
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id")) #Foreign key as relationship one client to many post
@@ -131,7 +132,7 @@ class Post(db.Model):
     #relationships 
     client: Mapped["Client"] = relationship(back_populates="posts") #one to many
     agreement: Mapped["Agreement"] = relationship(back_populates="post", uselist=False) #one to one
-    candidatures: Mapped[list["Candidature"]] = relationship(back_populates="post") #one post to many candidatures
+    candidatures: Mapped[list["Candidature"]] = relationship(back_populates="post", cascade="all, delete-orphan") #one post to many candidatures
     category: Mapped["Category"] = relationship(back_populates="posts") #one category to many posts
 
     def serialize(self):
@@ -160,17 +161,17 @@ class CandidatureStatus(enum.Enum):
 class Agreement(db.Model):
     __tablename__ = "agreements"
     id: Mapped[int] = mapped_column(primary_key=True) 
-    agreement_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
-    agreement_status: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    candidature_id: Mapped[int] = mapped_column(ForeignKey("candidatures.id", ondelete="CASCADE"), nullable=False)
-    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete="CASCADE"), nullable=False)
-    professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id", ondelete="CASCADE"), nullable=False)
-    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=False)
+    agreement_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=True)
+    agreement_status: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+    candidature_id: Mapped[int] = mapped_column(ForeignKey("candidatures.id", ondelete="CASCADE"), nullable=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete="CASCADE"), nullable=True)
+    professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id", ondelete="CASCADE"), nullable=True)
+    client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=True)
 
-    # Relación uno a uno con Candidature
-    candidature: Mapped["Candidature"] = relationship("Candidature", back_populates="agreement", uselist=False)
+    # Relationships 
+    candidature: Mapped["Candidature"] = relationship("Candidature", back_populates="agreement", uselist=False) #one to one
     post: Mapped["Post"] = relationship(back_populates="agreement", uselist=False) #one to one
-    professional: Mapped["Professional"] = relationship(back_populates="agreements") #many to one
+    professional: Mapped["Professional"] = relationship(back_populates="agreements") #many to one 
     client: Mapped["Client"] = relationship(back_populates="agreements") #many to one
 
     def serialize(self):
@@ -194,9 +195,10 @@ class Candidature(db.Model):
     post_id: Mapped[int] = mapped_column(ForeignKey("posts.id"))
     professional_id: Mapped[int] = mapped_column(ForeignKey("professionals.id"))
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), nullable=False)
+    
 
-    # Relación uno a uno con Agreement
-    agreement: Mapped["Agreement"] = relationship("Agreement", back_populates="candidature", uselist=False)
+    # Relationship 
+    agreement: Mapped["Agreement"] = relationship("Agreement", back_populates="candidature", uselist=False) #one to one
     post: Mapped["Post"] = relationship(back_populates="candidatures") #Scalar. Each candidature is linked to one post.
     professional: Mapped["Professional"] = relationship(back_populates="candidatures")
     client: Mapped["Client"] = relationship(back_populates="candidatures")
@@ -210,7 +212,6 @@ class Candidature(db.Model):
             "candidature_status": self.candidature_status.value if self.candidature_status else None,
             "post_id": self.post_id,
             "professional_id": self.professional_id,
-            "agreement_id": self.agreement_id,
             "client_id": self.client_id   
         }
 
@@ -288,12 +289,18 @@ class PremiumType(enum.Enum):
     BASIC = 2
     STANDARD = 3
     PLUS = 4
-    
+#Renewal and Expiration date set at 30 days from now
+def default_renewal_date():
+    return datetime.now() + timedelta(days=30)
+
+def default_expiration_date():
+    return datetime.now() + timedelta(days=30)
+
 class Premium(db.Model):
     __tablename__ = "premiums"
     id: Mapped[int] = mapped_column(primary_key=True) 
-    renewal_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
-    expiration_date: Mapped[datetime] = mapped_column(DateTime(), default=datetime.now, nullable=False)
+    renewal_date: Mapped[datetime] = mapped_column(DateTime(), default=default_renewal_date, nullable=False)
+    expiration_date: Mapped[datetime] = mapped_column(DateTime(), default=default_expiration_date, nullable=False)
     auto_renewal: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     premium_types: Mapped[PremiumType] = mapped_column(Enum(PremiumType), nullable=False)
     
@@ -303,6 +310,7 @@ class Premium(db.Model):
     #relationships
     professional: Mapped["Professional"] = relationship(back_populates="premiums") #one professional to many premiums
 
+   
     def serialize(self):
         return {
             "id": self.id,
@@ -328,5 +336,3 @@ class Category(db.Model): #Javier mentioned that we should only create table wit
             "name": self.name,
             "post_ids": [post.id for post in self.posts]
         }    
-
-#CORREO ELECTRÓNICO COMO NOTIFICACION. JAVIER NOS AYUDARÁ A IMPLEMENTARLO.
