@@ -1,0 +1,61 @@
+.about-container {
+    background-color: #EDF9FC;
+    justify-items: center;
+    padding-bottom: 20%;
+    text-align: center;
+}
+
+.about-container img{
+    margin-top: 100px;
+    max-width:50%;
+}
+
+
+
+.about-text{
+    margin-top: 50px;
+    max-width: 500px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-container {
+    width: 60%;
+    min-width:400px;
+    background-color: #004A7C;
+    padding: 40px; /* Más espacio interno dentro del formulario */
+    border-radius: 10px; /* Bordes redondeados opcionales */
+    color: white;
+    margin-top: 10%;
+}
+
+.form-tittle{
+    margin-bottom: 15px;
+    font-size: 36px;
+}
+/* Aumentar los márgenes en los elementos individuales */
+.form-container form .col-6, 
+.form-container form .col-12, 
+.form-container form .col-2 {
+    margin-bottom: 30px; /* Más espacio entre los elementos del formulario */
+}
+
+.form-container form input,
+.form-container form textarea {
+    padding: 15px;
+    font-size: 16px;
+}
+
+/* Ajustar el botón */
+.form-container form button {
+    padding: 15px;
+    font-size: 18px;
+}
+
+.message-form{
+    margin-top: 20px;
+}
+
+.about-text{
+    text-align: center;
+}
