@@ -8,7 +8,7 @@ export const Navbar = () => {
 				<img src="" alt="StarGig Logo" />  {/* Buscar como añadir la iamgen del logo desde cludinary  */}
 
 				<div className="ml-auto">
-					<Link to="/demo">
+					<Link to="/about">
 						<button className="text-white btn ">About</button>
 					</Link>
 					<Link to="/demo">
