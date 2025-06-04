@@ -1,8 +1,14 @@
 import { Navbar } from "./Navbar"
 
-import signupCSS from  "../../front/signup.css"
+import "../../front/signup.css"
 
 export const Signup = () => {
+
+    
+    const handleSubmit = e => {
+        e.preventDefault()
+    }
+
     return (
         <div className="signup-container-wrapper"> 
             <div className="signup-main-container">
@@ -15,7 +21,7 @@ export const Signup = () => {
                     <h4 className="signup-title">Let's Get Started</h4>
                     <p className="signup-title2">Join our community</p>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="form-field-group">
                             <label htmlFor="email" className="form-label">Email:</label>
                             <input type="email" className="form-input" id="email" />

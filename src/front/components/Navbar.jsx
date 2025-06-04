@@ -38,7 +38,7 @@ export const Navbar = () => {
           <a class="nav-link text-light m-2px px-2" href="/pricing">Pricing</a>
         </li>
         <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="#">Log in</a>
+          <a class="nav-link text-light m-2px px-2" href="/login">Log in</a>
         </li>
         <li class="nav-item  mx-2">
           <a class="nav-link text-light m-2px px-2" href="/signup">Sign up</a>
