@@ -9,7 +9,7 @@ export const Demo = () => {
 
   return (
     <div className="container">
-      <Signup/>
+      
     </div>
   );
 };
