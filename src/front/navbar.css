@@ -23,3 +23,9 @@
 .navbar-toggler-icon {
   filter: invert(1); /* Esto hace que el icono de la hamburguesa se vuelva blanco */
 } 
+
+.LogoStarGig{
+  width: 180px;
+  border-radius: 10px;
+  margin-left: 50px;
+}
