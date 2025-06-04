@@ -20,8 +20,8 @@
 }
 
 .form-container {
-    width: 60%;
-    min-width:400px;
+    width: 90%;
+    max-width: 900px;
     background-color: #004A7C;
     padding: 40px; /* Más espacio interno dentro del formulario */
     border-radius: 10px; /* Bordes redondeados opcionales */
