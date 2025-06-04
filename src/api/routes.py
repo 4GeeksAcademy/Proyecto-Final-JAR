@@ -488,6 +488,6 @@ def update_category(id):
     #Modification of properties of object
     category.name = data.get("name", category.name)
     
-    #Changes saved
+    #Changes saved 
     db.session.commit()
     return jsonify(category.serialize()), 200
