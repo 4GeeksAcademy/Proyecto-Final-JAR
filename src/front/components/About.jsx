@@ -33,10 +33,10 @@ export const About = () => {
 
             </div>
 
-            <div className="  container form-container ">
+            <div className=" form-container ">
                 <h2 className="form-tittle">Contact Form </h2>
-                <form className=" row from-text" onSubmit={handleSubmit}>
-                    <div class=" col-sm-12 col-md-12 col-lg-6 my-3">
+                <form className=" row text-start " onSubmit={handleSubmit}>
+                    <div class=" col-sm-12 col-md-12 col-lg-6 my-3 ">
                         <label for="exampleInputEmail1" className="form-label ">Email </label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
 
@@ -47,7 +47,7 @@ export const About = () => {
                     </div>
 
 
-                    <div class="mb-3 col-sm-12  col-md-12 col-lg-12 message-form">
+                    <div class="mb-3 col-sm-12  col-md-12 col-lg-12 my-3 message-form">
                         <label for="exampleFormControlTextarea1" className="form-label">Message</label>
                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>

@@ -1,0 +1,31 @@
+/* css navbar */
+
+.navbarCustom {
+  background-color: #004a7c;
+  align-items: flex-end;
+}
+
+.navbarIconCustom{
+  color: white;
+}
+.nav-link:hover {
+  border-radius: 5px;
+ background-color: #013253;
+}
+
+
+
+.navbarDivCustom{
+  margin-right: 40px;
+}
+
+
+.navbar-toggler-icon {
+  filter: invert(1); /* Esto hace que el icono de la hamburguesa se vuelva blanco */
+} 
+
+.LogoStarGig{
+  width: 180px;
+  border-radius: 10px;
+  margin-left: 50px;
+}

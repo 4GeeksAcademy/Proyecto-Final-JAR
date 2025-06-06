@@ -1,0 +1,115 @@
+.pricingCustom{
+    background-color: #EDF9FC;
+    min-height:775px;
+}
+
+
+.pageTittle{
+    color: #005691;
+    font-weight: bold;
+    font-size: 64px;
+}
+
+.basicPlan{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.standardPlan{
+
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+
+.plusPlan{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.customText{
+    font-size: 32px;
+}
+
+.pricingTittle{
+   color: #005691;
+   font-weight: bold;
+   font-size:46px;
+}
+
+.pricingPrice{
+   color: #005691;
+}
+
+.capacitiesPlan{
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.pricingButton {
+  font-weight: bolder;
+  background-color: #005691; /* Color personalizado */
+  color: white; /* Color del texto */
+  border: none; /* Elimina el borde predeterminado */
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.pricingButton:hover {
+  background-color: #012e4d; /* Color más oscuro al hacer hover */
+}
+
+.pricingButton {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
+
+.plusPlanCustom{
+    background-color: #005691;
+}
+
+.popularPricing{
+    height: 30px;
+    background-color: #FFCC29;
+    border-radius: 10px;
+    font-weight: bold;
+    color: black
+}
+
+.pricingButtonPlus{
+  font-weight: bolder;
+  background-color:white ; /* Color personalizado */
+  color: #005691; /* Color del texto */
+  border: none; /* Elimina el borde predeterminado */
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.pricingButtonPlus:hover {
+  background-color: #EDF9FC; /* Color más oscuro al hacer hover */
+}
+
+.pricingButtonPlus {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
+
+.plusPlan{
+    background-color:#005691 ;
+}
+
+.unlimitedCustom{
+    color: #FFCC29;
+}
+
+
+.customCurrentClientMonth{
+    font-weight: bold;
+}
+
+.pricingTittlePlus{
+    color: #005691;
+   font-weight: bold;
+   font-size:46px;
+  }
