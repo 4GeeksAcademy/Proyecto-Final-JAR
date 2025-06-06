@@ -23,6 +23,7 @@ class User(db.Model):
     address_country: Mapped[str] = mapped_column(String(150), nullable=False)
     tax_number: Mapped[str] = mapped_column(String(15), nullable=False)
     geo_dir: Mapped[str] = mapped_column(String(150), nullable=False)
+    active_user: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
     #Relationships with other tables
     client: Mapped["Client"] = relationship(back_populates="user", uselist=False) #one to one -CHECK BACKPOPULATES "user" (que es lo que esta populating) y Singular/plural
@@ -45,6 +46,7 @@ class User(db.Model):
             "address_country": self.address_country,
             "tax_number": self.tax_number,
             "geo_dir": self.geo_dir,
+            "active_user": self.active_user,
             "client_id": self.client.id if self.client else None,
             "professional_id": self.professional.id if self.professional else None
         }
