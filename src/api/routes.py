@@ -42,7 +42,7 @@ def create_user():
         "email", "password", "is_professional", 
         "firstname", "lastname1", "address_street",
         "address_city", "address_postcode", "address_county",
-        "address_country", "tax_number", "geo_dir"
+        "address_country", "tax_number", "geo_dir", "active_user"
     ]
     
     missing = [field for field in required_fields if field not in data]
@@ -63,7 +63,8 @@ def create_user():
             address_county=data["address_county"],
             address_country=data["address_country"],
             tax_number=data["tax_number"],
-            geo_dir=data["geo_dir"]
+            geo_dir=data["geo_dir"],
+            active_user=data["active_user"],
         )
         db.session.add(new_user)
         db.session.flush() #Assigns ID without committing
@@ -120,6 +121,7 @@ def update_user(id):
     user.address_country=data.get("address_country", user.address_country)
     user.tax_number=data.get("tax_number", user.tax_number)
     user.geo_dir=data.get("geo_dir",user.geo_dir)
+    user.active_user=data.get("active_user", user.active_user)
 
     #Creates Professional if is_professional is True and doesn"t exists
     if user.is_professional and not user.professional:
