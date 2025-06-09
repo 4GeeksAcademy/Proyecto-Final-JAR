@@ -10,9 +10,7 @@ export const Demo = () => {
 
   return (
     <div className="container">
-
       <ProfessionalView />
-      
     </div>
   );
 };
