@@ -33,28 +33,32 @@ export const About = () => {
 
             </div>
 
-            <div className=" form-container ">
-                <h2 className="form-tittle">Contact Form </h2>
-                <form className=" row text-start " onSubmit={handleSubmit}>
-                    <div class=" col-sm-12 col-md-12 col-lg-6 my-3 ">
-                        <label for="exampleInputEmail1" className="form-label ">Email </label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <div className="container-fluid d-flex justify-content-center">
+                <div className="form-container m-5">
+                    <h2 className="form-tittle">Contact Form</h2>
+                    <form className="contenedorForm"onSubmit={handleSubmit}>
+                        <div className="row">
+                            <div className="col-lg-4 col-md-12 col-sm-12 py-3">
+                                <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+                                <input type="email" className="form-control form-input" id="exampleInputEmail1" />
+                            </div>
+                            <div className="col-lg-4 col-md-12 col-sm-12 py-3">
+                                <label htmlFor="exampleInputPassword1" className="form-label">Name</label>
+                                <input type="text" className="form-control form-input" id="exampleInputPassword1" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12 py-3">
+                                <label htmlFor="exampleFormControlTextarea1" className="form-label">Message</label>
+                                <textarea className="form-control form-textarea" id="exampleFormControlTextarea1" rows="4"></textarea>
+                            </div>
+                            <div className="col-lg-4 col-md-6 col-sm-6 text-center pt-4">
+                                <button type="submit" className="btn btn-primary form-button">Submit</button>
+                            </div>
+                        </div>
+                    </form>
 
-                    </div>
-                    <div className=" col-sm-12 col-md-12 col-lg-6 my-3">
-                        <label for="exampleInputPassword1" className="form-label">Name</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" />
-                    </div>
-
-
-                    <div class="mb-3 col-sm-12  col-md-12 col-lg-12 my-3 message-form">
-                        <label for="exampleFormControlTextarea1" className="form-label">Message</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                    <div className=" col-sm-6 col-md-6 col-lg-2">
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                </div>
             </div>
 
 

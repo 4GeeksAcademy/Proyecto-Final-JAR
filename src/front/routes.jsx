@@ -13,6 +13,7 @@ import { SignupPage } from "./pages/Signup"; // 🔹 Usa el nombre correcto
 import { AboutPage } from "./pages/About"; 
 import { PricingPage } from "./pages/Pricing";
 import { LoginPage } from "./pages/Login";
+import { FindWork } from "./components/FindWork";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -33,6 +34,9 @@ export const router = createBrowserRouter(
         <Route path="/about" element={<AboutPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/findWork" element={<FindWork />} />
+
+        
       </Route>
     )
 );
