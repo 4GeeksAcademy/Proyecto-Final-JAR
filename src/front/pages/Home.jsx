@@ -4,7 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 import { Search, ClipboardList, Monitor } from "lucide-react"
 
-import Homecss from "../../front/home.css"
+import "../../front/home.css"
 
 
 export const Home = () => {
@@ -53,16 +53,16 @@ export const Home = () => {
 			</div>
 
 
-			<div class="features-content">
-				<div class="content-wrapper features-section">
-					<div class="feature-box">
+			<div className="features-content">
+				<div className="content-wrapper features-section">
+					<div className="feature-box">
 						<span className="fa-solid fa-lightbulb fa-10x"></span>
 						<h3>You don’t need to do it all yourself</h3>
 						<p>Spend more time on what you do best & start getting more done</p>
 					</div>
 
-					<div class="feature-box">
-						<span class="fa-regular fa-id-card fa-10x"></span>
+					<div className="feature-box">
+						<span className="fa-regular fa-id-card fa-10x"></span>
 						<h3>Don’t regret a bad hire</h3>
 						<p>Read reviews from real people and know you’re getting the best</p>
 					</div>
@@ -125,19 +125,19 @@ export const Home = () => {
 				<div className="">
 
 					<nav >
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Previous">
+						<ul className="pagination">
+							<li className="page-item">
+								<a className="page-link" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item "><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Next">
+							<li className="page-item active"><a className="page-link" href="#">1</a></li>
+							<li className="page-item "><a className="page-link" href="#">2</a></li>
+							<li className="page-item"><a className="page-link" href="#">3</a></li>
+							<li className="page-item"><a className="page-link" href="#">4</a></li>
+							<li className="page-item"><a className="page-link" href="#">5</a></li>
+							<li className="page-item">
+								<a className="page-link" href="#" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
@@ -148,38 +148,38 @@ export const Home = () => {
 
 				<div className="published_cards">
 					<div className="card published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 
 					<div className="card  published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 					<div className="card published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 					<div className="card  published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-title">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-title">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
