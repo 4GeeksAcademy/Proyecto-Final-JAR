@@ -38,11 +38,11 @@ export const About = () => {
                     <h2 className="form-tittle">Contact Form</h2>
                     <form className="contenedorForm"onSubmit={handleSubmit}>
                         <div className="row">
-                            <div className="col-lg-6 col-md-12 col-sm-12 py-3">
+                            <div className="col-lg-4 col-md-12 col-sm-12 py-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                                 <input type="email" className="form-control form-input" id="exampleInputEmail1" />
                             </div>
-                            <div className="col-lg-6 col-md-12 col-sm-12 py-3">
+                            <div className="col-lg-4 col-md-12 col-sm-12 py-3">
                                 <label htmlFor="exampleInputPassword1" className="form-label">Name</label>
                                 <input type="text" className="form-control form-input" id="exampleInputPassword1" />
                             </div>
@@ -52,7 +52,7 @@ export const About = () => {
                                 <label htmlFor="exampleFormControlTextarea1" className="form-label">Message</label>
                                 <textarea className="form-control form-textarea" id="exampleFormControlTextarea1" rows="4"></textarea>
                             </div>
-                            <div className="col-3 text-center pt-4">
+                            <div className="col-lg-4 col-md-6 col-sm-6 text-center pt-4">
                                 <button type="submit" className="btn btn-primary form-button">Submit</button>
                             </div>
                         </div>
