@@ -32,7 +32,7 @@ export const Navbar = () => {
           <a class="nav-link text-light m-2px px-2" href="#">Find Talent</a>
         </li>
         <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="#">Find Work</a>
+          <a class="nav-link text-light m-2px px-2" href="/findWork">Find Work</a>
         </li>
         <li class="nav-item  mx-2">
           <a class="nav-link text-light m-2px px-2" href="/pricing">Pricing</a>

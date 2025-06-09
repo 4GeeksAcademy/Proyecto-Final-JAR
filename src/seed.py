@@ -30,7 +30,8 @@ def seed_users():
             address_county=fake.state(),
             address_country=fake.country(),
             tax_number=fake.unique.random_number(digits=10),
-            geo_dir=f"{fake.latitude()}, {fake.longitude()}"
+            geo_dir=f"{fake.latitude()}, {fake.longitude()}",
+            active_user=fake.boolean()
         )
         users.append(user)
         db.session.add(user)
