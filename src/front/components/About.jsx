@@ -37,7 +37,7 @@ export const About = () => {
                 <div className="form-container m-5">
                     <h2 className="form-tittle">Contact Form</h2>
                     <form className="contenedorForm"onSubmit={handleSubmit}>
-                        <div className="row">
+                        <div className="row justify-content-center">
                             <div className="col-lg-4 col-md-12 col-sm-12 py-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                                 <input type="email" className="form-control form-input" id="exampleInputEmail1" />
@@ -52,7 +52,7 @@ export const About = () => {
                                 <label htmlFor="exampleFormControlTextarea1" className="form-label">Message</label>
                                 <textarea className="form-control form-textarea" id="exampleFormControlTextarea1" rows="4"></textarea>
                             </div>
-                            <div className="col-lg-4 col-md-6 col-sm-6 text-center pt-4">
+                            <div className="col-lg-2 col-md-4 col-sm-5 text-center pt-4 justify-content-center">
                                 <button type="submit" className="btn btn-primary form-button">Submit</button>
                             </div>
                         </div>
