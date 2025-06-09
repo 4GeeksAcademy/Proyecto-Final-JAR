@@ -3,7 +3,6 @@ import "../../front/profview.css";
 
 export const ProfessionalView = () => {
   const [isSaving, setIsSaving] = useState(false);
-  
   const [formData, setFormData] = useState({
     about: "",
     education: "",
@@ -18,110 +17,70 @@ export const ProfessionalView = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSaving(true);
-    
+
     setTimeout(() => {
       console.log("Datos guardados:", formData);
       setIsSaving(false);
-      alert("¡Completed");
+      alert("Updated!");
     }, 1500);
   };
 
   return (
-    <div className="professional-wrapper">
-      <div className="professional-container">
-        <div className="image-section">
-          <div className="image-overlay">
-            <div className="welcome-message">
-              <h2>Tu talento merece</h2>
-              <h1>ESTRELLAS</h1>
-              <div className="glow-effect"></div>
+    <div className="profile-wrapper">
+      <div className="profile-container">
+        <div className="profile-image"></div>
+
+        <div className="profile-form">
+          <p className="profile-step">Step 2: Professional Info</p>
+          <h2 className="form-title">Complete Your Profile</h2>
+          <p className="form-subtitle">Let clients know your background</p>
+
+          <form onSubmit={handleSubmit} className="profile-form-inner">
+            <label className="form-label">About Me</label>
+            <textarea
+              name="about"
+              value={formData.about}
+              onChange={handleChange}
+              placeholder="Tell us about yourself..."
+              className="form-input textarea"
+            />
+
+            <label className="form-label">Education</label>
+            <textarea
+              name="education"
+              value={formData.education}
+              onChange={handleChange}
+              placeholder="Degrees, institutions..."
+              className="form-input textarea"
+            />
+
+            <label className="form-label">Certifications</label>
+            <textarea
+              name="certifications"
+              value={formData.certifications}
+              onChange={handleChange}
+              placeholder="Certifications, dates..."
+              className="form-input textarea"
+            />
+
+            <label className="form-label">Skills & Experience</label>
+            <textarea
+              name="skills"
+              value={formData.skills}
+              onChange={handleChange}
+              placeholder="Your main skills..."
+              className="form-input textarea"
+            />
+
+            <div className="submit-button-container">
+              <button
+                type="submit"
+                className="submit-button"
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save Profile"}
+              </button>
             </div>
-          </div>
-        </div>
-
-        <div className="form-section">
-          <div className="form-header">
-            <h1 className="form-title">
-              Welcome to <span className="highlight">Star Gigs</span>
-            </h1>
-            <p className="form-subtitle">
-              Show your <span className="underline">best self</span> to potential clients
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit}>
-            <div className="input-group">
-              <div className="input-label">
-                <FiUser className="input-icon" />
-                <label>About me</label>
-              </div>
-              <textarea
-                name="about"
-                value={formData.about}
-                onChange={handleChange}
-                className="form-textarea"
-                placeholder="Tell us about yourself (min. 50 chars)..."
-                rows={4}
-              />
-            </div>
-
-            <div className="double-fields">
-              <div className="input-group">
-                <div className="input-label">
-                  <FiBook className="input-icon" />
-                  <label>Education</label>
-                </div>
-                <textarea
-                  name="education"
-                  value={formData.education}
-                  onChange={handleChange}
-                  className="form-textarea"
-                  placeholder="Degrees, courses, institutions..."
-                  rows={4}
-                />
-              </div>
-
-              <div className="input-group">
-                <div className="input-label">
-                  <FiAward className="input-icon" />
-                  <label>Certifications</label>
-                </div>
-                <textarea
-                  name="certifications"
-                  value={formData.certifications}
-                  onChange={handleChange}
-                  className="form-textarea"
-                  placeholder="Certifications with dates..."
-                  rows={4}
-                />
-              </div>
-            </div>
-
-            <div className="input-group">
-              <div className="input-label">
-                <FiCode className="input-icon" />
-                <label>Skills and experience</label>
-              </div>
-              <textarea
-                name="skills"
-                value={formData.skills}
-                onChange={handleChange}
-                className="form-textarea"
-                placeholder="Your top skills (separate by commas)..."
-                rows={4}
-              />
-            </div>
-
-            <button type="submit" className="submit-btn" disabled={isSaving}>
-              {isSaving ? (
-                <div className="spinner"></div>
-              ) : (
-                <>
-                  <FiSave className="btn-icon" />
-                  Save Profile
-                </>
-              )}
-            </button>
           </form>
         </div>
       </div>

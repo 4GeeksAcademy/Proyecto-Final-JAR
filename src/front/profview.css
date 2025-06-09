@@ -1,309 +1,121 @@
-:root {
-  --primary: #004a7c;
-  --secondary: #ffc107;
-  --dark: #002d4d;
-  --light: #f8f9fa;
-}
-
-/* Estructura épica */
-.professional-wrapper {
+.profile-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  background: #f5f5f5;
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.professional-container {
+.profile-container {
   display: flex;
   width: 100%;
-  max-width: 1100px;
-  border-radius: 20px;
+  max-width: 900px;
+  background: white;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-  transform: translateY(0);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-.professional-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2);
-}
-
-/* Sección de imagen con efecto GOD */
-.image-section {
-  flex: 1;
-  background: url('https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
-  position: relative;
+.profile-image {
+  flex: 0 0 30%;
+  background: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80") center/cover;
   min-height: 500px;
 }
 
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 74, 124, 0.9), rgba(0, 120, 212, 0.8));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.welcome-message {
-  color: white;
-  text-align: center;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  transform: translateY(0);
-  transition: transform 0.5s ease;
-}
-
-.welcome-message h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin: 0.5rem 0;
-  color: var(--secondary);
-}
-
-.welcome-message h2 {
-  font-size: 1.8rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-}
-
-.glow-effect {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,193,7,0.4) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: pulse 4s infinite alternate;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.8); opacity: 0.6; }
-  100% { transform: scale(1.2); opacity: 0.9; }
-}
-
-/* Formulario con estilo TOP */
-.form-section {
+.profile-form {
   flex: 1;
   padding: 3rem 2.5rem;
-  background: var(--primary);
+  background-color: #004a7c;
   color: white;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.form-section::before {
-  content: "";
-  position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.form-header {
-  margin-bottom: 2.5rem;
-  text-align: center;
+.profile-step {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
 }
 
 .form-title {
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.highlight {
-  color: var(--secondary);
-  position: relative;
-  display: inline-block;
-}
-
-.highlight::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--secondary);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.form-title:hover .highlight::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  text-align: center;
 }
 
 .form-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  font-weight: 300;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
 }
 
-.underline {
-  text-decoration: underline;
-  text-decoration-color: var(--secondary);
-  text-underline-offset: 3px;
-}
-
-/* Campos con estilo PREMIUM */
-.input-group {
-  margin-bottom: 1.8rem;
-}
-
-.input-label {
+.profile-form-inner {
+  max-width: 500px; 
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  margin-bottom: 0.8rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
   font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: white;
   font-size: 0.95rem;
-  gap: 0.5rem;
 }
 
-.input-icon {
-  font-size: 1.2rem;
-  color: var(--secondary);
-}
-
-.form-textarea {
+.form-input.textarea {
+  min-height: 100px;
   width: 100%;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  font-family: inherit;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
   resize: none;
+  background-color: white;
+  color: #333;
   transition: all 0.3s ease;
-  color: var(--dark);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.form-textarea::placeholder {
-  color: #6c757d;
-  opacity: 0.7;
-}
-
-.form-textarea:focus {
+.form-input.textarea:focus {
   outline: none;
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2);
-  background: white;
+  border-color: #004a7c;
+  box-shadow: 0 0 0 3px rgba(0, 74, 124, 0.1);
 }
 
-/* Campos dobles */
-.double-fields {
+.submit-button-container {
+  margin-top: 1rem;
   display: flex;
-  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.double-fields .input-group {
-  flex: 1;
-}
-
-/* Botón con animación GOD */
-.submit-btn {
-  background: var(--secondary);
-  color: var(--dark);
+.submit-button {
+  background-color: white;
+  color: #004a7c;
   border: none;
-  padding: 1rem 2rem;
+  padding: 0.85rem;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
-  width: 100%;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.3s;
+  width: 50%;
+  font-size: 1rem;
+  text-align: center;
+  display: block;
 }
 
-.submit-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
+.submit-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
 }
 
-.submit-btn:hover {
-  background: #ffca28;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.submit-btn:hover::before {
-  left: 100%;
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.btn-icon {
-  font-size: 1.2rem;
-}
-
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  border-top-color: var(--dark);
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive para todos los dispositivos */
-@media (max-width: 992px) {
-  .professional-container {
-    flex-direction: column;
-    max-width: 600px;
-  }
-  
-  .image-section {
-    min-height: 300px;
-  }
-  
-  .welcome-message h1 {
-    font-size: 2.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .double-fields {
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .form-section {
-    padding: 2rem;
-  }
-  
-  .professional-container {
-    border-radius: 15px;
-  }
-}
