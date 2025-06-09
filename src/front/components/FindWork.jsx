@@ -52,7 +52,7 @@ export const FindWork = () => {
       <div className="container-fluid filtersCustom align-content-center my-5">
         <h2 className="text-center text-white my-5">🔍 Search Options</h2>
         <div className="container my-5">
-          <div className="row g-3">
+          <div className="row findwork__row g-3">
             <div className="col-lg-2 col-md-6 col-sm-12">
               <select className="form-select" onChange={(e) => handleFilterChange("category", e.target.value)}>
                 <option value="">Seleccionar Categoría</option>
@@ -89,7 +89,7 @@ export const FindWork = () => {
    
 
       {/* Resultados con paginación */}
-      <div className="row customCard">
+      <div className="row  findwork__row customCard">
 
            <nav>
     <ul className="pagination">
@@ -119,8 +119,8 @@ export const FindWork = () => {
 </nav>
         {paginatedJobs.map(job => (
           <div key={job.id} className="col-12 customCard">
-            <div className="card p-3 shadow-sm">
-              <div className="row w-100 align-items-center">
+            <div className="card findwork__card  p-3 shadow-sm">
+              <div className="row  findwork__row w-100 align-items-center">
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
                   <p className="customTittle">{job.category}</p>
                   <p>{job.city}, {job.country}</p>
@@ -129,7 +129,7 @@ export const FindWork = () => {
                   <p>📅 {job.date}</p>
                 </div>
               </div>
-              <div className="row">
+              <div className="row findwork__row">
                 <p className="col-12 customDescription">{job.description}</p>
               </div>
             </div>
