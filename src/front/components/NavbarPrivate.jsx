@@ -27,21 +27,14 @@ export const NavbarPrivate = () => {
         <li class="nav-item  mx-2">
           <a class="nav-link text-light  px-2"  href="/about">About</a> 
         </li>
-        <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="#">Find Talent</a>
+         <li class="nav-item  mx-2">
+          <a class="nav-link text-light m-2px px-2" href="/">Home</a>
         </li>
-        <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/findWork">Find Work</a>
+        
+          <li class="nav-item  mx-2">
+          <a class="nav-link text-light m-2px px-2" href="#">Dashboard</a>
         </li>
-        <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/pricing">Pricing</a>
-        </li>
-        <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/login">Log in</a>
-        </li>
-        <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/signup">Sign up</a>
-        </li>
+       
          <li class="nav-item  mx-2">
           <a class="nav-link text-light m-2px px-2" href="/signup"><CircleUserRound /></a>
         </li>
