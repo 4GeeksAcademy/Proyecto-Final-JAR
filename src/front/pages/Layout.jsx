@@ -8,7 +8,8 @@ import { NavbarPrivate } from "../components/NavbarPrivate"
 export const Layout = () => {
     return (
         <ScrollToTop>
-            <Navbar />
+              <Navbar  />
+            <NavbarPrivate  />
 
                 <Outlet />
             <Footer />

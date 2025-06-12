@@ -36,7 +36,7 @@ export const NavbarPrivate = () => {
         </li>
        
          <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/signup"><CircleUserRound /></a>
+          <a class="nav-link text-light m-2px px-2" href="/profile"><CircleUserRound /></a>
         </li>
       </ul>
     </div>
