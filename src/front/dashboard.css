@@ -10,13 +10,15 @@
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  width: 100%;
+  width: 50%;
+  align-items: center;
 }
 
 .create-request-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  
 }
 
 /* Fila de inputs principales */
