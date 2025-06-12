@@ -6,6 +6,23 @@ import { Search, ClipboardList, Monitor } from "lucide-react"
 
 import "../../front/home.css"
 
+//***************************************TESTING FETCH******************************** */
+import { UserServices } from "../services/UserServices.jsx"
+import { ProfessionalServices } from "../services/ProfessionalServices.jsx"
+import { ClientServices } from "../services/ClientServices.jsx"
+import { PostServices } from "../services/PostServices.jsx"
+import { AgreementServices } from "../services/AgreementServices.jsx"
+import { CandidatureServices } from "../services/CandidatureServices.jsx"
+import { RatingServices } from "../services/RatingServices.jsx"
+import { CommentServices } from "../services/CommentServices.jsx"
+import { PaymentServices } from "../services/PaymentServices.jsx"
+import { PremiumServices } from "../services/PremiumServices.jsx"
+import { CategoryServices } from "../services/CategoryServices.jsx"
+
+
+
+import { CreateUser } from './CreateUser.jsx'
+//************************************************************************************** */
 
 export const Home = () => {
 
@@ -49,6 +66,21 @@ export const Home = () => {
 			<div className="image-wrapper">
 				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
 				<h1 className="title">Get more dates with Freelancers</h1>
+
+
+				<UserServices />
+				<ProfessionalServices />
+				<ClientServices />
+				<PostServices />
+				<AgreementServices />
+				<CandidatureServices />
+				<RatingServices />
+				<CommentServices />
+				<PaymentServices />
+				<PremiumServices />
+				<CategoryServices />
+
+				<CreateUser />
 				<input type="text" className="search-input" placeholder="Search Any Services" />
 			</div>
 
