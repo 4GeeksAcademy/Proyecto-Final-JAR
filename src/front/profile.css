@@ -1,0 +1,38 @@
+.profileCustom{
+    min-height: 300px; /* Se ajustará si necesita más espacio */
+    background-color: #005691;
+    border-radius: 10px;
+    padding: 20px; /* Añadir un poco de margen interno */
+}
+
+
+.userIcon{
+    color: white;
+    text-align: center;
+
+}
+
+
+.userName{
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+
+.pricingButtonPlus{
+  font-weight: bolder;
+  background-color:white ; /* Color personalizado */
+  color: #005691; /* Color del texto */
+  border: none; /* Elimina el borde predeterminado */
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.pricingButtonPlus:hover {
+  background-color: #EDF9FC; /* Color más oscuro al hacer hover */
+}
+
+.pricingButtonPlus {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
