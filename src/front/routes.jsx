@@ -5,6 +5,8 @@ import {
     createRoutesFromElements,
     Route,
 } from "react-router-dom";
+
+
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
@@ -14,6 +16,7 @@ import { AboutPage } from "./pages/About";
 import { PricingPage } from "./pages/Pricing";
 import { LoginPage } from "./pages/Login";
 import { FindWork } from "./components/FindWork";
+import { UserProfile } from "./pages/Profile";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,6 +38,7 @@ export const router = createBrowserRouter(
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/findWork" element={<FindWork />} />
+        <Route path="/profile" element={<UserProfile />} />
 
         
       </Route>

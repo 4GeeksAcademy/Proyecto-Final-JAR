@@ -47,7 +47,7 @@ export const Home = () => {
 	return (
 		<div className="container-fluid container-all">
 			<div className="image-wrapper">
-				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
+				<img src="https://picsum.photos/900/600" alt="Random Image" />
 				<h1 className="title">Get more dates with Freelancers</h1>
 				<input type="text" className="search-input" placeholder="Search Any Services" />
 			</div>
