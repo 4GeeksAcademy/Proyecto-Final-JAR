@@ -4,8 +4,25 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 import { Search, ClipboardList, Monitor } from "lucide-react"
 
-import Homecss from "../../front/home.css"
+import "../../front/home.css"
 
+//***************************************TESTING FETCH******************************** */
+import { UserServices } from "../services/UserServices.jsx"
+import { ProfessionalServices } from "../services/ProfessionalServices.jsx"
+import { ClientServices } from "../services/ClientServices.jsx"
+import { PostServices } from "../services/PostServices.jsx"
+import { AgreementServices } from "../services/AgreementServices.jsx"
+import { CandidatureServices } from "../services/CandidatureServices.jsx"
+import { RatingServices } from "../services/RatingServices.jsx"
+import { CommentServices } from "../services/CommentServices.jsx"
+import { PaymentServices } from "../services/PaymentServices.jsx"
+import { PremiumServices } from "../services/PremiumServices.jsx"
+import { CategoryServices } from "../services/CategoryServices.jsx"
+
+import { UserForm } from './CreateUser.jsx'
+
+// import { CreateUser, UpdateUser } from './CreateUser.jsx'
+//************************************************************************************** */
 
 export const Home = () => {
 
@@ -46,34 +63,50 @@ export const Home = () => {
 
 	return (
 		<div className="container-fluid container-all">
-			<div className="image-wrapper">
-				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
-				<h1 className="title">Get more dates with Freelancers</h1>
-				<input type="text" className="search-input" placeholder="Search Any Services" />
+			<div className="image-wrapper" style={{ color: "black "}}>
+				{/* <img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
+				<h1 className="title">Get more dates with Freelancers</h1> */}
+
+
+				<UserServices />
+				<ProfessionalServices />
+				<ClientServices />
+				<PostServices />
+				<AgreementServices />
+				<CandidatureServices />
+				<RatingServices />
+				<CommentServices /> 
+				<PaymentServices />
+				<PremiumServices />
+				<CategoryServices />
+
+				<UserForm />
+
+				{/* <input type="text" className="search-input" placeholder="Search Any Services" /> */}
 			</div>
 
 
-			<div class="features-content">
-				<div class="content-wrapper features-section">
-					<div class="feature-box">
+			{/* <div class="features-content">
+				<div className="content-wrapper features-section">
+					<div className="feature-box">
 						<span className="fa-solid fa-lightbulb fa-10x"></span>
 						<h3>You don’t need to do it all yourself</h3>
 						<p>Spend more time on what you do best & start getting more done</p>
 					</div>
 
-					<div class="feature-box">
-						<span class="fa-regular fa-id-card fa-10x"></span>
+					<div className="feature-box">
+						<span className="fa-regular fa-id-card fa-10x"></span>
 						<h3>Don’t regret a bad hire</h3>
 						<p>Read reviews from real people and know you’re getting the best</p>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 
 
 
 
-			<div className="scroll-wrapper">
+			{/* <div className="scroll-wrapper">
 				<button className="scroll-btn left" onClick={() => scrollServices("left")}>‹</button>
 
 				<div className="service-grid-container " id="service-scroll">
@@ -113,9 +146,9 @@ export const Home = () => {
 
 						</div>
 					</div>
-				</div>
+				</div> */}
 
-				<button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
+				{/* <button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
 			</div>
 
 
@@ -125,19 +158,19 @@ export const Home = () => {
 				<div className="">
 
 					<nav >
-						<ul class="pagination">
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Previous">
+						<ul className="pagination">
+							<li className="page-item">
+								<a className="page-link" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item "><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Next">
+							<li className="page-item active"><a className="page-link" href="#">1</a></li>
+							<li className="page-item "><a className="page-link" href="#">2</a></li>
+							<li className="page-item"><a className="page-link" href="#">3</a></li>
+							<li className="page-item"><a className="page-link" href="#">4</a></li>
+							<li className="page-item"><a className="page-link" href="#">5</a></li>
+							<li className="page-item">
+								<a className="page-link" href="#" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
@@ -148,48 +181,48 @@ export const Home = () => {
 
 				<div className="published_cards">
 					<div className="card published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 
 					<div className="card  published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 					<div className="card published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-tittle">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-tittle">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
 
 					<div className="card  published_card mb-3" >
-						<div class="card-body">
-							<h5 class="card-title">Build bbq</h5>
-							<p class="custom-text">Building</p>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
+						<div className="card-body">
+							<h5 className="card-title">Build bbq</h5>
+							<p className="custom-text">Building</p>
+							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
 						</div>
 					</div>
+ */}
 
 
 
+				{/* </div> */}
 
-				</div>
-
-			</div>
+			{/* </div> */}
 
 			<div className="row mb-4 ">
 

@@ -1,0 +1,118 @@
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+.profile-container {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image.client-image {
+  background: url("https://picsum.photos/seed/client/600/800") center/cover;
+}
+
+.profile-form {
+  flex: 1;
+  padding: 3rem 2.5rem;
+  background-color: #004a7c;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-step {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+}
+
+.form-title {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  text-align: center;
+}
+
+.form-subtitle {
+  font-weight: 500;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.profile-form-inner {
+  max-width: 500px; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.form-input.textarea {
+  min-height: 100px;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  resize: none;
+  background-color: white;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.form-input.textarea:focus {
+  outline: none;
+  border-color: #004a7c;
+  box-shadow: 0 0 0 3px rgba(0, 74, 124, 0.1);
+}
+
+.submit-button-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.submit-button {
+  background-color: white;
+  color: #004a7c;
+  border: none;
+  padding: 0.85rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 50%;
+  font-size: 1rem;
+  text-align: center;
+  display: block;
+}
+
+.submit-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
