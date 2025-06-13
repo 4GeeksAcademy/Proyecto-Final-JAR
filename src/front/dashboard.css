@@ -1,188 +1,201 @@
-/* === DASHBOARD GENERAL === */
-.dashboard-container {
-  padding: 20px;
-  max-width: 100%;
+.dashboard-container *,
+.dashboard-container *::before,
+.dashboard-container *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
 }
 
-/* === FORMULARIO DE CREACIÓN === */
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.dashboard-container {
+  width: 100%;
+  max-width: 100vw;
+  padding: 20px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+/* ===== CONTENEDOR AZUL (EL REBELDE) ===== */
 .create-request-container {
   background-color: #005691;
   border-radius: 12px;
   padding: 2rem;
-  margin-bottom: 2rem;
-  width: 50%;
-  align-items: center;
+  margin: 0 auto 2rem;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* ===== FORMULARIO ===== */
 .create-request-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  
+  gap: 1.8rem;
+  width: 100%;
 }
 
-/* Fila de inputs principales */
+/* ===== FILA SUPERIOR (TITLE, CAT, COL, CITY) ===== */
 .form-top-row {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem;
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  .form-top-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 .form-group {
-  flex: 1 1 25%;
+  width: 100%;
+  position: relative;
 }
 
-/* Estilos comunes a inputs y selects */
+/* ===== INPUTS Y SELECTS ===== */
 .form-control,
 .form-select {
   width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #ddd;
+  padding: 0.85rem;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
   background-color: white;
+  transition: all 0.25s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
-  background-size: 1em;
+  background-size: 12px;
 }
 
-/* Textarea */
+/* ===== TEXTAREA (20% MÁS GRANDE) ===== */
+.form-description {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
 .form-description textarea {
   width: 100%;
-  min-height: 160px;
-  padding: 1.2rem;
+  min-height: 180px;
+  padding: 1.3rem;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
-  border: 2px solid #ddd;
   font-size: 1rem;
+  line-height: 1.5;
   resize: vertical;
+  transition: all 0.25s ease;
 }
 
-/* Botón */
+.form-description textarea:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* ===== BOTÓN CREATE ===== */
 .form-submit {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .submit-button {
   background-color: white;
   color: #005691;
   border: none;
-  padding: 0.75rem 2rem;
+  padding: 0.85rem 2.5rem;
   font-size: 1.1rem;
+  font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .submit-button:hover {
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
   transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* === POST LISTADO === */
+.submit-button:active {
+  transform: translateY(0);
+}
+
+/* ===== SECCIÓN DE POSTS ===== */
+.posts-section {
+  margin-top: 3rem;
+}
+
 .posts-section h3 {
-  margin: 20px 0;
-  font-size: 1.5rem;
   color: #005691;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
 }
 
-.findwork__row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 20px;
-}
-
+/* ===== TARJETAS DE POSTS ===== */
 .findwork__card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  padding: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  width: 100%;
-  margin-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .findwork__card:hover {
-  transform: scale(1.02);
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .customTittle {
-  font-size: 18px;
-  color: #333;
-  margin: 5px 0;
-  font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #005691;
+  margin-bottom: 0.5rem;
 }
 
 .customDescription {
-  padding-left: 20px;
-  font-weight: normal;
-  margin-top: 10px;
+  color: #555;
+  line-height: 1.6;
+  margin: 1rem 0;
 }
 
-/* === BOTONES Y ESTADOS === */
-.btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.btn-light {
-  background-color: white;
-  color: #005691;
-  border: 2px solid white;
-}
-
-.btn-light:hover {
-  background-color: transparent;
-  color: white;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
-
-.text-success {
-  color: #28a745;
-  font-weight: bold;
-}
-
-/* === PAGINACIÓN === */
+/* ===== PAGINACIÓN ===== */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+  margin: 2rem 0;
   list-style: none;
-  padding: 1rem 0;
 }
 
 .page-item button {
   border: 1px solid #007bff;
-  padding: 0.4rem 0.7rem;
-  border-radius: 5px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
   background: white;
   color: #007bff;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .page-item.active button {
@@ -190,34 +203,44 @@
   color: white;
 }
 
-.page-item.disabled button {
-  opacity: 0.5;
-  cursor: not-allowed;
+.page-item button:hover {
+  background: #f0f7ff;
 }
 
-.page-link {
-  cursor: pointer;
+/* ===== ARCHIVED POSTS ===== */
+.archived .findwork__card {
+  opacity: 0.85;
+  background-color: #f9f9f9;
 }
 
-.form-top-row {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  width: 100%;
-  justify-content: space-between;
+.archived .findwork__card:hover {
+  opacity: 1;
 }
 
-.form-top-row .form-group {
-  flex: 1 1 0;
-  min-width: 0;
+/* ===== RESPONSIVE ADICIONAL ===== */
+@media (max-width: 992px) {
+  .create-request-container {
+    padding: 1.5rem;
+  }
+  
+  .form-top-row {
+    gap: 1rem;
+  }
 }
 
-.form-top-row .form-control,
-.form-top-row .form-select {
-  width: 100% !important;
-  box-sizing: border-box;
-}
-
-.create-request-container {
-  max-width: none !important;
+@media (max-width: 576px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+  
+  .create-request-container {
+    padding: 1.2rem;
+    border-radius: 10px;
+  }
+  
+  .form-control,
+  .form-select,
+  .form-description textarea {
+    padding: 0.75rem;
+  }
 }
