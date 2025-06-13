@@ -4,6 +4,7 @@ import { Signup } from "../components/Signup";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
 import { ProfessionalView } from "../components/Profview";
 import { ClientView } from "../components/Clientview";
+import { Dashboard } from "../components/Dashboard";
 
 export const Demo = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
@@ -13,6 +14,7 @@ export const Demo = () => {
     <div className="container">
       <ProfessionalView />
       <ClientView /> 
+      <Dashboard />
     </div>
   );
 };

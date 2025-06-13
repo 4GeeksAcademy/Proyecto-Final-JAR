@@ -1,0 +1,203 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.create-request-container {
+  background: #005691;
+  border-radius: 12px;
+  padding: 2rem;
+  color: white;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.create-request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-top-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.form-control,
+.form-select {
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 2px solid #ddd;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-check-input {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.submit-button {
+  width: fit-content;
+  margin-left: auto;
+  padding: 0.6rem 1.8rem;
+  background: white;
+  color: #005691;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: #f0f0f0;
+}
+
+.posts-section {
+  margin-top: 3rem;
+}
+
+.posts-section h3 {
+  color: #005691;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.findwork__card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.findwork__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.card-body {
+  padding: 0.5rem 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.customTittle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #005691;
+  margin: 0;
+}
+
+.customDescription {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0 2rem;
+  list-style: none;
+}
+
+.page-item button {
+  border: 1px solid #007bff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: white;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.page-item.active button {
+  background: #007bff;
+  color: white;
+}
+
+.page-item button:hover {
+  background: #f0f7ff;
+}
+
+.archived .findwork__card {
+  opacity: 0.85;
+  background-color: #f9f9f9;
+}
+
+.archived .findwork__card:hover {
+  opacity: 1;
+}
+
+.btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
