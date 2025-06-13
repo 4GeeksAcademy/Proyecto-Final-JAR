@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 //Asyncronous fetch
 export const UserServices = () => {   
         
-    const [users, setUsers] = useState()
+    const [users, setUsers] = useState([])
     useEffect(() => {
 
         console.log("Component Loading")
@@ -24,9 +24,30 @@ export const UserServices = () => {
         
         }
     };
-};
-   
 
+};
+
+// GET a user by ID
+export const fetchUserById = async (userId) => {
+  const numericId = Number(userId);
+  if (isNaN(numericId)) {
+    throw new Error("User ID must be a number");
+  }
+  try {
+    const response = await fetch(
+      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users/${numericId}`
+    );
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("User not found");
+      }
+      throw new Error("Error fetching user");
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
 
 // POST Create User
 export const createUser = async (formData) => {
@@ -41,32 +62,24 @@ export const createUser = async (formData) => {
     } catch (error) {
         throw error;
     }
+}
+
+// PUT Update User
+export const updateUser = async (userId, formData) => {
+  try {
+    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!resp.ok) throw new Error('Error updating user');
+    return await resp.json();
+  } catch (error) {
+    throw error;
+  }
 };
 
 
 
 
-
-
-    // //EDIT users
-    // const handleEdit = (user) => {
-    //     setIsEditing(!isEditing);
-    //     setCurrentUser({ ...user });
-    // };
-
-    // const handleChange = (e) => {
-    //     setPostData({ ...currentUser, postData, [e.target.name]: e.target.value });
-    // };
-
-    // const handleUpdate = async () => {
-    //     try {
-    //         const response = await fetch('https://improved-spork-7rw667jq57p3w7449-3001.app.github.dev/api/users/' + id, {
-    //             method: "PUT",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify(currentUser)
-    //         });
-            
-
-       
-
-// };
+   

@@ -19,9 +19,9 @@ import { PaymentServices } from "../services/PaymentServices.jsx"
 import { PremiumServices } from "../services/PremiumServices.jsx"
 import { CategoryServices } from "../services/CategoryServices.jsx"
 
+import { UserForm } from './CreateUser.jsx'
 
-
-import { CreateUser } from './CreateUser.jsx'
+// import { CreateUser, UpdateUser } from './CreateUser.jsx'
 //************************************************************************************** */
 
 export const Home = () => {
@@ -63,9 +63,9 @@ export const Home = () => {
 
 	return (
 		<div className="container-fluid container-all">
-			<div className="image-wrapper">
-				<img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
-				<h1 className="title">Get more dates with Freelancers</h1>
+			<div className="image-wrapper" style={{ color: "black "}}>
+				{/* <img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
+				<h1 className="title">Get more dates with Freelancers</h1> */}
 
 
 				<UserServices />
@@ -75,17 +75,18 @@ export const Home = () => {
 				<AgreementServices />
 				<CandidatureServices />
 				<RatingServices />
-				<CommentServices />
+				<CommentServices /> 
 				<PaymentServices />
 				<PremiumServices />
 				<CategoryServices />
 
-				<CreateUser />
-				<input type="text" className="search-input" placeholder="Search Any Services" />
+				<UserForm />
+
+				{/* <input type="text" className="search-input" placeholder="Search Any Services" /> */}
 			</div>
 
 
-			<div class="features-content">
+			{/* <div class="features-content">
 				<div className="content-wrapper features-section">
 					<div className="feature-box">
 						<span className="fa-solid fa-lightbulb fa-10x"></span>
@@ -99,13 +100,13 @@ export const Home = () => {
 						<p>Read reviews from real people and know you’re getting the best</p>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 
 
 
 
-			<div className="scroll-wrapper">
+			{/* <div className="scroll-wrapper">
 				<button className="scroll-btn left" onClick={() => scrollServices("left")}>‹</button>
 
 				<div className="service-grid-container " id="service-scroll">
@@ -145,9 +146,9 @@ export const Home = () => {
 
 						</div>
 					</div>
-				</div>
+				</div> */}
 
-				<button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
+				{/* <button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
 			</div>
 
 
@@ -215,13 +216,13 @@ export const Home = () => {
 
 						</div>
 					</div>
+ */}
 
 
 
+				{/* </div> */}
 
-				</div>
-
-			</div>
+			{/* </div> */}
 
 			<div className="row mb-4 ">
 
