@@ -14,7 +14,7 @@ export const UserServices = () => {
     // GETs list of Users
     const getUsers = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users')
+            const resp = await fetch('https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users')
             if (!resp.ok) throw new Error('error getting users');
             const data = await resp.json();
             setUsers(data);
@@ -35,7 +35,7 @@ export const fetchUserById = async (userId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users/${numericId}`
+      `https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -52,7 +52,7 @@ export const fetchUserById = async (userId) => {
 // POST Create User
 export const createUser = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users', {
+        const resp = await fetch('https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -67,7 +67,7 @@ export const createUser = async (formData) => {
 // PUT Update User
 export const updateUser = async (userId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/users/${userId}`, {
+    const resp = await fetch(`https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users/${userId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

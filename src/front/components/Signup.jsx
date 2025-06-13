@@ -1,16 +1,47 @@
-import { Navbar } from "./Navbar"
-
-import "../../front/signup.css"
+import React, { useState } from "react";
+import { createUser } from "../services/UserServices.jsx";
+import "../../front/signup.css";
 
 export const Signup = () => {
+    const [formData, setFormData] = useState({
+        active_user: true,
+        email: "",
+        password: "",
+        is_professional: false,
+        firstname: "",
+        lastname1: "",
+        lastname2: "",
+        address_street: "",
+        address_city: "",
+        address_postcode: "",
+        address_county: "",
+        address_country: "",
+        tax_number: "",
+        geo_dir: "",
+    });
 
-    
-    const handleSubmit = e => {
-        e.preventDefault()
-    }
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: name === "is_professional" ? value === "true" : type === "checkbox" ? checked : value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("Datos enviados:", formData);
+
+        try {
+            await createUser(formData);
+            alert("User created successfully!");
+        } catch (error) {
+            console.error("Error submitting user:", error);
+        }
+    };
 
     return (
-        <div className="signup-container-wrapper"> 
+        <div className="signup-container-wrapper">
             <div className="signup-main-container">
                 <div className="signup-image-section">
                     <p className="signup-step">Step 1: Basic Info</p>
@@ -24,35 +55,66 @@ export const Signup = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-field-group">
                             <label htmlFor="email" className="form-label">Email:</label>
-                            <input type="email" className="form-input" id="email" />
+                            <input
+                                className="form-input form-control"
+                                id="email"
+                                onChange={handleChange}
+                                value={formData.email}
+                                name="email"
+                                type="email"
+                            />
                         </div>
 
                         <div className="form-field-group">
                             <label htmlFor="password" className="form-label">Password: <span className="password-hint">(min. 8 characters)</span></label>
-                            <input type="password" className="form-input" id="password"/>
+                            <input
+                                className="form-input form-control"
+                                id="password"
+                                onChange={handleChange}
+                                value={formData.password}
+                                name="password"
+                                type="password"
+                            />
                         </div>
 
                         <div className="role-selection">
                             <div className="role-option">
-                                <input className="role-radio" type="radio" name="role" id="pro" />
+                                <input
+                                    className="role-radio"
+                                    type="radio"
+                                    name="is_professional"
+                                    id="pro"
+                                    value="true"
+                                    checked={formData.is_professional}
+                                    onChange={handleChange}
+                                />
                                 <label className="role-label" htmlFor="pro">
                                     I'm a professional
                                 </label>
                             </div>
+
                             <div className="role-option">
-                                <input className="role-radio" type="radio" name="role" id="need" />
+                                <input
+                                    className="role-radio"
+                                    type="radio"
+                                    name="is_professional"
+                                    id="need"
+                                    value="false"
+                                    checked={!formData.is_professional}
+                                    onChange={handleChange}
+                                />
                                 <label className="role-label" htmlFor="need">
                                     I need a professional
                                 </label>
                             </div>
                         </div>
-                       
+
                         <div className="terms-checkbox">
                             <input type="checkbox" className="terms-input" id="terms" />
-                            <label className="terms-label" htmlFor="terms"> 
+                            <label className="terms-label" htmlFor="terms">
                                 I agree to Star Gig's{" "}
                                 <a href="#" className="terms-link"> Terms </a>
-                                 and <a href="#" className="terms-link">Privacy Policy</a>
+                                and <a href="#" className="terms-link">Privacy Policy</a>
                             </label>
                         </div>
 
