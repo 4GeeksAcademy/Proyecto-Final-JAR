@@ -5,7 +5,6 @@
   font-family: sans-serif;
 }
 
-/* === FORMULARIO === */
 .create-request-container {
   background: #005691;
   border-radius: 12px;
@@ -39,6 +38,7 @@
   border-radius: 6px;
   border: 2px solid #ddd;
   font-size: 0.95rem;
+  width: 100%;
 }
 
 textarea.form-control {
@@ -73,7 +73,6 @@ textarea.form-control {
   background: #f0f0f0;
 }
 
-/* === SECCIONES DE POSTS === */
 .posts-section {
   margin-top: 3rem;
 }
@@ -86,7 +85,6 @@ textarea.form-control {
   border-bottom: 2px solid #e0e0e0;
 }
 
-/* ===== TARJETAS COMPACTAS (ESTILO IMAGEN) ===== */
 .findwork__card {
   background: white;
   border-radius: 10px;
@@ -142,7 +140,6 @@ textarea.form-control {
   overflow: hidden;
 }
 
-/* ===== PAGINACIÓN ===== */
 .pagination {
   display: flex;
   justify-content: center;
@@ -171,7 +168,6 @@ textarea.form-control {
   background: #f0f7ff;
 }
 
-/* ===== ARCHIVED POSTS ===== */
 .archived .findwork__card {
   opacity: 0.85;
   background-color: #f9f9f9;
@@ -181,7 +177,6 @@ textarea.form-control {
   opacity: 1;
 }
 
-/* ===== BOTONES ===== */
 .btn {
   padding: 0.25rem 0.5rem;
   font-size: 0.8rem;
@@ -206,4 +201,3 @@ textarea.form-control {
   border-color: #dc3545;
   color: white;
 }
-
