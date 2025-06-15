@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react";
-
-//Asyncronous fetch
-export const UserServices = () => {   
-        
-    const [users, setUsers] = useState([])
-    useEffect(() => {
-
-        console.log("Component Loading")
-        getUsers()
-    }, [])
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
-    // GETs list of Users
-    const getUsers = async () => {
-        try {
-            const resp = await fetch('https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users')
-            if (!resp.ok) throw new Error('error getting users');
-            const data = await resp.json();
-            setUsers(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
-
+// GET list of Users
+export const getUsers = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/users`);
+    if (!resp.ok) throw new Error('Error getting users');
+    const data = await resp.json();
+    console.log(data); 
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a user by ID
@@ -35,7 +24,7 @@ export const fetchUserById = async (userId) => {
   }
   try {
     const response = await fetch(
-      `https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users/${numericId}`
+      `${backendUrl}/api/users/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -52,7 +41,7 @@ export const fetchUserById = async (userId) => {
 // POST Create User
 export const createUser = async (formData) => {
     try {
-        const resp = await fetch('https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users', {
+        const resp = await fetch(`${backendUrl}/api/users`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -67,7 +56,7 @@ export const createUser = async (formData) => {
 // PUT Update User
 export const updateUser = async (userId, formData) => {
   try {
-    const resp = await fetch(`https://automatic-space-trout-r6v7xwqj9rjhw9x-3001.app.github.dev/api/users/${userId}`, {
+    const resp = await fetch(`${backendUrl}/api/users/${userId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }
