@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../../front/dashboard.css";
 
+
+// HACER RUTAS DE DASHBOARD! 
+
 const pruebaPosts = [
   { id: 1, title: "App and Website Development", remote_project: false, project_city: "Madrid", project_county: "Madrid", project_country: "España", post_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", estimated_budged: "$20 - $50", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-10" },
   { id: 2, title: "UX/UI Design", remote_project: true, project_city: "CDMX", project_county: "Ciudad de México", project_country: "México", post_description: "Diseño de interfaces para ecommerce mobile-first.", estimated_budged: "$30 - $60", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-12" },
