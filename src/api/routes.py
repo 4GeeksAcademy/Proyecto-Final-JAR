@@ -39,10 +39,7 @@ def create_user():
         
     # Validate required fields
     required_fields = [
-        "email", "password", "is_professional", 
-        "firstname", "lastname1", "address_street",
-        "address_city", "address_postcode", "address_county",
-        "address_country", "tax_number", "geo_dir", "active_user"
+        "email", "password"
     ]
     
     missing = [field for field in required_fields if field not in data]
@@ -236,6 +233,36 @@ def delete_post(id):
     db.session.commit()
     return jsonify({"message": "Post deleted"}), 200
 
+# POST: Add new Post
+@api.route("/posts", methods=["POST"])
+def create_post():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_post = Post(
+            client_id=data["client_id"],
+            category_id=data["category_id"],
+            estimated_budged=data["estimated_budged"],
+            post_active=data["post_active"],
+            post_completed=data["post_completed"],
+            post_description=data["post_description"],
+            post_open=data["post_open"],
+            project_city=data["project_city"],
+            project_country=data["project_country"],
+            project_county=data["project_county"],
+            remote_project=data["remote_project"],            
+        )
+        db.session.add(new_post)
+        db.session.flush() #Assigns ID without committing
+
+    
+        db.session.commit()
+        return jsonify(new_post.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
 #PUT: Modify Post
 @api.route("/posts/<int:id>", methods=["PUT"]) #Dynamic route
 def update_post(id):
@@ -248,6 +275,7 @@ def update_post(id):
         return jsonify({"error": "Post not found"}), 404
     
     #Modification of properties of object post
+    post.category_id = data.get("category_id", post.category_id)
     post.remote_project = data.get("remote_project", post.remote_project)
     post.project_city = data.get("project_city", post.project_city)
     post.project_county = data.get("project_county", post.project_county)

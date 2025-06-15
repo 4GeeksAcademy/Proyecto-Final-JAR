@@ -129,7 +129,7 @@ class Post(db.Model):
  
     #connection with foreign key 
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id")) #Foreign key as relationship one client to many post
-    cathegory_id: Mapped[int] = mapped_column(ForeignKey("cathegories.id"))
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
     
     #relationships 
     client: Mapped["Client"] = relationship(back_populates="posts") #one to many
@@ -151,7 +151,7 @@ class Post(db.Model):
             "post_completed": self.post_completed,
             "post_date": self.post_date.isoformat() if self.post_date else None,
             "client_id": self.client_id,
-            "cathegory_id": self.cathegory_id
+            "category_id": self.category_id
         }      
 
 class CandidatureStatus(enum.Enum):
@@ -323,8 +323,8 @@ class Premium(db.Model):
             "professional_id": self.professional_id
         }
 
-class Category(db.Model): #Javier mentioned that we should only create table with main cathegories
-    __tablename__ = "cathegories"
+class Category(db.Model): #Javier mentioned that we should only create table with main categories
+    __tablename__ = "categories"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(80), nullable=False)
     #foreing key connection goes in the many side (Post)
