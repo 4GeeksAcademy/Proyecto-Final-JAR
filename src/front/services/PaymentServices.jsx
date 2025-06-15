@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
+//Asyncronous fetch - TO DELETE
 export const PaymentServices = () => {   
     
     
@@ -14,7 +15,7 @@ export const PaymentServices = () => {
     // GETs list of Payments
     const getPayments = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/payments')
+            const resp = await fetch(`${backendUrl}/api/payments`)
             if (!resp.ok) throw new Error('error getting Payments');
             const data = await resp.json();
             setPayments(data);
@@ -34,7 +35,7 @@ export const fetchPaymentById = async (paymentId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/payments/${numericId}`
+      `${backendUrl}/api/payments/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -51,7 +52,7 @@ export const fetchPaymentById = async (paymentId) => {
 // POST Create Payment **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createPayment = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/payments', {
+        const resp = await fetch(`${backendUrl}/api/payments`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -66,7 +67,7 @@ export const createPayment = async (formData) => {
 // PUT Update Payment
 export const updatePayment = async (paymentId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/payments/${paymentId}`, {
+    const resp = await fetch(`${backendUrl}/api/payments/${paymentId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

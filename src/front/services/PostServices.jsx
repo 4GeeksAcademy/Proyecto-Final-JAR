@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 //Asyncronous fetch
 export const PostServices = () => {   
@@ -15,7 +16,7 @@ export const PostServices = () => {
     // GET list of Posts
     const getPosts = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/posts')
+            const resp = await fetch(`${backendUrl}/api/posts`)
             if (!resp.ok) throw new Error('error getting Posts');
             const data = await resp.json();
             setPosts(data);
@@ -36,7 +37,7 @@ export const fetchPostById = async (postId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/posts/${numericId}`
+      `${backendUrl}/api/posts/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -50,10 +51,10 @@ export const fetchPostById = async (postId) => {
   }
 };
 
-// POST Create Post **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
+// POST Create Post **DOUBLE CHECK IT REQUIRED** NO ENDPOINT **********************************NEEDED!!!
 export const createPost = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/posts', {
+        const resp = await fetch(`${backendUrl}/api/posts`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -68,7 +69,7 @@ export const createPost = async (formData) => {
 // PUT Update Post
 export const updatePost = async (postId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/posts/${postId}`, {
+    const resp = await fetch(`${backendUrl}/api/posts/${postId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

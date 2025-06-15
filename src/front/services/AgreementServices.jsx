@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-//Asyncronous fetch
+//Asyncronous fetch TO REMOVE
 export const AgreementServices = () => {   
     
     
@@ -14,7 +15,7 @@ export const AgreementServices = () => {
     // GETs list of Agreements
     const getAgreements = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/agreements')
+            const resp = await fetch(`${backendUrl}/api/agreements`)
             if (!resp.ok) throw new Error('error getting Agreements');
             const data = await resp.json();
             setAgreements(data);
@@ -34,7 +35,7 @@ export const fetchAgreementById = async (agreementId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/agreements/${numericId}`
+      `${backendUrl}/api/agreements/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -51,7 +52,7 @@ export const fetchAgreementById = async (agreementId) => {
 // POST Create Agreement **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createAgreement = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/agreements', {
+        const resp = await fetch(`${backendUrl}/api/agreements`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -66,7 +67,7 @@ export const createAgreement = async (formData) => {
 // PUT Update Agreement
 export const updateAgreement = async (agreementId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/agreements/${agreementId}`, {
+    const resp = await fetch(`${backendUrl}/api/agreements/${agreementId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

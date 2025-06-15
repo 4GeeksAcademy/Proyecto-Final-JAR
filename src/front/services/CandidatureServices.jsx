@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
+
+//Asyncronous fetch TO REMOVE
 export const CandidatureServices = () => {   
     
     
@@ -14,7 +16,7 @@ export const CandidatureServices = () => {
     // GETs list of Candidatures
     const getCandidatures = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/candidatures')
+            const resp = await fetch(`${backendUrl}/api/candidatures`)
             if (!resp.ok) throw new Error('error getting Candidatures');
             const data = await resp.json();
             setCandidatures(data);
@@ -35,7 +37,7 @@ export const fetchCandidatureById = async (candidatureId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/candidatures/${numericId}`
+      `${backendUrl}/api/candidatures/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -49,10 +51,10 @@ export const fetchCandidatureById = async (candidatureId) => {
   }
 };
 
-// POST Create Candidature **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
+// POST Create Candidature **DOUBLE CHECK IT REQUIRED** NO ENDPOINT *** NEEDED
 export const createCandidature = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/candidatures', {
+        const resp = await fetch(`${backendUrl}/api/candidatures`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -67,7 +69,7 @@ export const createCandidature = async (formData) => {
 // PUT Update Candidature
 export const updateCandidature = async (candidatureId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/candidatures/${candidatureId}`, {
+    const resp = await fetch(`${backendUrl}/api/candidatures/${candidatureId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

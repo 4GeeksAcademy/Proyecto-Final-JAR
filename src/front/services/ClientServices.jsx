@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 //Asyncronous fetch
 export const ClientServices = () => {   
@@ -15,7 +16,7 @@ export const ClientServices = () => {
     // GETs list of Clients
     const getClients = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/clients')
+            const resp = await fetch(`${backendUrl}/api/clients`)
             if (!resp.ok) throw new Error('error getting Clients');
             const data = await resp.json();
             setClients(data);
@@ -35,7 +36,7 @@ export const fetchClientById = async (clientId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/clients/${numericId}`
+      `${backendUrl}/api/clients/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
