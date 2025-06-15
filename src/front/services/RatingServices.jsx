@@ -47,7 +47,7 @@ export const fetchRatingById = async (ratingId) => {
   }
 };
 
-// POST Create Rating
+// POST Create Rating **DOUBLE CHECK IT REQUIRED** NO ENDPOINT*******************************************************
 export const createRating = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings', {
@@ -62,7 +62,7 @@ export const createRating = async (formData) => {
     }
 }
 
-// PUT Update Rating
+// PUT Update Rating **DOUBLE CHECK IT REQUIRED** NO ENDPOINT *******************************************************
 export const updateRating = async (ratingId, formData) => {
   try {
     const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings/${ratingId}`, {

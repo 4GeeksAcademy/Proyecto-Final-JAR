@@ -48,7 +48,7 @@ export const fetchAgreementById = async (agreementId) => {
   }
 };
 
-// POST Create Agreement
+// POST Create Agreement **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createAgreement = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/agreements', {

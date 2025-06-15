@@ -48,7 +48,7 @@ export const fetchCommentById = async (commentId) => {
   }
 };
 
-// POST Create Comment
+// POST Create Comment **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createComment = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/comments', {

@@ -48,7 +48,7 @@ export const fetchPaymentById = async (paymentId) => {
   }
 };
 
-// POST Create Payment
+// POST Create Payment **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createPayment = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/payments', {

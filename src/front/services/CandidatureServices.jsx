@@ -49,7 +49,7 @@ export const fetchCandidatureById = async (candidatureId) => {
   }
 };
 
-// POST Create Candidature
+// POST Create Candidature **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createCandidature = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/candidatures', {

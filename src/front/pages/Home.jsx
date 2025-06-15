@@ -7,7 +7,7 @@ import { Search, ClipboardList, Monitor } from "lucide-react"
 import "../../front/home.css"
 
 //***************************************TESTING FETCH******************************** */
-import { UserServices } from "../services/UserServices.jsx"
+
 import { ProfessionalServices } from "../services/ProfessionalServices.jsx"
 import { ClientServices } from "../services/ClientServices.jsx"
 import { PostServices } from "../services/PostServices.jsx"
@@ -68,7 +68,7 @@ export const Home = () => {
 				<h1 className="title">Get more dates with Freelancers</h1> */}
 
 
-				<UserServices />
+				{/* <UserServices /> */}
 				<ProfessionalServices />
 				<ClientServices />
 				<PostServices />
@@ -81,6 +81,8 @@ export const Home = () => {
 				<CategoryServices />
 
 				<UserForm />
+				
+
 
 				{/* <input type="text" className="search-input" placeholder="Search Any Services" /> */}
 			</div>

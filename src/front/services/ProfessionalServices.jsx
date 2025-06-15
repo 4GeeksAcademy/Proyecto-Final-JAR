@@ -49,7 +49,7 @@ export const fetchProfessionalById = async (professionalId) => {
   }
 };
 
-// POST Create Professional
+// POST Create Professional **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createProfessional = async (formData) => {
     try {
         const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/professionals', {
