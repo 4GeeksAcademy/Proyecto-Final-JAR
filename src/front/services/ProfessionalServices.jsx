@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 //Asyncronous fetch
 export const ProfessionalServices = () => {   
@@ -14,7 +15,7 @@ export const ProfessionalServices = () => {
     // GETs list of Professionals
     const getProfessionals = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/professionals')
+            const resp = await fetch(`${backendUrl}/api/professionals`)
             if (!resp.ok) throw new Error('error getting professionals');
             const data = await resp.json();
             setProfessionals(data);
@@ -35,7 +36,7 @@ export const fetchProfessionalById = async (professionalId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/professionals/${numericId}`
+      `${backendUrl}/api/professionals/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -49,10 +50,10 @@ export const fetchProfessionalById = async (professionalId) => {
   }
 };
 
-// POST Create Professional
+// POST Create Professional **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createProfessional = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/professionals', {
+        const resp = await fetch(`${backendUrl}/api/professionals`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -67,7 +68,7 @@ export const createProfessional = async (formData) => {
 // PUT Update Professional
 export const updateProfessional = async (professionalId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/professionals/${professionalId}`, {
+    const resp = await fetch(`${backendUrl}/api/professionals/${professionalId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 //Asyncronous fetch
 export const CategoryServices = () => {   
@@ -14,7 +15,7 @@ export const CategoryServices = () => {
     // GETs list of Categories
     const getCategories = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/categories')
+            const resp = await fetch(`${backendUrl}/api/categories`)
             if (!resp.ok) throw new Error('error getting Categories');
             const data = await resp.json();
             setCategories(data);
@@ -33,7 +34,7 @@ export const fetchCategoryById = async (categoryId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/categories/${numericId}`
+      `${backendUrl}/api/categories/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -47,10 +48,10 @@ export const fetchCategoryById = async (categoryId) => {
   }
 };
 
-// POST Create Category
+// POST Create Category **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createCategory = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/categories', {
+        const resp = await fetch(`${backendUrl}/api/categories`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -65,7 +66,7 @@ export const createCategory = async (formData) => {
 // PUT Update Category
 export const updateCategory = async (categoryId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/categories/${categoryId}`, {
+    const resp = await fetch(`${backendUrl}/api/categories/${categoryId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

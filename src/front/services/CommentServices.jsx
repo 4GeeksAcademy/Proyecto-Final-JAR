@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 //Asyncronous fetch
 export const CommentServices = () => {   
@@ -14,9 +15,9 @@ export const CommentServices = () => {
     // GETs list of Comments
     const getComments = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/comments')
+            const resp = await fetch(`${backendUrl}/api/comments`)
             if (!resp.ok) throw new Error('error getting Comments');
-            const data = await resp.json();git 
+            const data = await resp.json();
             setComments(data);
             console.log(data);
         } catch (error) {
@@ -34,7 +35,7 @@ export const fetchCommentById = async (commentId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/comments/${numericId}`
+      `${backendUrl}/api/comments/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -48,10 +49,10 @@ export const fetchCommentById = async (commentId) => {
   }
 };
 
-// POST Create Comment
+// POST Create Comment **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
 export const createComment = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/comments', {
+        const resp = await fetch(`${backendUrl}/api/comments`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -66,7 +67,7 @@ export const createComment = async (formData) => {
 // PUT Update Comment
 export const updateComment = async (commentId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/comments/${commentId}`, {
+    const resp = await fetch(`${backendUrl}/api/comments/${commentId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }

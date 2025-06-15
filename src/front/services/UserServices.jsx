@@ -7,6 +7,8 @@ export const getUsers = async () => {
   try {
     const resp = await fetch(`${backendUrl}/api/users`);
     if (!resp.ok) throw new Error('Error getting users');
+    // return await resp.json();
+    // console.log(resp);
     const data = await resp.json();
     console.log(data); 
     return data;

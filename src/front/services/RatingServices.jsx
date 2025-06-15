@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
+//Asyncronous fetch - to REMOVE
 export const RatingServices = () => {   
     
     
@@ -14,7 +15,7 @@ export const RatingServices = () => {
     // GETs list of Ratings
     const getRatings = async () => {
         try {
-            const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings')
+            const resp = await fetch(`${backendUrl}/api/ratings`)
             if (!resp.ok) throw new Error('error getting Ratings');
             const data = await resp.json();
             setRatings(data);
@@ -33,7 +34,7 @@ export const fetchRatingById = async (ratingId) => {
   }
   try {
     const response = await fetch(
-      `https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings/${numericId}`
+      `${backendUrl}/api/ratings/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
@@ -47,10 +48,10 @@ export const fetchRatingById = async (ratingId) => {
   }
 };
 
-// POST Create Rating
+// POST Create Rating **DOUBLE CHECK IT REQUIRED** NO ENDPOINT*******************************************************
 export const createRating = async (formData) => {
     try {
-        const resp = await fetch('https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings', {
+        const resp = await fetch(`${backendUrl}/api/ratings`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
@@ -62,10 +63,10 @@ export const createRating = async (formData) => {
     }
 }
 
-// PUT Update Rating
+// PUT Update Rating **DOUBLE CHECK IT REQUIRED** NO ENDPOINT *******************************************************
 export const updateRating = async (ratingId, formData) => {
   try {
-    const resp = await fetch(`https://improved-spork-7rw667jq57p3wrx9-3001.app.github.dev/api/ratings/${ratingId}`, {
+    const resp = await fetch(`${backendUrl}/api/ratings/${ratingId}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' }
