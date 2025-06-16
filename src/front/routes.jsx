@@ -11,12 +11,13 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-import { SignupPage } from "./pages/Signup"; // 🔹 Usa el nombre correcto
+import { SignupPage } from "./pages/Signup"; 
 import { AboutPage } from "./pages/About"; 
 import { PricingPage } from "./pages/Pricing";
 import { LoginPage } from "./pages/Login";
 import { FindWork } from "./components/FindWork";
 import { UserProfile } from "./pages/Profile";
+import { DashboardPage } from "./pages/Dashboard"
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -39,6 +40,7 @@ export const router = createBrowserRouter(
         <Route path="/login" element={<LoginPage />} />
         <Route path="/findWork" element={<FindWork />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
 
         
       </Route>
