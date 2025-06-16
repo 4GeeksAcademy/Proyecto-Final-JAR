@@ -51,7 +51,7 @@ export const fetchCandidatureById = async (candidatureId) => {
   }
 };
 
-// POST Create Candidature **DOUBLE CHECK IT REQUIRED** NO ENDPOINT *** NEEDED
+// POST Create Candidature 
 export const createCandidature = async (formData) => {
     try {
         const resp = await fetch(`${backendUrl}/api/candidatures`, {

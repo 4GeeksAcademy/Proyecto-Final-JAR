@@ -254,9 +254,7 @@ def create_post():
             remote_project=data["remote_project"],            
         )
         db.session.add(new_post)
-        db.session.flush() #Assigns ID without committing
-
-    
+            
         db.session.commit()
         return jsonify(new_post.serialize()), 201
     except Exception as e:
@@ -307,6 +305,28 @@ def get_agreement(agreement_id):
     #No need for loop as it returns one object
     return jsonify(agreement.serialize()), 200
 
+# POST: Add new Agreement
+@api.route("/agreements", methods=["POST"])
+def create_agreement():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_agreement = Agreement(
+            agreement_date=data["agreement_date"],
+            agreement_status=data["agreement_status"],
+            candidature_id=data["candidature_id"],
+            client_id=data["client_id"],
+            post_id=data["post_id"],
+            professional_id=data["professional_id"],            
+        )
+        db.session.add(new_agreement)  
+        db.session.commit()
+        return jsonify(new_agreement.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
 #PUT: Modify Agreement
 @api.route("/agreements/<int:id>", methods=["PUT"]) #Dynamic route
 def update_agreement(id):
@@ -343,6 +363,28 @@ def get_candidature(id):
     #No need for loop as it returns one object
     return jsonify(candidature.serialize()), 200
 
+# POST: Add new Candidature
+@api.route("/candidatures", methods=["POST"])
+def create_candidature():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_candidature = Candidature(
+            candidature_date=data["candidature_date"],
+            candidature_message=data["candidature_message"],
+            candidature_status=data["candidature_status"],
+            client_id=data["client_id"],
+            post_id=data["post_id"],
+            professional_id=data["professional_id"],            
+        )
+        db.session.add(new_candidature)  
+        db.session.commit()
+        return jsonify(new_candidature.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 #PUT: Modify Candidature
 @api.route("/candidatures/<int:id>", methods=["PUT"]) #Dynamic route
 def update_candidature(id):
@@ -378,6 +420,25 @@ def get_rating(id):
     #No need for loop as it returns one object 
     return jsonify(rating.serialize()), 200
 
+# POST: Add new Rating
+@api.route("/ratings", methods=["POST"])
+def create_rating():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_rating = Rating(
+            client_id=data["client_id"],
+            professional_id=data["professional_id"],
+            rating_professional=data["rating_professional"],            
+        )
+        db.session.add(new_rating)  
+        db.session.commit()
+        return jsonify(new_rating.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 #GET: list of Comments
 @api.route("/comments", methods=["GET"])
 def get_comments():
@@ -394,6 +455,25 @@ def get_comment(id):
         return jsonify({"error": "Comment not found"}), 404
     #No need for loop as it returns one object 
     return jsonify(comment.serialize()), 200
+
+# POST: Add new Comment
+@api.route("/comments", methods=["POST"])
+def create_comment():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_comment = Comment(
+            client_id=data["client_id"],
+            comment_text=data["comment_text"],
+            professional_id=data["professional_id"],            
+        )
+        db.session.add(new_comment)  
+        db.session.commit()
+        return jsonify(new_comment.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 #PUT: Modify Comment
 @api.route("/comments/<int:id>", methods=["PUT"]) #Dynamic route
@@ -504,6 +584,23 @@ def get_category(id):
     #No need for loop as it returns one object 
     return jsonify(category.serialize()), 200
 
+# POST: Add new Category
+@api.route("/categories", methods=["POST"])
+def create_category():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_category = Category(
+            name=data["name"],           
+        )
+        db.session.add(new_category)  
+        db.session.commit()
+        return jsonify(new_category.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
 #PUT: Modify Category 
 @api.route("/categories/<int:id>", methods=["PUT"]) #Dynamic route
 def update_category(id):
