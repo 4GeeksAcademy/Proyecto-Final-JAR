@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import  "../../front/navbar.css"
 export const Navbar = () => {
 
-	return (
-	
+  return (
+
 
 
 
@@ -48,6 +48,6 @@ export const Navbar = () => {
   </div>
 </nav>
 
-	);
+  );
 };
 
