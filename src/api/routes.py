@@ -332,35 +332,7 @@ def delete_post(id):
     # Changes saved
     db.session.commit()
     return jsonify({"message": "Post deleted"}), 200
-
-# POST: Add new Post
-@api.route("/posts", methods=["POST"])
-def create_post():
-    #extraemos la informacion del body puede ser con request.json
-    data = request.get_json()
-        
-    try:
-        new_post = Post(
-            client_id=data["client_id"],
-            category_id=data["category_id"],
-            estimated_budged=data["estimated_budged"],
-            post_active=data["post_active"],
-            post_completed=data["post_completed"],
-            post_description=data["post_description"],
-            post_open=data["post_open"],
-            project_city=data["project_city"],
-            project_country=data["project_country"],
-            project_county=data["project_county"],
-            remote_project=data["remote_project"],            
-        )
-        db.session.add(new_post)
-            
-        db.session.commit()
-        return jsonify(new_post.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-    
+   
 #PUT: Modify Post
 @api.route("/posts/<int:id>", methods=["PUT"]) #Dynamic route
 def update_post(id):
