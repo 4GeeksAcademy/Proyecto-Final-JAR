@@ -4,20 +4,9 @@ import "../../front/signup.css";
 
 export const Signup = () => {
     const [formData, setFormData] = useState({
-        active_user: true,
         email: "",
         password: "",
         is_professional: false,
-        firstname: "",
-        lastname1: "",
-        lastname2: "",
-        address_street: "",
-        address_city: "",
-        address_postcode: "",
-        address_county: "",
-        address_country: "",
-        tax_number: "",
-        geo_dir: "",
     });
 
     const handleChange = (e) => {

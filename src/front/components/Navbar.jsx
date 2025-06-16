@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import  "../../front/navbar.css"
+import { CircleUserRound } from "lucide-react"
+
 export const Navbar = () => {
 
   return (
@@ -37,12 +39,30 @@ export const Navbar = () => {
         <li className="nav-item  mx-2">
           <a className="nav-link text-light m-2px px-2" href="/pricing">Pricing</a>
         </li>
-        <li className="nav-item  mx-2">
+        {localStorage.getItem("token") ?
+        (<>
+                    <li class="nav-item  mx-2">
+          <a class="nav-link text-light m-2px px-2" href="#">Dashboard</a>
+        </li>
+       
+         <li class="nav-item  mx-2">
+          <a class="nav-link text-light m-2px px-2" href="/profile"><CircleUserRound /></a>
+        </li>
+        </>
+        )
+        :
+        
+        (
+        <>
+          <li className="nav-item  mx-2">
           <a className="nav-link text-light m-2px px-2" href="/login">Log in</a>
         </li>
         <li className="nav-item  mx-2">
           <a className="nav-link text-light m-2px px-2" href="/signup">Sign up</a>
         </li>
+        </>
+        )
+        }
       </ul>
     </div>
   </div>

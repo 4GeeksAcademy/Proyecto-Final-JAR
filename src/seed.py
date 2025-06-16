@@ -3,6 +3,7 @@ import random
 from datetime import datetime
 from faker import Faker
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash
 from app import app, db
 from api.models import (
     User, Client, Professional, Category, Post,
@@ -19,7 +20,8 @@ def seed_users():
     for i in range(20):  # 20 users (10 clients + 10 professionals)
         user = User(
             email=fake.unique.email(),
-            password=fake.password(),
+            # todos tiene el mismo password, pepe123
+            password=generate_password_hash('pepe123'),
             is_professional=(i >= 10),  # First 10 are clients
             registration_date=fake.date_time_this_year(),
             firstname=fake.first_name(),
@@ -126,7 +128,8 @@ def seed_agreements(candidatures):
     for candidature in candidatures:
         agreement = Agreement(
             agreement_date=fake.date_time_this_year(),
-            agreement_status=fake.boolean(),
+            agreement_status=random.choice(
+                list(CandidatureStatus)),  # CORRECTO
             candidature_id=candidature.id,
             post_id=candidature.post_id,
             professional_id=candidature.professional_id,
