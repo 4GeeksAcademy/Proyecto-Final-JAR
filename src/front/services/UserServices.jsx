@@ -55,6 +55,26 @@ export const createUser = async (formData) => {
     }
 }
 
+// POST Create User
+export const login = async (formData) => {
+    try {
+        const resp = await fetch(`${backendUrl}/api/login`, {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!resp.ok) throw new Error('Error creating user');
+        const data = await resp.json();
+        // Store the token in localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        data.success = true;
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 // PUT Update User
 export const updateUser = async (userId, formData) => {
   try {
