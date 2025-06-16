@@ -40,9 +40,7 @@ def create_user():
     # Validate required fields
     required_fields = [
         "email", "password", "is_professional", 
-        "firstname", "lastname1", "address_street",
-        "address_city", "address_postcode", "address_county",
-        "address_country", "tax_number", "geo_dir", "active_user"
+        
     ]
     
     missing = [field for field in required_fields if field not in data]
@@ -54,17 +52,7 @@ def create_user():
             email=data["email"],
             password=data["password"],  #REMOVE SERIALIZATION IN PRODUCTION
             is_professional=data["is_professional"],
-            firstname=data["firstname"],
-            lastname1=data["lastname1"],
-            lastname2=data["lastname2"],  #Optional field
-            address_street=data["address_street"],
-            address_city=data["address_city"],
-            address_postcode=data["address_postcode"],
-            address_county=data["address_county"],
-            address_country=data["address_country"],
-            tax_number=data["tax_number"],
-            geo_dir=data["geo_dir"],
-            active_user=data["active_user"],
+           
         )
         db.session.add(new_user)
         db.session.flush() #Assigns ID without committing
