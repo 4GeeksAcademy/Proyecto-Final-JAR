@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import  "../../front/navbar.css"
 import { CircleUserRound } from "lucide-react"
 
+import useGlobalReducer from "../hooks/useGlobalReducer"
+
 export const Navbar = () => {
-
+  const {store, dispatch } = useGlobalReducer()
   return (
-
-
-
+  
 
 <nav className="navbar navbarCustom navbar-expand-lg navbar-dark text-white " >
   <div className="container-fluid  d-flex justify-content-between">
@@ -28,25 +28,25 @@ export const Navbar = () => {
     <div className="collapse navbar-collapse justify-content-end  navbarDivCustom" id="navbarNav">
       <ul className="navbar-nav navbarIconCustom">
         <li className="nav-item  mx-2">
-          <a className="nav-link text-light  px-2"  href="/about">About</a> 
+          <Link className="nav-link text-light  px-2"  to="/about">About</Link> 
         </li>
         <li className="nav-item  mx-2">
-          <a className="nav-link text-light m-2px px-2" href="#">Find Talent</a>
+          <Link className="nav-link text-light m-2px px-2" to="#">Find Talent</Link>
         </li>
         <li className="nav-item  mx-2">
-          <a className="nav-link text-light m-2px px-2" href="/findWork">Find Work</a>
+          <Link className="nav-link text-light m-2px px-2" to="/findWork">Find Work</Link>
         </li>
         <li className="nav-item  mx-2">
-          <a className="nav-link text-light m-2px px-2" href="/pricing">Pricing</a>
+          <Link className="nav-link text-light m-2px px-2" to="/pricing">Pricing</Link>
         </li>
-        {localStorage.getItem("token") ?
+        {localStorage.getItem("token") || store.token ?
         (<>
                     <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="#">Dashboard</a>
+          <a class="nav-link text-light m-2px px-2" to="#">Dashboard</a>
         </li>
        
          <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" href="/profile"><CircleUserRound /></a>
+          <Link class="nav-link text-light m-2px px-2" to="/profile"><CircleUserRound /></Link>
         </li>
         </>
         )
@@ -55,10 +55,10 @@ export const Navbar = () => {
         (
         <>
           <li className="nav-item  mx-2">
-          <a className="nav-link text-light m-2px px-2" href="/login">Log in</a>
+          <Link className="nav-link text-light m-2px px-2" to="/login">Log in</Link>
         </li>
         <li className="nav-item  mx-2">
-          <a className="nav-link text-light m-2px px-2" href="/signup">Sign up</a>
+          <Link className="nav-link text-light m-2px px-2" to="/signup">Sign up</Link>
         </li>
         </>
         )
