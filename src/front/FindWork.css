@@ -3,8 +3,26 @@
     background-color: #005691;
     border-radius: 10px;
     padding: 20px; /* Añadir un poco de margen interno */
- 
+}
+.customCard{
+  padding-bottom: 15px;
+}
 
+.pagination{
+ justify-content: center;
+}
+
+.customTittle {
+  font-size: 18px;
+  color: #333;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.customDescription{
+  height: 80px;
+  padding-left: 50px;
+  font-weight: normal;
 }
 
 .filters {
@@ -16,7 +34,7 @@
 
 .filters select,
 .filters input {
-    width: 100%; /* Hace que los filtros ocupen todo el espacio disponible en la columna */
+  width: 100%; /* Hace que los filtros ocupen todo el espacio disponible en la columna */
   padding: 8px;
   border: 2px solid #ddd;
   border-radius: 8px;
@@ -33,7 +51,7 @@
 }
 
 /* Contenedor de las tarjetas */
-.row {
+.findwork__row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -41,7 +59,7 @@
 }
 
 /* Estilo de cada tarjeta */
-.card {
+.findwork__card {
   background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #ddd;
@@ -52,16 +70,20 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 100%; /* Ocupará todo el ancho disponible */
+  max-width: 980px; /* Máximo ancho de cada tarjeta */
+  margin: auto; /* Centra la tarjeta */
+  height: 900px;
 }
 
 /* Efecto hover en tarjetas */
-.card:hover {
+.findwork__card:hover {
   transform: scale(1.05);
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Texto dentro de las tarjetas */
-.card h5 {
+.findwork__card h5 {
   color: #005691;
   font-size: 16px;
   font-weight: bold;
@@ -69,53 +91,15 @@
   display: flex;
 }
 
-.customTittle {
-  font-size: 18px;
-  color: #333;
-  margin: 5px 0;
-  font-weight: bold;
-}
-
 /* Íconos y detalles adicionales */
-.card p::before {
+.findwork__card p::before {
   margin-right: 8px;
   font-size: 20px;
 }
 
-.card .date-info::before {
-
+.findwork__card .date-info::before {
   margin-right: 8px;
   font-size: 20px;
 }
 
-
-
-.card {
-  width: 100%; /* Ocupará todo el ancho disponible */
-  max-width: 980px; /* Máximo ancho de cada tarjeta */
-  margin: auto; /* Centra la tarjeta */
-  height: 900px;
- 
-}
-
-.row {
-  gap: 20px; /* Espacio entre tarjetas */
-}
-
-
-.customDescription{
-  height: 80px;
-  padding-left: 50px;
-  font-weight: normal;
-  
-}
-
-
-.customCard{
-  padding-bottom: 15px;
-}
-
-.pagination{
- justify-content: center;
-}
 

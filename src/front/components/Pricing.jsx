@@ -1,6 +1,6 @@
 import { Navbar } from "./Navbar"
 
-import  "../../front/pricing.css"
+import "../../front/pricing.css"
 
 export const Pricing = () => {
     return (
