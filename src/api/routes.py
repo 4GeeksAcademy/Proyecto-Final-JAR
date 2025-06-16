@@ -333,10 +333,36 @@ def delete_post(id):
     db.session.commit()
     return jsonify({"message": "Post deleted"}), 200
 
-# PUT: Modify Post
-
-@api.route("/posts/<int:id>", methods=["PUT"])  # Dynamic route
-@jwt_required()  # obligated to use the token to access this route
+# POST: Add new Post
+@api.route("/posts", methods=["POST"])
+def create_post():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_post = Post(
+            client_id=data["client_id"],
+            category_id=data["category_id"],
+            estimated_budged=data["estimated_budged"],
+            post_active=data["post_active"],
+            post_completed=data["post_completed"],
+            post_description=data["post_description"],
+            post_open=data["post_open"],
+            project_city=data["project_city"],
+            project_country=data["project_country"],
+            project_county=data["project_county"],
+            remote_project=data["remote_project"],            
+        )
+        db.session.add(new_post)
+            
+        db.session.commit()
+        return jsonify(new_post.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+#PUT: Modify Post
+@api.route("/posts/<int:id>", methods=["PUT"]) #Dynamic route
 def update_post(id):
     # Extraction of data from body
     data = request.get_json()
@@ -391,11 +417,30 @@ def get_agreement(agreement_id):
     # No need for loop as it returns one object
     return jsonify(agreement.serialize()), 200
 
-# PUT: Modify Agreement
-
-
-@api.route("/agreements/<int:id>", methods=["PUT"])  # Dynamic route
-@jwt_required()  # obligated to use the token to access this route
+# POST: Add new Agreement
+@api.route("/agreements", methods=["POST"])
+def create_agreement():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_agreement = Agreement(
+            agreement_date=data["agreement_date"],
+            agreement_status=data["agreement_status"],
+            candidature_id=data["candidature_id"],
+            client_id=data["client_id"],
+            post_id=data["post_id"],
+            professional_id=data["professional_id"],            
+        )
+        db.session.add(new_agreement)  
+        db.session.commit()
+        return jsonify(new_agreement.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+#PUT: Modify Agreement
+@api.route("/agreements/<int:id>", methods=["PUT"]) #Dynamic route
 def update_agreement(id):
     data = request.get_json()
     stmt = select(Agreement).where(Agreement.id == id)
@@ -498,11 +543,30 @@ def get_candidature(id):
     # No need for loop as it returns one object
     return jsonify(candidature.serialize()), 200
 
-# PUT: Modify Candidature
+# POST: Add new Candidature
+@api.route("/candidatures", methods=["POST"])
+def create_candidature():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_candidature = Candidature(
+            candidature_date=data["candidature_date"],
+            candidature_message=data["candidature_message"],
+            candidature_status=data["candidature_status"],
+            client_id=data["client_id"],
+            post_id=data["post_id"],
+            professional_id=data["professional_id"],            
+        )
+        db.session.add(new_candidature)  
+        db.session.commit()
+        return jsonify(new_candidature.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
-
-@api.route("/candidatures/<int:id>", methods=["PUT"])  # Dynamic route
-@jwt_required()  # obligated to use the token to access this route
+#PUT: Modify Candidature
+@api.route("/candidatures/<int:id>", methods=["PUT"]) #Dynamic route
 def update_candidature(id):
     # Extraction of data from body
     data = request.get_json()
@@ -805,11 +869,25 @@ def get_category(id):
     # No need for loop as it returns one object
     return jsonify(category.serialize()), 200
 
-# PUT: Modify Category
-
-
-@api.route("/categories/<int:id>", methods=["PUT"])  # Dynamic route
-@jwt_required()  # obligated to use the token to access this route
+# POST: Add new Category
+@api.route("/categories", methods=["POST"])
+def create_category():
+    #extraemos la informacion del body puede ser con request.json
+    data = request.get_json()
+        
+    try:
+        new_category = Category(
+            name=data["name"],           
+        )
+        db.session.add(new_category)  
+        db.session.commit()
+        return jsonify(new_category.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+#PUT: Modify Category 
+@api.route("/categories/<int:id>", methods=["PUT"]) #Dynamic route
 def update_category(id):
     # Extraction of data from body
     data = request.get_json()
