@@ -42,7 +42,7 @@ export const Navbar = () => {
         {localStorage.getItem("token") || store.token ?
         (<>
                     <li class="nav-item  mx-2">
-          <a class="nav-link text-light m-2px px-2" to="#">Dashboard</a>
+          <Link class="nav-link text-light m-2px px-2" to="/dashboard">Dashboard</Link>
         </li>
        
          <li class="nav-item  mx-2">
