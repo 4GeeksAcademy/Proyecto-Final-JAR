@@ -9,16 +9,33 @@ export const Signup = () => {
         is_professional: false,
     });
 
+    const [termsAccepted, setTermsAccepted] = useState(false);
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: name === "is_professional" ? value === "true" : type === "checkbox" ? checked : value,
-        });
+
+        if (name === "is_professional") {
+            setFormData({ ...formData, [name]: value === "true" });
+        } else if (name === "termsAccepted") {
+            setTermsAccepted(checked);
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (formData.password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+
+        if (!termsAccepted) {
+            alert("You must accept the Terms and Privacy Policy to continue.");
+            return;
+        }
+
         console.log("Datos enviados:", formData);
 
         try {
@@ -99,10 +116,17 @@ export const Signup = () => {
                         </div>
 
                         <div className="terms-checkbox">
-                            <input type="checkbox" className="terms-input" id="terms" />
+                            <input
+                                type="checkbox"
+                                className="terms-input"
+                                id="terms"
+                                name="termsAccepted"
+                                checked={termsAccepted}
+                                onChange={handleChange}
+                            />
                             <label className="terms-label" htmlFor="terms">
                                 I agree to Star Gig's{" "}
-                                <a href="#" className="terms-link"> Terms </a>
+                                <a href="#" className="terms-link">Terms</a>
                                 and <a href="#" className="terms-link">Privacy Policy</a>
                             </label>
                         </div>

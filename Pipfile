@@ -19,7 +19,6 @@ flask-admin = "*"
 typing-extensions = "*"
 wtforms = "==3.1.2"
 sqlalchemy = "*"
-faker = "*"
 flask-jwt-extended = "*"
 
 [requires]
