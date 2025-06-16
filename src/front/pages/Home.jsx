@@ -78,12 +78,13 @@ export const Home = () => {
 
 				<div className="service-grid-container " id="service-scroll">
 					<div className="service-card">
+						<img src="https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" alt="Reformas" />
 						<h3>Reformas</h3>
 						<div className="card-actions">
 
 
 						</div>
-						<img src="https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" alt="Reformas" />
+						
 
 					</div>
 
@@ -106,10 +107,9 @@ export const Home = () => {
 					</div>
 
 					<div className="service-card">
-						<img src="" alt="" />
+						<img className="service-img "src="https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" alt="" />
 						<h3>Carpintería</h3>
 						<div className="card-actions">
-							<button className="learn-btn">Learn more</button>
 
 						</div>
 					</div>
