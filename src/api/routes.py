@@ -515,27 +515,7 @@ def get_candidature(id):
     # No need for loop as it returns one object
     return jsonify(candidature.serialize()), 200
 
-# POST: Add new Candidature
-@api.route("/candidatures", methods=["POST"])
-def create_candidature():
-    #extraemos la informacion del body puede ser con request.json
-    data = request.get_json()
-        
-    try:
-        new_candidature = Candidature(
-            candidature_date=data["candidature_date"],
-            candidature_message=data["candidature_message"],
-            candidature_status=data["candidature_status"],
-            client_id=data["client_id"],
-            post_id=data["post_id"],
-            professional_id=data["professional_id"],            
-        )
-        db.session.add(new_candidature)  
-        db.session.commit()
-        return jsonify(new_candidature.serialize()), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+
 
 #PUT: Modify Candidature
 @api.route("/candidatures/<int:id>", methods=["PUT"]) #Dynamic route
