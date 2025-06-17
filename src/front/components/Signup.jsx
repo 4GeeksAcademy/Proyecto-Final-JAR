@@ -65,7 +65,8 @@ export const Signup = () => {
                 </div>
 
                 <div className="signup-form-section">
-                    <h4 className="signup-title">Let's Get Started</h4>
+                    <h3 className="signup-heading">Sign up</h3>
+                    <h4 className="signup-title">Create your free account</h4>
                     <p className="signup-title2">Join our community</p>
 
                     <form onSubmit={handleSubmit}>
@@ -142,7 +143,7 @@ export const Signup = () => {
                         </div>
 
                         <div className="submit-button-container">
-                            <button type="submit" className="submit-button">Continue</button>
+                            <button type="submit" className="submit-button">Continue!</button>
                         </div>
                     </form>
                 </div>
