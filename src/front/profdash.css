@@ -1,104 +1,133 @@
-/* === DASHBOARD PROFESIONAL === */
-.dashboard-container {
+/* professionalDashboard.css */
+
+/* Contenedor principal */
+.professional-dashboard {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
 }
 
-.posts-section {
-  margin-top: 3rem;
-}
-
-.posts-section h3 {
-  color: #005691;
-  font-size: 1.5rem;
+/* Título de sección */
+.dashboard-title {
+  text-align: center;
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e0e0e0;
+  color: #343a40;
+  font-size: 2rem;
 }
 
-/* Tarjetas de candidaturas */
-.findwork__card {
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #e0e0e0;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Grid: Cards de mínimo 300px, hasta 3 en cada fila. La 4ª baja sola. */
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Responsive: 1 card en móvil */
+@media (max-width: 768px) {
+  .applications-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card base */
+.app-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
-.findwork__card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+/* Hover sutil */
+.app-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
+/* Card atenuada si está inactiva */
+.inactive-card {
+  opacity: 0.6;
+}
+
+/* Cabecera de la card */
 .card-header {
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: none;
 }
 
+/* Título */
+.post-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #212529;
+}
+
+/* Badge de oferta */
+.post-status-badge {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  padding: 0.3em 0.6em;
+  border-radius: 0.75rem;
+  text-transform: uppercase;
+}
+.post-status-badge.active  { background-color: #17a2b8; color: #fff; }
+.post-status-badge.inactive{ background-color: #6c757d; color: #fff; }
+
+/* Badge de estado de candidatura */
+.status.badge {
+  font-size: 0.75rem;
+  padding: 0.4em 0.6em;
+  border-radius: 1rem;
+  text-transform: uppercase;
+}
+.status-in_process{ background-color: #ffc107; color: #212529; }
+.status-accepted  { background-color: #28a745; color: #fff; }
+.status-rejected  { background-color: #dc3545; color: #fff; }
+
+/* Cuerpo */
 .card-body {
-  padding: 0.5rem 0;
+  padding: 1rem;
+  flex: 1;
 }
 
-.card-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding-top: 0.5rem;
-}
-
-/* Títulos y descripciones */
-.customTittle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #005691;
-  margin: 0;
-}
-
-.customDescription {
-  color: #555;
+/* Líneas de info */
+.post-info,
+.post-budget,
+.post-date {
+  margin: 0.25rem 0;
+  color: #6c757d;
   font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0;
+}
+
+/* Truncado a 3 líneas */
+.app-message {
+  margin: 0.75rem 0;
+  font-style: italic;
+  color: #495057;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Botones */
-.btn {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
-  border-radius: 4px;
-  transition: all 0.2s;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
+/* Pie de la card */
+.card-footer {
+  padding: 0.75rem 1rem;
+  background-color: #f1f1f1;
+  border-top: 1px solid #e0e0e0;
+  text-align: right;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-}
-
-.btn-sm {
-  font-size: 0.75rem;
-  padding: 0.3rem 0.6rem;
+/* Botón “View Offer” */
+.card-footer .btn-link {
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin: 0;
 }
