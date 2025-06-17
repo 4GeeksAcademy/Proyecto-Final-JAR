@@ -17,7 +17,7 @@ import { RatingServices } from "../services/RatingServices.jsx"
 import { CommentServices } from "../services/CommentServices.jsx"
 import { PaymentServices } from "../services/PaymentServices.jsx"
 import { PremiumServices } from "../services/PremiumServices.jsx"
-import { CategoryServices } from "../services/CategoryServices.jsx"
+import { getCategories } from "../services/CategoryServices.jsx"
 
 import { UserForm } from './CreateUser.jsx'
 
@@ -73,7 +73,7 @@ export const Home = () => {
 				<ClientServices />
 				<PostServices />
 				<AgreementServices />
-				<CandidatureServices />
+				<getCategories />
 				<RatingServices />
 				<CommentServices /> 
 				<PaymentServices />

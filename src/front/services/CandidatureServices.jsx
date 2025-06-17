@@ -2,31 +2,16 @@ import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
-//Asyncronous fetch TO REMOVE
-export const CandidatureServices = () => {   
-    
-    
-    const [candidatures, setCandidatures] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getCandidatures()
-    }, [])
-
-
-    // GETs list of Candidatures
-    const getCandidatures = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/candidatures`)
-            if (!resp.ok) throw new Error('error getting Candidatures');
-            const data = await resp.json();
-            setCandidatures(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
-
+// GET list of candidatures
+export const getCandidatures = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/candidatures`);
+    if (!resp.ok) throw new Error('Error getting candidature');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a candidature by ID

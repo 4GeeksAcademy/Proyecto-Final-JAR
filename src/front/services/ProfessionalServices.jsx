@@ -1,32 +1,17 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
-export const ProfessionalServices = () => {   
-    
-    
-    const [professionals, setProfessionals] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getProfessionals()
-    }, [])
-
-
-    // GETs list of Professionals
-    const getProfessionals = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/professionals`)
-            if (!resp.ok) throw new Error('error getting professionals');
-            const data = await resp.json();
-            setProfessionals(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
-
-}
+// GET list of Professionals
+export const getProfessionals = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/professionals`);
+    if (!resp.ok) throw new Error('Error getting professionals');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 // GET a professional by ID
 export const fetchProfessionalById = async (professionalId) => {
