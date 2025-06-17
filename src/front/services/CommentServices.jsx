@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
-export const CommentServices = () => {   
-    
-    
-    const [comments, setComments] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getComments()
-    }, [])
-
-
-    // GETs list of Comments
-    const getComments = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/comments`)
-            if (!resp.ok) throw new Error('error getting Comments');
-            const data = await resp.json();
-            setComments(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of comments
+export const getComments = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/comments`);
+    if (!resp.ok) throw new Error('Error getting comments');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a comment by ID
