@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
+
 import { createUser } from "../services/UserServices.jsx";
 import "../../front/signup.css";
 
+
+
 export const Signup = () => {
+
+    const navigate = useNavigate()
+
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -41,6 +50,7 @@ export const Signup = () => {
         try {
             await createUser(formData);
             alert("User created successfully!");
+            navigate("/login")
         } catch (error) {
             console.error("Error submitting user:", error);
         }
