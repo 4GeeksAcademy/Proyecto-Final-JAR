@@ -1,0 +1,104 @@
+/* === DASHBOARD PROFESIONAL === */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.posts-section {
+  margin-top: 3rem;
+}
+
+.posts-section h3 {
+  color: #005691;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Tarjetas de candidaturas */
+.findwork__card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.findwork__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.card-body {
+  padding: 0.5rem 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* Títulos y descripciones */
+.customTittle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #005691;
+  margin: 0;
+}
+
+.customDescription {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Botones */
+.btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-sm {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+}
