@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
 import "../../front/FindWork.css";
+import  useGlobalReducer  from "../hooks/useGlobalReducer";
 
 export const FindWork = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({ category: "", country: "", city: "", date: "" });
+  const [filters, setFilters] = useState({ category: "", country: "", city: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -35,8 +36,8 @@ export const FindWork = () => {
   const filteredJobs = posts.filter(job =>
     (!filters.category || job.category === filters.category) &&
     (!filters.country || job.country === filters.country) &&
-    (!filters.city || job.city === filters.city) &&
-    (!filters.date || job.date === filters.date)
+    (!filters.city || job.city === filters.city) 
+    // (!filters.date || job.date === filters.date)
   );
 
   const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
@@ -53,7 +54,7 @@ export const FindWork = () => {
         <h2 className="text-center text-white my-5">🔍 Search Options</h2>
         <div className="container my-5">
           <div className="row findwork__row g-3">
-            <div className="col-lg-2 col-md-6 col-sm-12">
+            {/* <div className="col-lg-2 col-md-6 col-sm-12">
               <select className="form-select" onChange={(e) => handleFilterChange("category", e.target.value)}>
                 <option value="">Seleccionar Categoría</option>
                 <option value="Tecnología">Tecnología</option>
@@ -76,10 +77,10 @@ export const FindWork = () => {
                 <option value="CDMX">CDMX</option>
                 <option value="Buenos Aires">Buenos Aires</option>
               </select>
-            </div>
-            <div className="col-lg-2 col-md-6 col-sm-12">
+            </div> */}
+            {/* <div className="col-lg-2 col-md-6 col-sm-12">
               <input type="date" className="form-control" onChange={(e) => handleFilterChange("date", e.target.value)} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -105,20 +106,20 @@ export const FindWork = () => {
             </li>
           </ul>
         </nav>
-        {paginatedJobs.map(job => (
-          <div key={job.id} className="col-12 customCard">
+        {paginatedJobs.map(post => (
+          <div key={post.id} className="col-12 customCard">
             <div className="card findwork__card p-3 shadow-sm">
               <div className="row findwork__row w-100 align-items-center">
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p className="customTittle">{job.category}</p>
-                  <p>{job.city}, {job.country}</p>
+                  <p className="customTittle">{post.category_id}</p>
+                  <p>{post.project_city}, {post.project_country}</p>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p>📅 {job.date}</p>
+                  <p>📅 {post.post_date}</p>
                 </div>
               </div>
               <div className="row findwork__row">
-                <p className="col-12 customDescription">{job.description}</p>
+                <p className="col-12 customDescription">{post.post_description}</p>
               </div>
             </div>
           </div>
