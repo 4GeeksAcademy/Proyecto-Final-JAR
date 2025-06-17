@@ -143,7 +143,7 @@ export const Signup = () => {
                         </div>
 
                         <div className="submit-button-container">
-                            <button type="submit" className="submit-button">Continue</button>
+                            <button type="submit" className="submit-button">Continue!</button>
                         </div>
                     </form>
                 </div>
