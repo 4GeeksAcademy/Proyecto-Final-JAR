@@ -1,31 +1,16 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
-export const ClientServices = () => {   
-    
-    
-    const [clients, setClients] = useState()
-    useEffect(() => {
-
-        console.log("Component Loading")
-        getClients()
-    }, [])
-
-
-    // GETs list of Clients
-    const getClients = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/clients`)
-            if (!resp.ok) throw new Error('error getting Clients');
-            const data = await resp.json();
-            setClients(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of Clients
+export const getClients = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/clients`);
+    if (!resp.ok) throw new Error('Error getting clients');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a client by ID

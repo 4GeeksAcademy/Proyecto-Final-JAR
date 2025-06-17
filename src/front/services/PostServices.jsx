@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-
 // GET list of posts
 export const getPosts = async () => {
   try {
@@ -13,36 +12,6 @@ export const getPosts = async () => {
     throw error;
   }
 };
-
-
-
-//Asyncronous fetch
-// export const PostServices = () => {   
-    
-    
-//     const [posts, setPosts] = useState([])
-//     useEffect(() => {
-
-//         console.log("Component Loading")
-//         getPosts()
-//     }, [])
-
-
-//     // GET list of Posts
-//     const getPosts = async () => {
-//         try {
-//             const resp = await fetch(`${backendUrl}/api/posts`)
-//             if (!resp.ok) throw new Error('error getting Posts');
-//             const data = await resp.json();
-//             setPosts(data);
-//             console.log(data);
-//         } catch (error) {
-//             console.log(error);
-        
-//         }
-//     };
-
-// };
 
 // GET a post by ID
 export const fetchPostById = async (postId) => {

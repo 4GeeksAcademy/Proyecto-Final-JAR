@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch - to REMOVE
-export const RatingServices = () => {   
-    
-    
-    const [ratings, setRatings] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getRatings()
-    }, [])
-
-
-    // GETs list of Ratings
-    const getRatings = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/ratings`)
-            if (!resp.ok) throw new Error('error getting Ratings');
-            const data = await resp.json();
-            setRatings(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of Ratings
+export const getRatings = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/ratings`);
+    if (!resp.ok) throw new Error('Error getting ratings');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
+
 // GET a rating by ID
 export const fetchRatingById = async (ratingId) => {
   const numericId = Number(ratingId);
