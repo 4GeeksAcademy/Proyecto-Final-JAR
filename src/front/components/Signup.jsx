@@ -65,7 +65,8 @@ export const Signup = () => {
                 </div>
 
                 <div className="signup-form-section">
-                    <h4 className="signup-title">Let's Get Started</h4>
+                    <h3 className="signup-heading">Create your account</h3>
+                    <h3 className="signup-title">Sign up in just a few steps</h3>
                     <p className="signup-title2">Join our community</p>
 
                     <form onSubmit={handleSubmit}>
