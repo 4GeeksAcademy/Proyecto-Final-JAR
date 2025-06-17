@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-// GET list of posts
+// GET list of Clients
 export const getClients = async () => {
   try {
     const resp = await fetch(`${backendUrl}/api/clients`);

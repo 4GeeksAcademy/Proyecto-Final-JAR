@@ -13,7 +13,6 @@ export const getProfessionals = async () => {
   }
 };
 
-
 // GET a professional by ID
 export const fetchProfessionalById = async (professionalId) => {
   const numericId = Number(professionalId);
