@@ -147,3 +147,12 @@ form {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 74, 124, 0.2);
 }
+
+.login-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}

@@ -17,8 +17,10 @@ export const Login = () => {
                 </div>
 
                 <div className="login-form-section">
-                    <h4 className="login-title">Great to see you again!</h4>
-                    <p className="login-title2">Let's get back to work</p>
+                    <h3 className="login-heading">Log in</h3>
+                    <h3 className="login-title">Welcome back to Star Gigs</h3>
+                    <p className="login-title2">Access your account to continue</p>
+
 
                     <form onSubmit={handleSubmit}>
                         <div className="form-field-group">
