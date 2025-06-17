@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch - TO DELETE
-export const PaymentServices = () => {   
-    
-    
-    const [payments, setPayments] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getPayments()
-    }, [])
-
-
-    // GETs list of Payments
-    const getPayments = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/payments`)
-            if (!resp.ok) throw new Error('error getting Payments');
-            const data = await resp.json();
-            setPayments(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of Payments
+export const getPayments = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/payments`);
+    if (!resp.ok) throw new Error('Error getting payments');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a payment by ID
