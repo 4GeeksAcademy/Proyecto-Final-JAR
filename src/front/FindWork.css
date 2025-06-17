@@ -1,0 +1,105 @@
+.filtersCustom{
+    min-height: 300px; /* Se ajustará si necesita más espacio */
+    background-color: #005691;
+    border-radius: 10px;
+    padding: 20px; /* Añadir un poco de margen interno */
+}
+.customCard{
+  padding-bottom: 15px;
+}
+
+.pagination{
+ justify-content: center;
+}
+
+.customTittle {
+  font-size: 18px;
+  color: #333;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.customDescription{
+  height: 80px;
+  padding-left: 50px;
+  font-weight: normal;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los filtros pasen a la siguiente línea si no caben */
+  justify-content: space-between; /* Distribución más equilibrada */
+  gap: 5px;
+}
+
+.filters select,
+.filters input {
+  width: 100%; /* Hace que los filtros ocupen todo el espacio disponible en la columna */
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #f8f9fa;
+  transition: 0.3s ease-in-out;
+}
+
+/* Estilo hover en filtros */
+.filters select:hover,
+.filters input:hover {
+  border-color: #007bff;
+  background-color: #ffffff;
+}
+
+/* Contenedor de las tarjetas */
+.findwork__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+/* Estilo de cada tarjeta */
+.findwork__card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%; /* Ocupará todo el ancho disponible */
+  max-width: 980px; /* Máximo ancho de cada tarjeta */
+  margin: auto; /* Centra la tarjeta */
+  height: 900px;
+}
+
+/* Efecto hover en tarjetas */
+.findwork__card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Texto dentro de las tarjetas */
+.findwork__card h5 {
+  color: #005691;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+/* Íconos y detalles adicionales */
+.findwork__card p::before {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.findwork__card .date-info::before {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+

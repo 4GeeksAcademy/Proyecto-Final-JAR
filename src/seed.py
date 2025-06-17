@@ -3,14 +3,16 @@ import random
 from datetime import datetime
 from faker import Faker
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash
 from app import app, db
 from api.models import (
-    User, Client, Professional, Category, Post, 
+    User, Client, Professional, Category, Post,
     Candidature, Agreement, Rating, Comment, Payment, Premium,
     CandidatureStatus, PremiumType, RatingValue
 )
-#modulo que se tiene que instalar!
+# modulo que se tiene que instalar!
 fake = Faker()
+
 
 def seed_users():
     print("Seeding users...")
@@ -18,7 +20,8 @@ def seed_users():
     for i in range(20):  # 20 users (10 clients + 10 professionals)
         user = User(
             email=fake.unique.email(),
-            password=fake.password(),
+            # todos tiene el mismo password, pepe123
+            password=generate_password_hash('pepe123'),
             is_professional=(i >= 10),  # First 10 are clients
             registration_date=fake.date_time_this_year(),
             firstname=fake.first_name(),
@@ -30,12 +33,14 @@ def seed_users():
             address_county=fake.state(),
             address_country=fake.country(),
             tax_number=fake.unique.random_number(digits=10),
-            geo_dir=f"{fake.latitude()}, {fake.longitude()}"
+            geo_dir=f"{fake.latitude()}, {fake.longitude()}",
+            active_user=fake.boolean()
         )
         users.append(user)
         db.session.add(user)
     db.session.commit()
     return users
+
 
 def seed_clients(users):
     print("Seeding clients...")
@@ -46,6 +51,7 @@ def seed_clients(users):
         db.session.add(client)
     db.session.commit()
     return clients
+
 
 def seed_professionals(users):
     print("Seeding professionals...")
@@ -62,7 +68,8 @@ def seed_professionals(users):
     db.session.commit()
     return professionals
 
-def seed_cathegories():
+
+def seed_categories():
     print("Seeding categories...")
     categories = []
     for _ in range(10):
@@ -71,6 +78,7 @@ def seed_cathegories():
         db.session.add(category)
     db.session.commit()
     return categories
+
 
 def seed_posts(clients, categories):
     print("Seeding posts...")
@@ -88,12 +96,13 @@ def seed_posts(clients, categories):
             post_completed=fake.boolean(),
             post_date=fake.date_time_this_year(),
             client_id=random.choice(clients).id,
-            cathegory_id=random.choice(categories).id
+            category_id=random.choice(categories).id
         )
         posts.append(post)
         db.session.add(post)
     db.session.commit()
     return posts
+
 
 def seed_candidatures(posts, professionals, clients):
     print("Seeding candidatures...")
@@ -112,13 +121,15 @@ def seed_candidatures(posts, professionals, clients):
     db.session.commit()
     return candidatures
 
+
 def seed_agreements(candidatures):
     print("Seeding agreements...")
     agreements = []
     for candidature in candidatures:
         agreement = Agreement(
             agreement_date=fake.date_time_this_year(),
-            agreement_status=fake.boolean(),
+            agreement_status=random.choice(
+                list(CandidatureStatus)),  # CORRECTO
             candidature_id=candidature.id,
             post_id=candidature.post_id,
             professional_id=candidature.professional_id,
@@ -128,6 +139,7 @@ def seed_agreements(candidatures):
         db.session.add(agreement)
     db.session.commit()
     return agreements
+
 
 def seed_ratings(professionals, clients):
     print("Seeding ratings...")
@@ -143,6 +155,7 @@ def seed_ratings(professionals, clients):
     db.session.commit()
     return ratings
 
+
 def seed_comments(professionals, clients):
     print("Seeding comments...")
     comments = []
@@ -157,6 +170,7 @@ def seed_comments(professionals, clients):
     db.session.commit()
     return comments
 
+
 def seed_payments(professionals):
     print("Seeding payments...")
     payments = []
@@ -170,6 +184,7 @@ def seed_payments(professionals):
         db.session.add(payment)
     db.session.commit()
     return payments
+
 
 def seed_premiums(professionals):
     print("Seeding premiums...")
@@ -187,6 +202,7 @@ def seed_premiums(professionals):
     db.session.commit()
     return premiums
 
+
 def main():
     with app.app_context():
         # Reset database
@@ -197,7 +213,7 @@ def main():
         users = seed_users()
         clients = seed_clients(users)
         professionals = seed_professionals(users)
-        categories = seed_cathegories()
+        categories = seed_categories()
         posts = seed_posts(clients, categories)
         candidatures = seed_candidatures(posts, professionals, clients)
         agreements = seed_agreements(candidatures)
@@ -207,6 +223,7 @@ def main():
         premiums = seed_premiums(professionals)
 
         print("✅ Database seeded successfully!")
+
 
 if __name__ == "__main__":
     main()

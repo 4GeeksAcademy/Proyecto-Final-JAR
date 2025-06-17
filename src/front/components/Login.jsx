@@ -1,13 +1,40 @@
 import { Navbar } from "./Navbar"
 import "../login.css";
-
+import { useState } from "react";
+import { login } from "../services/UserServices";
+import  useGlobalReducer  from "../hooks/useGlobalReducer";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+    const {store, dispatch} = useGlobalReducer();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    });
+    const navigate = useNavigate();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData, [name]: value
+        });
+    };
 
+    const handleSubmit =  (e) => {
+        e.preventDefault();
+        console.log("Datos enviados:", formData);
 
-    const handleSubmit = e => {
-        e.preventDefault()
-    }
+            login(formData).then(data=> {
+                if (data.error) {
+                    console.error("Error logging in:", data.error);
+                    return;
+                }
+                dispatch({type: "LOGIN", payload: data});
+                console.log("User logged in successfully:", data);
+                navigate("/profile");
+            }).catch(error => {
+            });
+    };
+
 
     return (
         <div className="login-container-wrapper">
@@ -25,12 +52,12 @@ export const Login = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-field-group">
                             <label htmlFor="email" className="form-label">Email:</label>
-                            <input type="email" className="form-input" id="email" />
+                            <input type="email" name='email' className="form-input" id="email" onChange={handleChange} />
                         </div>
 
                         <div className="form-field-group">
                             <label htmlFor="password" className="form-label">Password:</label>
-                            <input type="password" className="form-input" id="password" />
+                            <input type="password" name='password' className="form-input" id="password" onChange={handleChange} />
                         </div>
 
 

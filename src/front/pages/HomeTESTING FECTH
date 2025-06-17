@@ -6,6 +6,23 @@ import { Search, ClipboardList, Monitor } from "lucide-react"
 
 import "../../front/home.css"
 
+//***************************************TESTING FETCH******************************** */
+import { UserServices } from "../services/UserServices.jsx"
+import { ProfessionalServices } from "../services/ProfessionalServices.jsx"
+import { ClientServices } from "../services/ClientServices.jsx"
+import { PostServices } from "../services/PostServices.jsx"
+import { AgreementServices } from "../services/AgreementServices.jsx"
+import { CandidatureServices } from "../services/CandidatureServices.jsx"
+import { RatingServices } from "../services/RatingServices.jsx"
+import { CommentServices } from "../services/CommentServices.jsx"
+import { PaymentServices } from "../services/PaymentServices.jsx"
+import { PremiumServices } from "../services/PremiumServices.jsx"
+import { CategoryServices } from "../services/CategoryServices.jsx"
+
+import { UserForm } from './CreateUser.jsx'
+
+
+//************************************************************************************** */
 
 export const Home = () => {
 
@@ -46,14 +63,30 @@ export const Home = () => {
 
 	return (
 		<div className="container-fluid container-all">
-			<div className="image-wrapper">
-				<img src="https://picsum.photos/900/600" alt="Random Image" />
-				<h1 className="title">Get more dates with Freelancers</h1>
-				<input type="text" className="search-input" placeholder="Search Any Services" />
+			<div className="image-wrapper" style={{ color: "black "}}>
+				{/* <img src="https://www.sim-prom.com/assets/img-temp/900x600/img1.jpg" alt="Random Image" />
+				<h1 className="title">Get more dates with Freelancers</h1> */}
+
+
+				<UserServices />
+				<ProfessionalServices />
+				<ClientServices />
+				<PostServices />
+				<AgreementServices />
+				<CandidatureServices />
+				<RatingServices />
+				<CommentServices /> 
+				<PaymentServices />
+				<PremiumServices />
+				<CategoryServices />
+
+				<UserForm />
+
+				{/* <input type="text" className="search-input" placeholder="Search Any Services" /> */}
 			</div>
 
 
-			<div class="features-content">
+			{/* <div class="features-content">
 				<div className="content-wrapper features-section">
 					<div className="feature-box">
 						<span className="fa-solid fa-lightbulb fa-10x"></span>
@@ -67,24 +100,23 @@ export const Home = () => {
 						<p>Read reviews from real people and know you’re getting the best</p>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 
 
 
 
-			<div className="scroll-wrapper">
+			{/* <div className="scroll-wrapper">
 				<button className="scroll-btn left" onClick={() => scrollServices("left")}>‹</button>
 
 				<div className="service-grid-container " id="service-scroll">
 					<div className="service-card">
-						<img src="https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" alt="Reformas" />
 						<h3>Reformas</h3>
 						<div className="card-actions">
 
 
 						</div>
-						
+						<img src="https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" alt="Reformas" />
 
 					</div>
 
@@ -107,15 +139,16 @@ export const Home = () => {
 					</div>
 
 					<div className="service-card">
-						<img className="service-img "src="https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" alt="" />
+						<img src="" alt="" />
 						<h3>Carpintería</h3>
 						<div className="card-actions">
+							<button className="learn-btn">Learn more</button>
 
 						</div>
 					</div>
-				</div>
+				</div> */}
 
-				<button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
+				{/* <button className="scroll-btn right" onClick={() => scrollServices("right")}>›</button>
 			</div>
 
 
@@ -183,13 +216,13 @@ export const Home = () => {
 
 						</div>
 					</div>
+ */}
 
 
 
+				{/* </div> */}
 
-				</div>
-
-			</div>
+			{/* </div> */}
 
 			<div className="row mb-4 ">
 

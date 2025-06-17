@@ -1,13 +1,11 @@
-import { Login } from "../components/Login";
+import { Dashboard } from "../components/Dashboard";
 import { Link} from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
 
-
-export const LoginPage = () => { 
+export const DashboardPage = () => { 
     return (
         <div className="container">
-            <Login/>
-            
+            <Dashboard />
         </div>
     );
 };
