@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch - TO DELETE
-export const PremiumServices = () => {   
-    
-    
-    const [premiums, setPremiums] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getPremiums()
-    }, [])
-
-
-    // GETs list of Premiums
-    const getPremiums = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/premiums`)
-            if (!resp.ok) throw new Error('error getting Premiums');
-            const data = await resp.json();
-            setPremiums(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of premiums
+export const getPremiums = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/premiums`);
+    if (!resp.ok) throw new Error('Error getting premiums');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET a premium by ID
