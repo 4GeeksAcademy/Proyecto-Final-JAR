@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-//Asyncronous fetch TO REMOVE
-export const AgreementServices = () => {   
-    
-    
-    const [agreements, setAgreements] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getAgreements()
-    }, [])
-
-
-    // GETs list of Agreements
-    const getAgreements = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/agreements`)
-            if (!resp.ok) throw new Error('error getting Agreements');
-            const data = await resp.json();
-            setAgreements(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of agreements
+export const getAgreements = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/agreements`);
+    if (!resp.ok) throw new Error('Error getting agreements');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // GET an agreement by ID

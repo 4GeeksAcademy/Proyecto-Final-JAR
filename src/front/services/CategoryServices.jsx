@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from "react";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-//Asyncronous fetch
-export const CategoryServices = () => {   
-    
-    
-    const [categories, setCategories] = useState()
-    useEffect(() => {
-        console.log("Component Loading")
-        getCategories()
-    }, [])
-
-
-    // GETs list of Categories
-    const getCategories = async () => {
-        try {
-            const resp = await fetch(`${backendUrl}/api/categories`)
-            if (!resp.ok) throw new Error('error getting Categories');
-            const data = await resp.json();
-            setCategories(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        
-        }
-    };
+// GET list of categories
+export const getCategories = async () => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/categories`);
+    if (!resp.ok) throw new Error('Error getting Categories');
+    return await resp.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
+
 // GET a category by ID
 export const fetchCategoryById = async (categoryId) => {
   const numericId = Number(categoryId);

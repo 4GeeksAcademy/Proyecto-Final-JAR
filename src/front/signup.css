@@ -200,5 +200,12 @@ form {
   transform: translateY(-2px);
 }
 
-
+.signup-heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
 
