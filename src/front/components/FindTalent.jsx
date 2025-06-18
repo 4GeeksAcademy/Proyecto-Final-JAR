@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getProfessionals } from "../services/ProfessionalServices.jsx";
 import "../../front/FindWork.css";
+import { Link } from "react-router-dom";
 
 export const FindTalent = () => {
   const [professionals, setProfessionals] = useState([]);
@@ -86,9 +87,7 @@ export const FindTalent = () => {
           <div key={pro.id} className="col-12 customCard">
             <div className="card findwork__card p-3 shadow-sm">
               <div className="row findwork__row w-100 align-items-center">
-                <div className="col-md-6">
-                  
-                </div>
+                <div className="col-md-6"></div>
                 <div className="col-md-6 text-md-end">
                   <p>⭐ <strong>{pro.average_rating ? pro.average_rating.toFixed(1) : "Sin rating"}</strong></p>
                 </div>
@@ -102,15 +101,13 @@ export const FindTalent = () => {
                     : "Sin descripción disponible."}
                 </p>
               </div>
-              {pro.prof_url && (
-                <div className="row mt-2">
-                  <div className="col">
-                    <a href={pro.prof_url} className="btn btn-sm btn-outline-primary" target="_blank" rel="noreferrer">
-                      Ver Perfil
-                    </a>
-                  </div>
+              <div className="row mt-2">
+                <div className="col d-flex gap-2">
+                  <Link to={`/profesional/${pro.id}`} className="btn btn-sm btn-outline-primary">
+                    Ver Detalles
+                  </Link>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         ))}
