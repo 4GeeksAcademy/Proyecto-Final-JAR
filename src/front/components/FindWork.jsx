@@ -48,96 +48,85 @@ export const FindWork = () => {
 
   return (
     <div className="container">
-      {/* Filtros */}
-      <div className="container-fluid filtersCustom align-content-center my-5">
-        <h2 className="text-center text-white my-5">🔍 Search Options</h2>
-        <div className="container my-5">
-          <div className="row findwork__row g-3">
-            <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("category", e.target.value)}>
-                <option value="">Seleccionar Categoría</option>
-                <option value="Tecnología">Tecnología</option>
-                <option value="Diseño">Diseño</option>
-                <option value="Marketing">Marketing</option>
-              </select>
+  {/* Filtros */}
+  <div className="container-fluid filtersCustom align-content-center my-5">
+    <h2 className="text-center text-white my-5">🔎 Find Professionals</h2>
+    <div className="container my-5">
+      <div className="row findwork__row g-3">
+        <div className="col-lg-2 col-md-6 col-sm-12">
+          <select className="form-select" onChange={(e) => handleFilterChange("category", e.target.value)}>
+            <option value="">Select Category</option>
+            <option value="Development">Development</option>
+            <option value="Design">Design</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+        </div>
+        <div className="col-lg-2 col-md-6 col-sm-12">
+          <select className="form-select" onChange={(e) => handleFilterChange("country", e.target.value)}>
+            <option value="">Select Country</option>
+            <option value="Spain">Spain</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Argentina">Argentina</option>
+          </select>
+        </div>
+        <div className="col-lg-2 col-md-6 col-sm-12">
+          <select className="form-select" onChange={(e) => handleFilterChange("city", e.target.value)}>
+            <option value="">Select City</option>
+            <option value="Madrid">Madrid</option>
+            <option value="CDMX">CDMX</option>
+            <option value="Buenos Aires">Buenos Aires</option>
+          </select>
+        </div>
+        <div className="col-lg-2 col-md-6 col-sm-12">
+          <input type="date" className="form-control" onChange={(e) => handleFilterChange("date", e.target.value)} />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Resultados con paginación */}
+  <div className="row findwork__row customCard">
+    <nav>
+      <ul className="pagination">
+        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+          <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)} aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
+            <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
+              {index + 1}
+            </button>
+          </li>
+        ))}
+        <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+          <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)} aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    {paginatedJobs.map((pro) => (
+      <div key={pro.id} className="col-12 customCard">
+        <div className="card findwork__card p-3 shadow-sm">
+          <div className="row findwork__row w-100 align-items-center">
+            <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+              <p className="customTittle">{pro.category}</p>
+              <p>{pro.city}, {pro.country}</p>
             </div>
-            <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("country", e.target.value)}>
-                <option value="">Seleccionar País</option>
-                <option value="España">España</option>
-                <option value="México">México</option>
-                <option value="Argentina">Argentina</option>
-              </select>
+            <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+              <p>📅 {pro.date}</p>
             </div>
-            <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("city", e.target.value)}>
-                <option value="">Seleccionar Ciudad</option>
-                <option value="Madrid">Madrid</option>
-                <option value="CDMX">CDMX</option>
-                <option value="Buenos Aires">Buenos Aires</option>
-              </select>
-            </div>
-            <div className="col-lg-2 col-md-6 col-sm-12">
-              <input type="date" className="form-control" onChange={(e) => handleFilterChange("date", e.target.value)} />
-            </div>
+          </div>
+          <div className="row findwork__row">
+            <p className="col-12 customDescription">{pro.description}</p>
           </div>
         </div>
       </div>
-
-
-
-   
-
-      {/* Resultados con paginación */}
-      <div className="row  findwork__row customCard">
-
-           <nav>
-    <ul className="pagination">
-        {/* Botón "Anterior" */}
-        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-            <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)} aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </button>
-        </li>
-
-        {/* Números de página */}
-        {Array.from({ length: totalPages }, (_, index) => (
-            <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
-                <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
-                    {index + 1}
-                </button>
-            </li>
-        ))}
-
-        {/* Botón "Siguiente" */}
-        <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-            <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)} aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </button>
-        </li>
-    </ul>
-</nav>
-        {paginatedJobs.map(job => (
-          <div key={job.id} className="col-12 customCard">
-            <div className="card findwork__card  p-3 shadow-sm">
-              <div className="row  findwork__row w-100 align-items-center">
-                <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p className="customTittle">{job.category}</p>
-                  <p>{job.city}, {job.country}</p>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p>📅 {job.date}</p>
-                </div>
-              </div>
-              <div className="row findwork__row">
-                <p className="col-12 customDescription">{job.description}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
- 
-    </div>
+    ))}
+  </div>
+</div>
   );
 };
