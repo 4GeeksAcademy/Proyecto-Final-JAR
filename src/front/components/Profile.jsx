@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { CircleUserRound } from "lucide-react";
 import "../../front/profile.css";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { useNavigate } from "react-router-dom";
+
 
 export const Profile = () => {
   const { store, dispatch } = useGlobalReducer();
@@ -102,6 +104,24 @@ export const Profile = () => {
   const handleChange = (field) => (e) => {
     setForm({ ...form, [field]: e.target.value });
   };
+
+
+
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Eliminar token y usuario
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // Limpiar el store global
+    dispatch({ type: "LOGOUT" }); 
+
+    // Redireccionar a home 
+    navigate("/"); // o navigate("/")
+  };
+
 
   return (
     <div className="container-fluid profileCustom align-content-center my-5">
@@ -253,6 +273,14 @@ export const Profile = () => {
           </div>
           <div className="row justify-content-center">
             <button className="col-2 my-5 pricingButtonPlus">Change Password</button>
+          </div>
+          <div className="row justify-content-center">
+            <button
+              className="col-2 my-2 pricingButtonPlus"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
