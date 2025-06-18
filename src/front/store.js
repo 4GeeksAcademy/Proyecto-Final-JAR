@@ -25,6 +25,15 @@ export default function storeReducer(store, action = {}) {
         user: action.payload.user,
         token: action.payload.token
       };
+
+
+      case 'LOGOUT':
+      return {
+        ...store,
+        user: null,
+        token: null
+      };
+      
     case 'set_hello':
       return {
         ...store,
