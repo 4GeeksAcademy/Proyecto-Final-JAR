@@ -35,7 +35,7 @@ export const fetchPostById = async (postId) => {
   }
 };
 
-// POST Create Post **DOUBLE CHECK IT REQUIRED** NO ENDPOINT **********************************NEEDED!!!
+// POST Create Post 
 export const createPost = async (formData) => {
     try {
         const resp = await fetch(`${backendUrl}/api/posts`, {

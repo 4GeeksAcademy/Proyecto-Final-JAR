@@ -1,0 +1,42 @@
+.profileCustom {
+  min-height: 300px;
+  background-color: #005691;
+  border-radius: 10px;
+  padding: 40px 20px; /* Más padding vertical para respirar */
+  margin-bottom: 40px;
+}
+
+/* Ícono centrado */
+.userIcon {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Nombre del usuario */
+.userName {
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Botón principal */
+.pricingButtonPlus {
+  font-weight: bolder;
+  background-color: white;
+  color: #005691;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.pricingButtonPlus:hover {
+  background-color: #EDF9FC;
+}
+
+/* Ajustes generales para márgenes entre secci*

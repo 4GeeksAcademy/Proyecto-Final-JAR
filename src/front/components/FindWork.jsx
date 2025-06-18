@@ -1,49 +1,77 @@
 import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
+import { getCategories } from "../services/CategoryServices.jsx";
 import "../../front/FindWork.css";
-import  useGlobalReducer  from "../hooks/useGlobalReducer";
 
 export const FindWork = () => {
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [categoryMap, setCategoryMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({ category: "", country: "", city: "" });
+  const [filters, setFilters] = useState({ 
+    category_name: "", 
+    project_country: "", 
+    project_city: "" 
+  });
   const [currentPage, setCurrentPage] = useState(1);
+  const [uniqueData, setUniqueData] = useState({
+    countries: [],
+    cities: []
+  });
   const itemsPerPage = 5;
-
-
-
+ 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       try {
-        const data = await getPosts();
-        setPosts(data);
+        const [postData, categoryData] = await Promise.all([
+          getPosts(),
+          getCategories()
+        ]);
+
+        setPosts(postData);
+        setCategories(categoryData);
+        
+        // Create category map
+        const map = categoryData.reduce((acc, cat) => {
+          acc[cat.id] = cat.name;
+          return acc;
+        }, {});
+        setCategoryMap(map);
+
+        // Extract unique locations
+        setUniqueData({
+          countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
+          cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean)
+        });
+        
         setLoading(false);
       } catch (err) {
         setError(err.message);
         setLoading(false);
       }
     };
-    fetchData();
+    fetchAllData();
   }, []);
 
- 
   const handleFilterChange = (filterType, value) => {
-    setFilters({ ...filters, [filterType]: value });
+    setFilters(prev => ({ ...prev, [filterType]: value }));
     setCurrentPage(1);
   };
 
-  const filteredJobs = posts.filter(job =>
-    (!filters.category || job.category === filters.category) &&
-    (!filters.country || job.country === filters.country) &&
-    (!filters.city || job.city === filters.city) 
-    // (!filters.date || job.date === filters.date)
-  );
+  const filteredPosts = posts.filter(pos => {
+    const postCategoryName = categoryMap[pos.category_id];
+    return (
+      (!filters.category_name || postCategoryName === filters.category_name) &&
+      (!filters.project_country || pos.project_country === filters.project_country) &&
+      (!filters.project_city || pos.project_city === filters.project_city)
+    );
+  });
 
-  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
+  const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
   if (loading) return <div className="container text-center my-5">Loading...</div>;
   if (error) return <div className="container text-center my-5">Error: {error}</div>;
@@ -54,33 +82,42 @@ export const FindWork = () => {
         <h2 className="text-center text-white my-5">🔍 Search Options</h2>
         <div className="container my-5">
           <div className="row findwork__row g-3">
-            {/* <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("category", e.target.value)}>
-                <option value="">Seleccionar Categoría</option>
-                <option value="Tecnología">Tecnología</option>
-                <option value="Diseño">Diseño</option>
-                <option value="Marketing">Marketing</option>
+            <div className="col-lg-2 col-md-6 col-sm-12">
+              <select 
+                className="form-select" 
+                value={filters.category_name}
+                onChange={(e) => handleFilterChange("category_name", e.target.value)}
+              >
+                <option value="">Select Category</option>
+                {categories.map(cat => (
+                  <option key={cat.id} value={cat.name}>{cat.name}</option>
+                ))}
               </select>
             </div>
             <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("country", e.target.value)}>
-                <option value="">Seleccionar País</option>
-                <option value="España">España</option>
-                <option value="México">México</option>
-                <option value="Argentina">Argentina</option>
+              <select 
+                className="form-select"
+                value={filters.project_country}
+                onChange={(e) => handleFilterChange("project_country", e.target.value)}
+              >
+                <option value="">Select Country</option>
+                {uniqueData.countries.map(country => (
+                  <option key={country} value={country}>{country}</option>
+                ))}
               </select>
             </div>
             <div className="col-lg-2 col-md-6 col-sm-12">
-              <select className="form-select" onChange={(e) => handleFilterChange("city", e.target.value)}>
-                <option value="">Seleccionar Ciudad</option>
-                <option value="Madrid">Madrid</option>
-                <option value="CDMX">CDMX</option>
-                <option value="Buenos Aires">Buenos Aires</option>
+              <select 
+                className="form-select"
+                value={filters.project_city}
+                onChange={(e) => handleFilterChange("project_city", e.target.value)}
+              >
+                <option value="">Select City</option>
+                {uniqueData.cities.map(city => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
               </select>
-            </div> */}
-            {/* <div className="col-lg-2 col-md-6 col-sm-12">
-              <input type="date" className="form-control" onChange={(e) => handleFilterChange("date", e.target.value)} />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
@@ -106,15 +143,15 @@ export const FindWork = () => {
             </li>
           </ul>
         </nav>
-        {paginatedJobs.map(post => (
+        {paginatedPosts.map(post => (
           <div key={post.id} className="col-12 customCard">
             <div className="card findwork__card p-3 shadow-sm">
               <div className="row findwork__row w-100 align-items-center">
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p className="customTittle">{post.category_id}</p>
+                  <p className="customTittle">{categoryMap[post.category_id] || "Unknown Category"}</p>
                   <p>{post.project_city}, {post.project_country}</p>
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+                <div className="col-lg-4 col-md-4 col6-sm-6 d-flex justify-content-between">
                   <p>📅 {post.post_date}</p>
                 </div>
               </div>
