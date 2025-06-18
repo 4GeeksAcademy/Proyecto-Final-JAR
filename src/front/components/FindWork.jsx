@@ -20,7 +20,7 @@ export const FindWork = () => {
     cities: []
   });
   const itemsPerPage = 5;
-
+ 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -32,7 +32,7 @@ export const FindWork = () => {
         setPosts(postData);
         setCategories(categoryData);
         
-        // Create category map
+        // Create category  map
         const map = categoryData.reduce((acc, cat) => {
           acc[cat.id] = cat.name;
           return acc;
