@@ -3,6 +3,8 @@ import { getPosts } from "../services/PostServices.jsx";
 import "../../front/FindWork.css";
 import  useGlobalReducer  from "../hooks/useGlobalReducer";
 
+
+
 export const FindWork = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,9 +36,9 @@ export const FindWork = () => {
   };
 
   const filteredJobs = posts.filter(job =>
-    (!filters.category || job.category === filters.category) &&
-    (!filters.country || job.country === filters.country) &&
-    (!filters.city || job.city === filters.city) 
+    (!filters.category || post.category_id === filters.category_id) &&
+    (!filters.country || post.project_country === filters.project_country) &&
+    (!filters.city || post.project_city === filters.project_city) 
     // (!filters.date || job.date === filters.date)
   );
 
