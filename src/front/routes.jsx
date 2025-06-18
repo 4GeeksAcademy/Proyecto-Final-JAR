@@ -15,6 +15,7 @@ import { SignupPage } from "./pages/Signup";
 import { AboutPage } from "./pages/About"; 
 import { PricingPage } from "./pages/Pricing";
 import { LoginPage } from "./pages/Login";
+import { FindTalent} from "./components/FindTalent"
 import { FindWork } from "./components/FindWork";
 import { UserProfile } from "./pages/Profile";
 import { DashboardPage } from "./pages/Dashboard"
@@ -38,11 +39,16 @@ export const router = createBrowserRouter(
         <Route path="/about" element={<AboutPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/login" element={<LoginPage />} />
+         <Route path="/findTalent" element={<FindTalent />} />
         <Route path="/findWork" element={<FindWork />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+      
 
         
       </Route>
     )
 );
+
+
+
