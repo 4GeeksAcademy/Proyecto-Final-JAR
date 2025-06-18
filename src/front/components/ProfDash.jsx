@@ -1,36 +1,157 @@
-import React, { useEffect, useState } from "react";
-import "../../front/profdash.css"; // asumimos que lo compartís
-
-const sampleApplications = [
-  { id: 1, post: { id: 101, title: 'E-commerce Mobile-First UI Design', city: 'Madrid', country: 'Spain', estimated_budget: '$30 - $60', date: '2025-06-12', isActive: true }, message: 'If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.', status: 'IN_PROCESS' },
-  { id: 2, post: { id: 102, title: 'Conversion Funnel Optimization', city: 'Buenos Aires', country: 'Argentina', estimated_budget: '$25 - $55', date: '2025-06-15', isActive: true }, message: 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.', status: 'ACCEPTED' },
-  { id: 3, post: { id: 103, title: 'AI Automation Solutions', city: 'Paris', country: 'France', estimated_budget: '$60 - $120', date: '2025-06-21', isActive: true }, message: 'Built AI-powered tools to automate data processing workflows, reducing manual effort by 70%.', status: 'IN_PROCESS' },
-  { id: 4, post: { id: 104, title: 'International Project Management', city: 'Bogotá', country: 'Colombia', estimated_budget: '$40 - $80', date: '2025-06-18', isActive: false }, message: 'Managed cross-border teams across 3 continents, ensuring on-time delivery.', status: 'REJECTED' },
-  { id: 5, post: { id: 105, title: 'Brand Identity for Online Stores', city: 'Rome', country: 'Italy', estimated_budget: '$35 - $70', date: '2025-06-22', isActive: false }, message: 'Developed cohesive brand guidelines for multiple e-commerce brands, including logo, palette, and typography.', status: 'ACCEPTED' },
-  { id: 6, post: { id: 106, title: 'Marketing Strategy Consulting', city: 'London', country: 'UK', estimated_budget: '$45 - $90', date: '2025-06-25', isActive: true }, message: 'Advised startups on go-to-market strategies and brand positioning.', status: 'IN_PROCESS' },
-  { id: 7, post: { id: 107, title: 'Mobile App QA Testing', city: 'Berlin', country: 'Germany', estimated_budget: '$20 - $40', date: '2025-06-28', isActive: false }, message: 'Performed end-to-end testing for multiple mobile applications.', status: 'REJECTED' }
-];
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../../front/dashboard.css";
 
 const statusLabels = {
   IN_PROCESS: "In Progress",
-  ACCEPTED:   "Accepted",
-  REJECTED:   "Rejected",
+  ACCEPTED: "Accepted",
+  REJECTED: "Rejected"
 };
 
-export default function ProfessionalDashboard() {
-  const [applications] = useState(sampleApplications);
-
-  // Separa activas / pasadas
-  const activeApps = applications.filter(a => a.post.isActive);
-  const pastApps   = applications.filter(a => !a.post.isActive);
-
-  // Paginación
-  const pageSize = 3;
+export const ProfessionalDashboard = () => {
+  const [applications, setApplications] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [pastPage,   setPastPage]   = useState(1);
+  const [pastPage, setPastPage] = useState(1);
+  const pageSize = 4;
+  const navigate = useNavigate();
+
+  // Api: 
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        // Simulamos retraso de red
+        await new Promise(resolve => setTimeout(resolve, 600));
+        
+        // Datos simulados actualizados
+        const mockData = [
+          {
+            id: 1,
+            candidature_status: "IN_PROCESS",
+            candidature_date: "2025-06-12T10:30:00Z",
+            post: {
+              id: 101,
+              title: "E-commerce Mobile-First UI Design",
+              remote_project: false,
+              project_city: "Madrid",
+              project_county: "Madrid",
+              project_country: "Spain",
+              post_description: "We need a talented UI designer to create a mobile-first e-commerce interface that provides an exceptional user experience on all devices. The design should be modern, intuitive and conversion-focused.",
+              estimated_budged: "$30 – $60",
+              post_open: true,
+              post_active: true,
+              post_completed: false,
+              post_date: "2025-06-10",
+              category: {
+                name: "Design"
+              }
+            }
+          },
+          {
+            id: 2,
+            candidature_status: "ACCEPTED",
+            candidature_date: "2025-06-15T14:45:00Z",
+            post: {
+              id: 102,
+              title: "Conversion Funnel Optimization",
+              remote_project: true,
+              project_city: "Buenos Aires",
+              project_county: "Buenos Aires",
+              project_country: "Argentina",
+              post_description: "Looking for a marketing expert to optimize our conversion funnels. We need to improve our lead generation and sales conversion rates through A/B testing and data analysis.",
+              estimated_budged: "$25 – $55",
+              post_open: true,
+              post_active: true,
+              post_completed: false,
+              post_date: "2025-06-12",
+              category: {
+                name: "Marketing"
+              }
+            }
+          },
+          {
+            id: 3,
+            candidature_status: "REJECTED",
+            candidature_date: "2025-06-18T09:15:00Z",
+            post: {
+              id: 103,
+              title: "AI Automation Solutions",
+              remote_project: false,
+              project_city: "Paris",
+              project_county: "Île-de-France",
+              project_country: "France",
+              post_description: "Develop AI-powered tools to automate data processing workflows, reducing manual effort by 70%. Requires experience with machine learning and natural language processing.",
+              estimated_budged: "$60 – $120",
+              post_open: false,
+              post_active: false,
+              post_completed: false,
+              post_date: "2025-06-21",
+              category: {
+                name: "Technology"
+              }
+            }
+          },
+          {
+            id: 4,
+            candidature_status: "REJECTED",
+            candidature_date: "2025-06-18T09:15:00Z",
+            post: {
+              id: 103,
+              title: "AI Automation Solutions",
+              remote_project: false,
+              project_city: "Paris",
+              project_county: "Île-de-France",
+              project_country: "France",
+              post_description: "Develop AI-powered tools to automate data processing workflows, reducing manual effort by 70%. Requires experience with machine learning and natural language processing.",
+              estimated_budged: "$60 – $120",
+              post_open: false,
+              post_active: false,
+              post_completed: false,
+              post_date: "2025-06-21",
+              category: {
+                name: "Technology"
+              }
+            }
+          },
+          {
+            id: 5,
+            candidature_status: "REJECTED",
+            candidature_date: "2025-06-18T09:15:00Z",
+            post: {
+              id: 103,
+              title: "AI Automation Solutions",
+              remote_project: false,
+              project_city: "Paris",
+              project_county: "Île-de-France",
+              project_country: "France",
+              post_description: "Develop AI-powered tools to automate data processing workflows, reducing manual effort by 70%. Requires experience with machine learning and natural language processing.",
+              estimated_budged: "$60 – $120",
+              post_open: false,
+              post_active: false,
+              post_completed: false,
+              post_date: "2025-06-21",
+              category: {
+                name: "Technology"
+              }
+            }
+          }
+        ];
+        
+        setApplications(mockData);
+      } catch (error) {
+        console.error("Error fetching applications:", error);
+      } 
+    };
+    
+    fetchApplications();
+  }, []);
+
+  // Separar aplicaciones activas y archivadas
+  const activeApps = applications.filter(a => a.post.post_active);
+  const pastApps = applications.filter(a => !a.post.post_active);
 
   const totalActivePages = Math.ceil(activeApps.length / pageSize);
-  const totalPastPages   = Math.ceil(pastApps.length   / pageSize);
+  const totalPastPages = Math.ceil(pastApps.length / pageSize);
 
   const slicePage = (arr, page) =>
     arr.slice((page - 1) * pageSize, page * pageSize);
@@ -38,84 +159,181 @@ export default function ProfessionalDashboard() {
   const renderPagination = (current, total, onPageChange) => {
     if (total <= 1) return null;
     return (
-      <ul className="pagination">
-        <li className="page-item">
-          <button disabled={current === 1} onClick={() => onPageChange(current - 1)}>
-            &laquo;
-          </button>
-        </li>
-        {Array.from({ length: total }, (_, i) => i + 1).map(n => (
-          <li key={n} className={`page-item ${n === current ? "active" : ""}`}>
-            <button onClick={() => onPageChange(n)}>{n}</button>
+      <nav>
+        <ul className="pagination">
+          <li className={`page-item ${current === 1 ? "disabled" : ""}`}>
+            <button 
+              className="page-link" 
+              onClick={() => onPageChange(current - 1)}
+              disabled={current === 1}
+            >
+              &laquo;
+            </button>
           </li>
-        ))}
-        <li className="page-item">
-          <button disabled={current === total} onClick={() => onPageChange(current + 1)}>
-            &raquo;
-          </button>
-        </li>
-      </ul>
+          {Array.from({ length: total }, (_, i) => i + 1).map(n => (
+            <li
+              key={n}
+              className={`page-item ${n === current ? "active" : ""}`}
+            >
+              <button 
+                className="page-link" 
+                onClick={() => onPageChange(n)}
+              >
+                {n}
+              </button>
+            </li>
+          ))}
+          <li className={`page-item ${current === total ? "disabled" : ""}`}>
+            <button 
+              className="page-link" 
+              onClick={() => onPageChange(current + 1)}
+              disabled={current === total}
+            >
+              &raquo;
+            </button>
+          </li>
+        </ul>
+      </nav>
     );
   };
 
   const renderCard = (app) => {
     const { post } = app;
+    const location = post.remote_project 
+      ? "Remote" 
+      : `${post.project_city}, ${post.project_county}, ${post.project_country}`;
+    
+    const formattedDate = new Date(app.candidature_date).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+
+    // Formatear la descripción del proyecto
+    const projectDescription = post.post_description.length > 150 
+      ? `${post.post_description.substring(0, 150)}...` 
+      : post.post_description;
+
     return (
-      <div
-        key={app.id}
-        className={`findwork__card app-card ${!post.isActive ? "inactive-card" : ""}`}
-      >
-        {/* Header */}
-        <div className="card-header">
-          <div>
-            <h5 className="post-title">{post.title}</h5>
-            <small className="post-meta">
-              📍 {post.city}, {post.country}
-            </small>
+      <div key={app.id} className="col-12 customCard">
+        <div className="card findwork__card p-3 shadow-sm">
+          <div className="row findwork__row w-100 align-items-center">
+            <div className="col-lg-6 col-md-6 col-sm-6">
+              <p className="customTittle">{post.title}</p>
+              <p className="customLocation">{location}</p>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-6 d-flex flex-wrap justify-content-end">
+              <div className="d-flex align-items-center me-3">
+                <span className="calendar-icon me-1">📅</span>
+                <p className="customDate m-0">{formattedDate}</p>
+              </div>
+              <div className="d-flex align-items-center me-3">
+                <span className="money-icon me-1">💰</span>
+                <p className="customBudget m-0">{post.estimated_budged}</p>
+              </div>
+              <span className={`status-badge status-${app.candidature_status.toLowerCase()}`}>
+                {statusLabels[app.candidature_status]}
+              </span>
+            </div>
           </div>
-          <div className="header-extra text-end">
-            <span>📅 {post.date}</span>
-            <span>💰 {post.estimated_budget}</span>
-            <span className={`status badge status-${app.status.toLowerCase()}`}>
-              {statusLabels[app.status]}
-            </span>
+          <div className="row findwork__row mt-3">
+            <div className="col-12">
+              <div className="project-description">
+                <h5 className="description-title">Project Description</h5>
+                <p className="customDescription">
+                  {projectDescription}
+                </p>
+              </div>
+              <div className="d-flex mt-2">
+                <div className="category-badge me-2">
+                  <span className="category-icon"></span>
+                  <span>{post.category?.name || "N/A"}</span>
+                </div>
+                <div className={`status-tag status-${app.candidature_status.toLowerCase()}`}>
+                  {statusLabels[app.candidature_status]}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        {/* Body */}
-        <div className="card-body">
-          <p className="app-message">"{app.message}"</p>
-        </div>
-
-        {/* Footer */}
-        <div className="card-footer">
-          <button
-            className="btn btn-primary btn-sm"
-            onClick={() => window.location.href = `/offers/${post.id}`}
-          >
-            View Offer Details
-          </button>
+          <div className="row findwork__row mt-3">
+            <div className="col-12 d-flex justify-content-end">
+              <button 
+                className="btn btn-primary btn-action me-2"
+                onClick={() => navigate(`/offers/${post.id}`)}
+              >
+                View Project Details
+              </button>
+              <button 
+                className="btn btn-outline-secondary btn-action"
+                onClick={() => navigate(`/messages/${app.id}`)}
+              >
+                Contact Client
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   };
 
-  const activeSlice = slicePage(activeApps, activePage);
-  const pastSlice   = slicePage(pastApps,   pastPage);
-
   return (
     <div className="dashboard-container professional-dashboard">
-      <div className="posts-section">
-        <h3>My Active Applications</h3>
-        {renderPagination(activePage, totalActivePages, setActivePage)}
-        {activeSlice.map(renderCard)}
+      <div className="dashboard-header">
+        <h1 className="text-center mb-3">Professional Applications</h1>
+        <p className="text-center text-muted mb-4">
+          Track and manage all your job applications in one place
+        </p>
       </div>
 
-      <div className="posts-section archived">
-        <h3>My Past Applications</h3>
-        {renderPagination(pastPage, totalPastPages, setPastPage)}
-        {pastSlice.map(renderCard)}
-      </div>
+      <section className="posts-section">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h3 className="section-title">
+             Active Applications
+          </h3>
+          <span className="badge bg-primary">
+            {activeApps.length} application{activeApps.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+        
+        {activeApps.length === 0 ? (
+          <div className="alert alert-info">
+            <i className="bi bi-info-circle me-2"></i>
+            You don't have any active applications. Start applying to jobs now!
+          </div>
+        ) : (
+          <>
+            {renderPagination(activePage, totalActivePages, setActivePage)}
+            <div className="row findwork__row">
+              {slicePage(activeApps, activePage).map(renderCard)}
+            </div>
+          </>
+        )}
+      </section>
+
+      <section className="posts-section archived mt-5">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h3 className="section-title">
+             Past Applications
+          </h3>
+          <span className="badge bg-secondary">
+            {pastApps.length} application{pastApps.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+        
+        {pastApps.length === 0 ? (
+          <div className="alert alert-secondary">
+            <i className="bi bi-clock-history me-2"></i>
+            Your past applications will appear here once they are closed or completed.
+          </div>
+        ) : (
+          <>
+            {renderPagination(pastPage, totalPastPages, setPastPage)}
+            <div className="row findwork__row">
+              {slicePage(pastApps, pastPage).map(renderCard)}
+            </div>
+          </>
+        )}
+      </section>
     </div>
   );
-}
+};

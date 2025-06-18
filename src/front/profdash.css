@@ -1,114 +1,237 @@
-.dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: sans-serif;
+/* Professional Dashboard Styles */
+.professional-dashboard {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 3rem;
 }
 
-/* —————————————————————————————————————————
-   Sección de posts
-   ————————————————————————————————————————— */
-.posts-section {
-  margin-top: 3rem;
+.professional-dashboard .dashboard-header {
+  margin-bottom: 2rem;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #005691, #0077b6);
+  border-radius: 0 0 20px 20px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-.posts-section h3 {
+
+.professional-dashboard .dashboard-header h1 {
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.professional-dashboard .dashboard-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.professional-dashboard .section-title {
   color: #005691;
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin: 0;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e0e0e0;
-}
-
-/* —————————————————————————————————————————
-   Cards estilo FindWork / Professional
-   ————————————————————————————————————————— */
-.professional-dashboard .findwork__card,
-.professional-dashboard .app-card {
   display: flex;
-  flex-direction: column;
-  max-width: 900px;
-  margin: 0 auto 1rem;
-  padding: 0.75rem 1rem;
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  align-items: center;
   gap: 0.5rem;
 }
-.professional-dashboard .findwork__card:hover,
-.professional-dashboard .app-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+
+.professional-dashboard .section-title {
+  color: #28a745;
+  font-size: 1.8rem;
+  line-height: 1;
 }
 
-/* — Tarjetas inactivas — */
-.archived .findwork__card,
-.professional-dashboard .inactive-card {
-  opacity: 0.85;
-  background-color: #f9f9f9;
+.professional-dashboard .section-title .archived-icon {
+  color: #6c757d;
+  font-size: 1.8rem;
+  line-height: 1;
 }
-.professional-dashboard .inactive-card:hover {
+
+.professional-dashboard .customCard {
+  margin-bottom: 1.5rem;
+}
+
+.professional-dashboard .findwork__card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.professional-dashboard .findwork__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+}
+
+.professional-dashboard .customTittle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #005691;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.professional-dashboard .customLocation {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 0.3rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.professional-dashboard .customDate,
+.professional-dashboard .customBudget {
+  font-size: 0.95rem;
+  margin: 0;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+/* Project Description */
+.professional-dashboard .project-description {
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 3px solid #007bff;
+}
+
+.professional-dashboard .description-title {
+  font-size: 1rem;
+  color: #005691;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.professional-dashboard .customDescription {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Category badge */
+.professional-dashboard .category-badge {
+  background-color: #e9f7fe;
+  color: #007bff;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Status badges */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+}
+
+.status-in_process {
+  background-color: #ffc107;
+}
+
+.status-accepted {
+  background-color: #28a745;
+}
+
+.status-rejected {
+  background-color: #dc3545;
+}
+
+.status-tag {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.status-tag.status-in_process {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.status-tag.status-accepted {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.status-tag.status-rejected {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+/* Archived section */
+.archived .findwork__card {
+  opacity: 0.9;
+  background-color: #f8f9fa;
+}
+
+.archived .findwork__card:hover {
   opacity: 1;
 }
 
-/* — Header de la card — */
-.professional-dashboard .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #eee;
-}
-
-/* — Body de la card — */
-.professional-dashboard .card-body {
-  flex: 0 0 auto;        /* evita que crezca y llene el contenedor */
-  padding: 0.5rem 0;
-}
-
-/* — Footer de la card — */
-.professional-dashboard .card-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding-top: 0.5rem;
-  flex: 0 0 auto;        /* evita que crezca */
-}
-
-/* — Título y metadatos — */
-.post-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #005691;
-  margin: 0;
-}
-.post-meta {
-  color: #555;
+/* Buttons */
+.btn-action {
+  padding: 0.5rem 1.2rem;
   font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0.25rem 0 0;
+  border-radius: 6px;
+  min-width: 170px;
+  text-align: center;
 }
 
-/* — Mensaje truncado a 2 líneas — */
-.app-message {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-weight: 500;
 }
 
-/* — Paginación — */
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}
+
+/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1rem 0 2rem;
-  padding: 0;
+  margin: 1.5rem 0 2rem;
   list-style: none;
+  flex-wrap: wrap;
 }
+
 .page-item button {
   border: 1px solid #007bff;
   padding: 0.5rem 0.9rem;
@@ -118,11 +241,85 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.9rem;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.page-item.active button {
-  background: #007bff;
-  color: white;
-}
+
+
 .page-item button:hover {
   background: #f0f7ff;
+}
+
+.page-item button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Alert messages */
+.alert {
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.alert-info {
+  background-color: #e7f5ff;
+  border-color: #c5e3fc;
+  color: #004085;
+}
+
+.alert-secondary {
+  background-color: #f8f9fa;
+  border-color: #e9ecef;
+  color: #495057;
+}
+
+/* Loading spinner */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.2em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .professional-dashboard .findwork__row.w-100.align-items-center {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .professional-dashboard .findwork__row.w-100.align-items-center > div {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .professional-dashboard .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .btn-action {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .professional-dashboard .dashboard-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .professional-dashboard .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .professional-dashboard .dashboard-header p {
+    font-size: 1rem;
+  }
+  
+  .professional-dashboard .section-title {
+    font-size: 1.3rem;
+  }
 }
