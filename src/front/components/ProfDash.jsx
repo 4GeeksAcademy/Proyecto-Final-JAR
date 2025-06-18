@@ -12,45 +12,85 @@ const sampleApplications = [
 ];
 
 const statusLabels = {
-  IN_PROCESS: 'In Progress',
-  ACCEPTED:   'Accepted',
-  REJECTED:   'Rejected',
+  IN_PROCESS: "In Progress",
+  ACCEPTED:   "Accepted",
+  REJECTED:   "Rejected",
 };
 
-export const ProfessionalDashboard = () => {
+export default function ProfessionalDashboard() {
   const [applications] = useState(sampleApplications);
 
-  // split active vs. past
-  const activeApps = applications.filter(app => app.post.isActive);
-  const pastApps   = applications.filter(app => !app.post.isActive);
+  // Separa activas / pasadas
+  const activeApps = applications.filter(a => a.post.isActive);
+  const pastApps   = applications.filter(a => !a.post.isActive);
+
+  // Paginación
+  const pageSize = 3;
+  const [activePage, setActivePage] = useState(1);
+  const [pastPage,   setPastPage]   = useState(1);
+
+  const totalActivePages = Math.ceil(activeApps.length / pageSize);
+  const totalPastPages   = Math.ceil(pastApps.length   / pageSize);
+
+  const slicePage = (arr, page) =>
+    arr.slice((page - 1) * pageSize, page * pageSize);
+
+  const renderPagination = (current, total, onPageChange) => {
+    if (total <= 1) return null;
+    return (
+      <ul className="pagination">
+        <li className="page-item">
+          <button disabled={current === 1} onClick={() => onPageChange(current - 1)}>
+            &laquo;
+          </button>
+        </li>
+        {Array.from({ length: total }, (_, i) => i + 1).map(n => (
+          <li key={n} className={`page-item ${n === current ? "active" : ""}`}>
+            <button onClick={() => onPageChange(n)}>{n}</button>
+          </li>
+        ))}
+        <li className="page-item">
+          <button disabled={current === total} onClick={() => onPageChange(current + 1)}>
+            &raquo;
+          </button>
+        </li>
+      </ul>
+    );
+  };
 
   const renderCard = (app) => {
     const { post } = app;
     return (
       <div
         key={app.id}
-        className={`card app-card p-4 shadow-sm ${!post.isActive ? 'inactive-card' : ''}`}
+        className={`findwork__card app-card ${!post.isActive ? "inactive-card" : ""}`}
       >
-        <div className="card-header d-flex justify-content-between align-items-center">
+        {/* Header */}
+        <div className="card-header">
           <div>
             <h5 className="post-title">{post.title}</h5>
-            <span className={`post-status-badge ${post.isActive ? 'active' : 'inactive'}`}>
-              {post.isActive ? 'Active Offer' : 'Closed Offer'}
+            <small className="post-meta">
+              📍 {post.city}, {post.country}
+            </small>
+          </div>
+          <div className="header-extra text-end">
+            <span>📅 {post.date}</span>
+            <span>💰 {post.estimated_budget}</span>
+            <span className={`status badge status-${app.status.toLowerCase()}`}>
+              {statusLabels[app.status]}
             </span>
           </div>
-          <span className={`status badge status-${app.status.toLowerCase()}`}>
-            {statusLabels[app.status]}
-          </span>
         </div>
+
+        {/* Body */}
         <div className="card-body">
-          <p className="post-info">📍 {post.city}, {post.country}</p>
-          <p className="post-budget">💰 {post.estimated_budget}</p>
-          <p className="post-date">📅 {post.date}</p>
           <p className="app-message">"{app.message}"</p>
         </div>
-        <div className="card-footer text-end">
+
+        {/* Footer */}
+        <div className="card-footer">
           <button
-            className="btn btn-link btn-sm"
+            className="btn btn-primary btn-sm"
             onClick={() => window.location.href = `/offers/${post.id}`}
           >
             View Offer Details
@@ -60,17 +100,22 @@ export const ProfessionalDashboard = () => {
     );
   };
 
+  const activeSlice = slicePage(activeApps, activePage);
+  const pastSlice   = slicePage(pastApps,   pastPage);
+
   return (
-    <div className="professional-dashboard">
-      <h2 className="dashboard-title">My Active Applications</h2>
-      <div className="applications-grid">
-        {activeApps.map(renderCard)}
+    <div className="dashboard-container professional-dashboard">
+      <div className="posts-section">
+        <h3>My Active Applications</h3>
+        {renderPagination(activePage, totalActivePages, setActivePage)}
+        {activeSlice.map(renderCard)}
       </div>
 
-      <h2 className="dashboard-title mt-5">My Past Applications</h2>
-      <div className="applications-grid">
-        {pastApps.map(renderCard)}
+      <div className="posts-section archived">
+        <h3>My Past Applications</h3>
+        {renderPagination(pastPage, totalPastPages, setPastPage)}
+        {pastSlice.map(renderCard)}
       </div>
     </div>
   );
-};
+}

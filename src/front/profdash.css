@@ -1,133 +1,128 @@
-/* professionalDashboard.css */
-
-/* Contenedor principal */
-.professional-dashboard {
+.dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  font-family: sans-serif;
 }
 
-/* Título de sección */
-.dashboard-title {
-  text-align: center;
+/* —————————————————————————————————————————
+   Sección de posts
+   ————————————————————————————————————————— */
+.posts-section {
+  margin-top: 3rem;
+}
+.posts-section h3 {
+  color: #005691;
+  font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  color: #343a40;
-  font-size: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
 }
 
-/* Grid: Cards de mínimo 300px, hasta 3 en cada fila. La 4ª baja sola. */
-.applications-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  align-items: start;
-}
-
-/* Responsive: 1 card en móvil */
-@media (max-width: 768px) {
-  .applications-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Card base */
-.app-card {
-  background-color: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* —————————————————————————————————————————
+   Cards estilo FindWork / Professional
+   ————————————————————————————————————————— */
+.professional-dashboard .findwork__card,
+.professional-dashboard .app-card {
   display: flex;
   flex-direction: column;
+  max-width: 900px;
+  margin: 0 auto 1rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  gap: 0.5rem;
+}
+.professional-dashboard .findwork__card:hover,
+.professional-dashboard .app-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover sutil */
-.app-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+/* — Tarjetas inactivas — */
+.archived .findwork__card,
+.professional-dashboard .inactive-card {
+  opacity: 0.85;
+  background-color: #f9f9f9;
+}
+.professional-dashboard .inactive-card:hover {
+  opacity: 1;
 }
 
-/* Card atenuada si está inactiva */
-.inactive-card {
-  opacity: 0.6;
-}
-
-/* Cabecera de la card */
-.card-header {
-  padding: 1rem;
+/* — Header de la card — */
+.professional-dashboard .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: none;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
 }
 
-/* Título */
+/* — Body de la card — */
+.professional-dashboard .card-body {
+  flex: 0 0 auto;        /* evita que crezca y llene el contenedor */
+  padding: 0.5rem 0;
+}
+
+/* — Footer de la card — */
+.professional-dashboard .card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  flex: 0 0 auto;        /* evita que crezca */
+}
+
+/* — Título y metadatos — */
 .post-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #005691;
   margin: 0;
-  font-size: 1.2rem;
-  color: #212529;
 }
-
-/* Badge de oferta */
-.post-status-badge {
-  margin-top: 0.25rem;
-  font-size: 0.75rem;
-  padding: 0.3em 0.6em;
-  border-radius: 0.75rem;
-  text-transform: uppercase;
-}
-.post-status-badge.active  { background-color: #17a2b8; color: #fff; }
-.post-status-badge.inactive{ background-color: #6c757d; color: #fff; }
-
-/* Badge de estado de candidatura */
-.status.badge {
-  font-size: 0.75rem;
-  padding: 0.4em 0.6em;
-  border-radius: 1rem;
-  text-transform: uppercase;
-}
-.status-in_process{ background-color: #ffc107; color: #212529; }
-.status-accepted  { background-color: #28a745; color: #fff; }
-.status-rejected  { background-color: #dc3545; color: #fff; }
-
-/* Cuerpo */
-.card-body {
-  padding: 1rem;
-  flex: 1;
-}
-
-/* Líneas de info */
-.post-info,
-.post-budget,
-.post-date {
-  margin: 0.25rem 0;
-  color: #6c757d;
+.post-meta {
+  color: #555;
   font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.25rem 0 0;
 }
 
-/* Truncado a 3 líneas */
+/* — Mensaje truncado a 2 líneas — */
 .app-message {
-  margin: 0.75rem 0;
-  font-style: italic;
-  color: #495057;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Pie de la card */
-.card-footer {
-  padding: 0.75rem 1rem;
-  background-color: #f1f1f1;
-  border-top: 1px solid #e0e0e0;
-  text-align: right;
+/* — Paginación — */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0 2rem;
+  padding: 0;
+  list-style: none;
 }
-
-/* Botón “View Offer” */
-.card-footer .btn-link {
-  font-size: 0.875rem;
-  text-decoration: none;
-  margin: 0;
+.page-item button {
+  border: 1px solid #007bff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: white;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+.page-item.active button {
+  background: #007bff;
+  color: white;
+}
+.page-item button:hover {
+  background: #f0f7ff;
 }
