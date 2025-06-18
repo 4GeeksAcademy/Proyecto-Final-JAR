@@ -43,8 +43,12 @@ export const router = createBrowserRouter(
         <Route path="/findWork" element={<FindWork />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+      
 
         
       </Route>
     )
 );
+
+
+
