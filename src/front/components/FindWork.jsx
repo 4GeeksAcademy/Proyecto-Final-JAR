@@ -1,72 +1,72 @@
 import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
+import { getCategories } from "../services/CategoryServices.jsx";
 import "../../front/FindWork.css";
-
 
 export const FindWork = () => {
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [categoryMap, setCategoryMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({ category_id: "", project_country: "", project_city: "" });
+  const [filters, setFilters] = useState({ 
+    category_name: "", 
+    project_country: "", 
+    project_city: "" 
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const [uniqueData, setUniqueData] = useState({
     countries: [],
-    cities: [],
-    categories: []
+    cities: []
   });
   const itemsPerPage = 5;
 
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await getPosts();
-  //       setPosts(data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       try {
-        const data = await getPosts();
-        setPosts(data);
-        
-        // Extract unique values from posts
-        const countries = [...new Set(data.map(post => post.project_country))].filter(Boolean);
-        const cities = [...new Set(data.map(post => post.project_city))].filter(Boolean);
-        const categories = [...new Set(data.map(post => post.category_id.toString()))].filter(Boolean);
+        const [postData, categoryData] = await Promise.all([
+          getPosts(),
+          getCategories()
+        ]);
 
+        setPosts(postData);
+        setCategories(categoryData);
+        
+        // Create category map
+        const map = categoryData.reduce((acc, cat) => {
+          acc[cat.id] = cat.name;
+          return acc;
+        }, {});
+        setCategoryMap(map);
+
+        // Extract unique locations
         setUniqueData({
-          countries,
-          cities,
-          categories
+          countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
+          cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean)
         });
+        
         setLoading(false);
       } catch (err) {
         setError(err.message);
         setLoading(false);
       }
     };
-    fetchData();
+    fetchAllData();
   }, []);
 
   const handleFilterChange = (filterType, value) => {
-    setFilters({ ...filters, [filterType]: value });
+    setFilters(prev => ({ ...prev, [filterType]: value }));
     setCurrentPage(1);
   };
 
-  const filteredPosts = posts.filter(pos =>
-    (!filters.category_id || pos.category_id.toString() === filters.category_id) &&
-    (!filters.project_country || pos.project_country === filters.project_country) &&
-    (!filters.project_city || pos.project_city === filters.project_city) 
-  );
+  const filteredPosts = posts.filter(pos => {
+    const postCategoryName = categoryMap[pos.category_id];
+    return (
+      (!filters.category_name || postCategoryName === filters.category_name) &&
+      (!filters.project_country || pos.project_country === filters.project_country) &&
+      (!filters.project_city || pos.project_city === filters.project_city)
+    );
+  });
 
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -85,12 +85,12 @@ export const FindWork = () => {
             <div className="col-lg-2 col-md-6 col-sm-12">
               <select 
                 className="form-select" 
-                value={filters.category_id}
-                onChange={(e) => handleFilterChange("category_id", e.target.value)}
+                value={filters.category_name}
+                onChange={(e) => handleFilterChange("category_name", e.target.value)}
               >
                 <option value="">Select Category</option>
-                {uniqueData.categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
+                {categories.map(cat => (
+                  <option key={cat.id} value={cat.name}>{cat.name}</option>
                 ))}
               </select>
             </div>
@@ -148,10 +148,10 @@ export const FindWork = () => {
             <div className="card findwork__card p-3 shadow-sm">
               <div className="row findwork__row w-100 align-items-center">
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p className="customTittle">{post.category_id}</p>
+                  <p className="customTittle">{categoryMap[post.category_id] || "Unknown Category"}</p>
                   <p>{post.project_city}, {post.project_country}</p>
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+                <div className="col-lg-4 col-md-4 col6-sm-6 d-flex justify-content-between">
                   <p>📅 {post.post_date}</p>
                 </div>
               </div>
@@ -164,4 +164,4 @@ export const FindWork = () => {
       </div>
     </div>
   );
-}
+};
