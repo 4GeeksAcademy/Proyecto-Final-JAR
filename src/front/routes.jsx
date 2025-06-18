@@ -19,7 +19,7 @@ import { FindTalent} from "./components/FindTalent"
 import { FindWork } from "./components/FindWork";
 import { UserProfile } from "./pages/Profile";
 import { DashboardPage } from "./pages/Dashboard"
-
+import { ProfessionalDetail } from "./components/ProfessionalDetail.jsx";
 export const router = createBrowserRouter(
     createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
@@ -43,12 +43,16 @@ export const router = createBrowserRouter(
         <Route path="/findWork" element={<FindWork />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/profesional/:id" element={<ProfessionalDetail />} />
       
 
         
       </Route>
     )
 );
+
+
+
 
 
 
