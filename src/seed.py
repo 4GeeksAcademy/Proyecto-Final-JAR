@@ -195,7 +195,8 @@ def seed_premiums(professionals):
             expiration_date=fake.date_time_this_year(),
             auto_renewal=fake.boolean(),
             premium_types=random.choice(list(PremiumType)),
-            professional_id=random.choice(professionals).id
+            professional_id=random.choice(professionals).id,
+            
         )
         premiums.append(premium)
         db.session.add(premium)

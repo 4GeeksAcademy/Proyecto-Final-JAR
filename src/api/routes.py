@@ -9,7 +9,13 @@ from sqlalchemy import select
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.models import CandidatureStatus
+import stripe
+import os
+
 api = Blueprint("api", __name__)
+
+stripe.api_key=os.getenv("STRIPE_SECRET")
+FRONT=os.getenv("FRONT")
 
 # Allow CORS requests to this API
 CORS(api)
@@ -855,3 +861,20 @@ def update_category(id):
     # Changes saved
     db.session.commit()
     return jsonify(category.serialize()), 200
+
+@api.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    try:
+        body = request.json
+        if not body or 'items' not in body:
+            return jsonify({"error": "Invalid request, 'items' is required"}), 400
+        session = stripe.checkout.Session.create(
+            ui_mode = 'embedded',
+            line_items=body['items'],
+            mode='payment',
+            return_url=FRONT + 'return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return str(e)
+
+    return jsonify({"clientSecret":session.client_secret})
