@@ -1,0 +1,232 @@
+.professional-dashboard {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+.professional-dashboard .dashboard-header {
+  margin-bottom: 2rem;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #005691, #0077b6);
+  border-radius: 0 0 20px 20px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.professional-dashboard .dashboard-header h1 {
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.professional-dashboard .dashboard-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.professional-dashboard .section-title {
+  color: #005691;
+  font-size: 1.5rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.professional-dashboard .customCard {
+  margin-bottom: 1.5rem;
+}
+
+.professional-dashboard .findwork__card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.professional-dashboard .findwork__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+}
+
+.professional-dashboard .findwork__card.archived-card {
+  opacity: 0.9;
+  background-color: #f8f9fa;
+}
+
+.professional-dashboard .findwork__card.archived-card:hover {
+  opacity: 1;
+}
+
+.professional-dashboard .customTittle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #005691;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.professional-dashboard .location-text {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.professional-dashboard .date-text,
+.professional-dashboard .budget-text {
+  font-size: 0.95rem;
+  margin: 0;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.professional-dashboard .customDescription {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 1rem 0 0;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+}
+
+.status-in_process {
+  background-color: #ffc107;
+}
+
+.status-accepted {
+  background-color: #28a745;
+}
+
+.status-rejected {
+  background-color: #dc3545;
+}
+
+.category-badge {
+  background-color: #e9f7fe;
+  color: #007bff;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 2rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.page-item button {
+  border: 1px solid #007bff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: white;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-item.active button {
+  background: #007bff;
+  color: white;
+}
+
+.page-item button:hover {
+  background: #f0f7ff;
+}
+
+.page-item button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status-filter {
+  display: flex;
+  align-items: center;
+}
+
+.status-filter-item {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status-filter-item.active {
+  background-color: #e7f5ff;
+  color: #007bff;
+  border: 1px solid #c5e3fc;
+}
+
+.status-filter-item.archived {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #e9ecef;
+}
+
+.alert {
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.alert-info {
+  background-color: #e7f5ff;
+  border-color: #c5e3fc;
+  color: #004085;
+}
+
