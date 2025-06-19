@@ -25,8 +25,6 @@ export const Pricing = () => {
 
                             <p>candidatures per month</p>
 
-
-
                         </div>
                         {/* <p className="customCurrentClientMonth">25 Current Client Per Month </p> */}
 
@@ -46,12 +44,8 @@ export const Pricing = () => {
 
                             <p>candidatures per month</p>
 
-
-
                         </div>
                         {/* <p className="customCurrentClientMonth" >50 Current Client Per Month </p> */}
-
-
 
                     </div>
                     <div className="plusPlan col-sm-12 col-md-3  text-white col-lg-3">
@@ -73,19 +67,13 @@ export const Pricing = () => {
                                 <p className="unlimitedCustom">Unlimited </p>
 
                                 < p>candidatures per month</p>
-
-
                             </div>
                         </div>
                         {/* <p className="customCurrentClientMonth" >Unlimited Current client per montth </p> */}
 
-
-
                     </div>
-
-
                 </div>
             </div>
         </div>
     );
-};
+}
