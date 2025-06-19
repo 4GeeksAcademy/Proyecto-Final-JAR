@@ -255,7 +255,7 @@ export const ProfessionalDashboard = () => {
               <span className={`badge status-badge status-${app.candidature_status.toLowerCase()}`}>
                 {statusLabels[app.candidature_status]}
               </span>
-              <span className="category-badge">{post.category?.name}</span>
+              <span className="category-badge">{post.category?.name} </span>
             </div>
           </div>
           <div className="row findwork__row">
