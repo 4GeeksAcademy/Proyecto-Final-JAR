@@ -135,6 +135,7 @@ class Professional(db.Model):
             "is_premium": self.is_premium,
             "user_id": self.user_id,
             "ratings": [r.rating_professional.value for r in self.ratings],
+            "user": self.user.serialize() if self.user else None,
             "average_rating": self.average_rating
         }
 
