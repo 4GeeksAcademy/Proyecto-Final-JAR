@@ -227,23 +227,16 @@
 }
 
 .primary-button:hover {
-  background-color: #003355; /* Azul más oscuro al pasar el mouse */
+  background-color: #003355; 
 }
 
-/* Eliminamos los estilos de estado que ya no usamos */
-.project-status, .status-badge {
-  display: none;
-}
-
-/* Ajustamos el footer para centrar el botón */
 .card-footer {
   display: flex;
-  justify-content: center; /* Centramos el botón */
+  justify-content: center; 
   padding-top: 1rem;
   margin-top: 1rem;
   border-top: 1px solid #eee;
 }
-/* Project Cards */
 .projects-grid {
   display: flex;
   flex-direction: column;
@@ -302,7 +295,7 @@
 
 .card-price {
   font-weight: 600;
-  color: #005691;
+  color: #0a0a0a;
   margin-bottom: 1rem;
 }
 

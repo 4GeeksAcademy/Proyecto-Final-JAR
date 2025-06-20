@@ -207,7 +207,7 @@ export const ComponentHome = () => {
           <div className="card-body">
             <p className="card-description">{post.post_description}</p>
             <div className="card-price">
-              <span>${post.price_range_min || '20'} - ${post.price_range_max || '50'}</span>
+              <span>💰 ${post.price_range_min || '20'} - ${post.price_range_max || '500'}</span>
             </div>
           </div>
           
