@@ -1,4 +1,4 @@
-import stripeServices from "../services/stripeServices";
+import { stripeServicesFetchClientSecret } from "../services/stripeServices";
 import { loadStripe } from '@stripe/stripe-js';
 import {
     EmbeddedCheckoutProvider,
@@ -16,7 +16,13 @@ const CheckoutForm = () => {
     //usamos el useEffect para obtener el clientSecret una vez que el componente se monta
     useEffect(() => {
         //utilizamos el servicio stripeServices para obtener el clientSecret
-        stripeServices.fetchClientSecret().then(secret => setClientSecret(secret));
+        const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
+        if (!selectedPlan) {
+            console.error("No plan selected. Redirecting to pricing page.");
+            window.location.href = '/pricing'; // Redirige a la página de precios si no hay plan seleccionado
+            return;
+        }
+        stripeServicesFetchClientSecret(selectedPlan.stripe).then(secret => setClientSecret(secret));
     }, []);
 
     const options = { clientSecret };

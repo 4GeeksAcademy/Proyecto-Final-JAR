@@ -8,19 +8,48 @@ from app import app, db
 from api.models import (
     User, Client, Professional, Category, Post,
     Candidature, Agreement, Rating, Comment, Payment, Premium,
-    CandidatureStatus, PremiumType, RatingValue
+    CandidatureStatus, RatingValue, Plan
 )
 # modulo que se tiene que instalar!
 fake = Faker()
 
+def seed_plans():
+    plan_basic = Plan(
+            stripe="price_1RbQQlPr61Db1P240cWyjq0S",
+            name="basic",
+            description="up to 5 candidatures per month",
+            price=25.99,
+            
+        )
+    db.session.add(plan_basic)
+    db.session.commit()
+    plan_standard = Plan(
+            stripe="price_1RbQR7Pr61Db1P24ADN0C2Gc",
+            name="standard",
+            description="up to 15 candidatures per month",
+            price=50.99,
+            
+        )
+    db.session.add(plan_standard)
+    db.session.commit()
+    plan_plus = Plan(
+            stripe="price_1RbQRMPr61Db1P24956LyNCT",
+            name="plus",
+            description="unlimited candidatures per month",
+            price=99.99,  
+        )
+    db.session.add(plan_plus)
+    db.session.commit()
+    return [plan_basic, plan_standard, plan_plus]
 
-def seed_users():
+def seed_users(plans):
     print("Seeding users...")
     users = []
     for i in range(20):  # 20 users (10 clients + 10 professionals)
+        # Asignar plan aleatorio o ninguno
+        plan = random.choice(plans) if random.random() < 0.7 else None
         user = User(
             email=fake.unique.email(),
-            # todos tiene el mismo password, pepe123
             password=generate_password_hash('pepe123'),
             is_professional=(i >= 10),  # First 10 are clients
             registration_date=fake.date_time_this_year(),
@@ -32,9 +61,11 @@ def seed_users():
             address_postcode=fake.postcode(),
             address_county=fake.state(),
             address_country=fake.country(),
-            tax_number=fake.unique.random_number(digits=10),
+            tax_number=str(fake.unique.random_number(
+                digits=10)),  # Corregido a string
             geo_dir=f"{fake.latitude()}, {fake.longitude()}",
-            active_user=fake.boolean()
+            active_user=fake.boolean(),
+            plan=plan  # Relación directa
         )
         users.append(user)
         db.session.add(user)
@@ -185,6 +216,7 @@ def seed_payments(professionals):
     db.session.commit()
     return payments
 
+premiumTypes = ['basic', 'standard', 'plus']
 
 def seed_premiums(professionals):
     print("Seeding premiums...")
@@ -194,9 +226,9 @@ def seed_premiums(professionals):
             renewal_date=fake.date_time_this_year(),
             expiration_date=fake.date_time_this_year(),
             auto_renewal=fake.boolean(),
-            premium_types=random.choice(list(PremiumType)),
+            premium_types=random.choice(list(premiumTypes)),
             professional_id=random.choice(professionals).id,
-            
+
         )
         premiums.append(premium)
         db.session.add(premium)
@@ -211,7 +243,8 @@ def main():
         db.create_all()
 
         # Seed data in dependency order
-        users = seed_users()
+        plans = seed_plans()
+        users = seed_users(plans)
         clients = seed_clients(users)
         professionals = seed_professionals(users)
         categories = seed_categories()

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import stripeServices from "../services/stripeServices";
+import { stripeServicesfetchSessionStatus } from "../services/stripeServices";
 
 const PaymentReturn = () => {
   const [status, setStatus] = useState(null);
@@ -15,9 +15,9 @@ const PaymentReturn = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const sessionId = urlParams.get('session_id');
-
+    const planSelected = JSON.parse(localStorage.getItem("selectedPlan"));
     //verificamos el estado de la sesión
-    stripeServices.fetchSessionStatus(sessionId).then(data => {
+    stripeServicesfetchSessionStatus(sessionId, planSelected.stripe).then(data => {
       setStatus(data.status);
       setCustomerEmail(data.customer_email);
       setLoading(false);

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Client, Professional, Post, Agreement, Candidature, Rating, Comment, Payment, Premium, Category
+from api.models import db, User, Client, Professional, Post, Plan, Agreement, Candidature, Rating, Comment, Payment, Premium, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from sqlalchemy import select
@@ -11,7 +11,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from api.models import CandidatureStatus
 import stripe
 import os
-
+from datetime import datetime, timedelta
 api = Blueprint("api", __name__)
 
 stripe.api_key=os.getenv("STRIPE_SECRET")
@@ -863,6 +863,7 @@ def update_category(id):
     return jsonify(category.serialize()), 200
 
 @api.route('/create-checkout-session', methods=['POST'])
+@jwt_required()  # obligated to use the token to access this route
 def create_checkout_session():
     try:
         body = request.json
@@ -872,9 +873,77 @@ def create_checkout_session():
             ui_mode = 'embedded',
             line_items=body['items'],
             mode='payment',
-            return_url=FRONT + 'return?session_id={CHECKOUT_SESSION_ID}',
+            return_url=str(os.getenv("FRONT")) +
+            'return?session_id={CHECKOUT_SESSION_ID}',
         )
     except Exception as e:
         return str(e)
 
     return jsonify({"clientSecret":session.client_secret})
+
+
+@api.route('/session-status', methods=['GET'])
+def session_status():
+    session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+
+    return jsonify(status=session.status, customer_email=session.customer_details.email)
+
+
+#plans
+
+@api.route('/plans', methods=['GET'])
+def get_plans():
+    try:
+        stm = select(Plan)
+        plans = db.session.execute(stm).scalars().all()
+        if not plans:
+            return jsonify({"error": "No plans found"}), 404
+        # Serialize the plans
+        return jsonify([plan.serialize() for plan in plans]), 200
+    except Exception as e:
+        db.session.rollback()
+        # Handle any exceptions that occur
+        return jsonify({"error": str(e)}), 500
+
+# after stripe purchase is completed, we update premium and user plan in the database
+@api.route('/stripe-update-db', methods=['POST'])
+@jwt_required()  # obligated to use the token to access this route
+def update_db():
+    try:
+        id = get_jwt_identity()  # Get the user ID from the JWT token
+        user = db.session.execute(select(User).where(User.id == id)).scalar_one_or_none()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        # Check if the user is a professional
+        if not user.is_professional:
+            return jsonify({"error": "User is not a professional"}), 403
+        body = request.json
+        if not body or 'plan_id' not in body :
+            return jsonify({"error": "Invalid request, 'plan_id' is required"}), 400
+        
+        plan = db.session.execute(select(Plan).where(Plan.stripe == body['plan_id'])).scalar_one_or_none()
+        if not plan:
+            return jsonify({"error": "Plan not found"}), 404
+        
+        user = db.session.execute(select(User).where(User.id == id)).scalar_one_or_none()
+      
+        
+        # Update the user's plan
+        user.plan_id = plan.id
+        db.session.commit()
+
+        premium = Premium(
+            auto_renewal=True,
+            expiration_date=(datetime.utcnow() + timedelta(days=30)).date(),
+            premium_types=plan.name,
+            renewal_date=(datetime.utcnow() + timedelta(days=30)).date(),
+            professional_id=user.professional.id  # Assuming user has a professional relationship
+        )
+
+        db.session.add(premium)
+        db.session.commit()
+        
+        return jsonify({"message": "User's plan updated successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500

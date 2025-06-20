@@ -28,14 +28,17 @@ class User(db.Model):
     tax_number: Mapped[str] = mapped_column(String(15), nullable=True)
     geo_dir: Mapped[str] = mapped_column(String(150), nullable=True)
     active_user: Mapped[bool] = mapped_column(Boolean(), default=True)
+    plan_id: Mapped[int] = mapped_column(ForeignKey(
+        "plans.id"), nullable=True)  
 
     # Relaciones
     client: Mapped["Client"] = relationship(
         back_populates="user", uselist=False)
     professional: Mapped["Professional"] = relationship(
         back_populates="user", uselist=False)
-    plan: Mapped["Plan"] = relationship(back_populates="users") #Many users to one plan
-    
+    plan: Mapped["Plan"] = relationship(
+        back_populates="users")  # Many users to one plan
+
     def serialize(self):
         return {
             "id": self.id,
@@ -55,7 +58,7 @@ class User(db.Model):
             "active_user": self.active_user,
             "client_id": self.client.id if self.client else None,
             "professional_id": self.professional.id if self.professional else None,
-            "plan_id": self.plan.id if self.plan.id else None
+            "plan": self.plan.serialize() if self.plan else None
         }
 
 
@@ -79,7 +82,6 @@ class Client(db.Model):
         back_populates="client")  # one client to many comments
     candidatures: Mapped[list["Candidature"]
                          ] = relationship(back_populates="client")
-    
 
     def serialize(self):
         return {
@@ -357,11 +359,6 @@ class Payment(db.Model):
         }
 
 
-class PremiumType(enum.Enum):
-    FREE = 1
-    BASIC = 2
-    STANDARD = 3
-    PLUS = 4
 # Renewal and Expiration date set at 30 days from now
 
 
@@ -381,9 +378,8 @@ class Premium(db.Model):
     expiration_date: Mapped[datetime] = mapped_column(
         DateTime(), default=default_expiration_date, nullable=False)
     auto_renewal: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    premium_types: Mapped[PremiumType] = mapped_column(
-        Enum(PremiumType), nullable=False)
-    
+    premium_types: Mapped[str] = mapped_column(
+        String(10), nullable=False)
 
     # connection with foreign key
     professional_id: Mapped[int] = mapped_column(
@@ -400,43 +396,32 @@ class Premium(db.Model):
             "expiration_date": self.expiration_date.isoformat() if self.expiration_date else None,
             "auto_renewal": self.auto_renewal,
             "premium_types": self.premium_types.value if self.premium_types else None,
-            "professional_id": self.professional_id    
+            "professional_id": self.professional_id
         }
 
-class Plan(db.model): # table including the different pricing plans for the implementation with Stripe
-    __tablename__= "plans"
+
+class Plan(db.Model):  # table including the different pricing plans for the implementation with Stripe
+    __tablename__ = "plans"
     id: Mapped[int] = mapped_column(primary_key=True)
     stripe: Mapped[str] = mapped_column(String(100), nullable=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    description: Mapped[str] = mapped_column(String(500), nullable=True)
+    price: Mapped[float] = mapped_column(Float, nullable=False)
+    # one to many: one plan to many users
+    users: Mapped[list["User"]] = relationship(
+        back_populates="plan")  # one plan to many users
 
-    # one to one relationship. foreign key in plan only
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-   
-    # relationships
-    premium: Mapped["Premium"] = relationship(back_populates="plan")  # one to one
-    user: Mapped[list["User"]] = relationship(back_populates="plan")  # one plan to many users
-    
+  
 
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "stripe": self.stripe
-
+            "stripe": self.stripe,
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "user_ids": [user.id for user in self.users]
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Category(db.Model):  # Javier mentioned that we should only create table with main cathegories
