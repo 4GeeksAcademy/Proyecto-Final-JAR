@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "../../front/dashboard.css";
-
-
-// HACER RUTAS DE DASHBOARD! 
+import { createPost } from "../services/PostServices.jsx";
 
 const pruebaPosts = [
   { id: 1, title: "App and Website Development", remote_project: false, project_city: "Madrid", project_county: "Madrid", project_country: "España", post_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", estimated_budged: "$20 - $50", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-10" },
@@ -12,7 +10,6 @@ const pruebaPosts = [
   { id: 5, title: "Financial Planning", remote_project: true, project_city: "Santiago", project_county: "Santiago", project_country: "Chile", post_description: "Inversiones en startups tech.", estimated_budged: "$50 - $100", post_open: false, post_active: false, post_completed: true, post_date: "2025-06-20" },
   { id: 6, title: "AI Automation Software", remote_project: false, project_city: "París", project_county: "Île-de-France", project_country: "Francia", post_description: "Soluciones IA para automatización.", estimated_budged: "$60 - $120", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-21" },
   { id: 7, title: "E-commerce Branding", remote_project: false, project_city: "Roma", project_county: "Lazio", project_country: "Italia", post_description: "Identidad visual para marca online.", estimated_budged: "$35 - $70", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-22" }
-  
 ];
 
 export const Dashboard = () => {
@@ -20,13 +17,61 @@ export const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
+  // Filtra posts activos y archivados
   const publishedPosts = posts.filter(p => p.post_active);
   const archivedPosts = posts.filter(p => !p.post_active);
+
+  // Para paginación
   const totalPages = Math.ceil(publishedPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedPosts = publishedPosts.slice(startIndex, startIndex + itemsPerPage);
 
-  const handleSubmit = e => e.preventDefault();
+  // Maneja la creación del post
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const postData = {
+  title: form.title.value.trim(), // si no existe en modelo, bórralo
+  remote_project: form.remote_project.checked,
+  project_city: form.project_city.value.trim(),
+  project_county: form.project_county.value.trim(),
+  project_country: form.project_country.value,
+  post_description: form.post_description.value.trim(),
+  estimated_budged: form.estimated_budged.value.trim(),
+  post_open: true,
+  post_active: true,
+  post_completed: false,
+  post_date: new Date().toISOString(), // opcional si lo pones por defecto en DB
+  category_id: parseInt(form.category_id.value),
+};
+
+
+
+    if (!postData.title || !postData.project_city || !postData.project_country || !postData.category_id) {
+      alert("Please complete Title, City, Country, and Category fields.");
+      return;
+    }
+
+    try {
+      // Espera la creación del post
+      const newPost = await createPost(postData);
+
+      // Agrega el nuevo post a la lista
+      setPosts(prev => [...prev, newPost]);
+
+      alert("¡Publicación creada exitosamente!");
+      form.reset();
+    } catch (err) {
+      console.error("Failed to create post", err);
+      if (err.message === "Unauthorized") {
+        alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
+        // Aquí puedes limpiar token y redirigir a login si usas react-router
+      } else {
+        alert("Hubo un error al crear la publicación");
+      }
+    }
+  };
 
   const handleToggle = (id, field) => {
     setPosts(prev => prev.map(p => p.id === id ? { ...p, [field]: !p[field] } : p));
@@ -97,40 +142,50 @@ export const Dashboard = () => {
         <h2 className="text-center text-white mb-4">Create a new Request</h2>
         <form className="create-request-form" onSubmit={handleSubmit}>
           <div className="form-top-row">
-            <div className="form-group"><input type="text" className="form-control" placeholder="Title" /></div>
             <div className="form-group">
-              <select className="form-select">
-                <option>Category</option>
-                <option>Technology</option>
-                <option>Design</option>
-                <option>Marketing</option>
+              <input type="text" className="form-control" name="title" placeholder="Title" />
+            </div>
+            <div className="form-group">
+              <select className="form-select" name="category_id">
+                <option value="">Category</option>
+                <option value="1">Technology</option>
+                <option value="2">Design</option>
+                <option value="3">Marketing</option>
               </select>
             </div>
             <div className="form-group">
-              <select className="form-select">
-                <option>Country</option>
-                <option>Spain</option>
-                <option>Argentina</option>
-                <option>Mexico</option>
+              <select className="form-select" name="project_country">
+                <option value="">Country</option>
+                <option value="España">Spain</option>
+                <option value="Argentina">Argentina</option>
+                <option value="México">Mexico</option>
               </select>
             </div>
             <div className="form-group">
-              <select className="form-select">
-                <option>City</option>
-                <option>Madrid</option>
-                <option>Buenos Aires</option>
-                <option>CDMX</option>
+              <select className="form-select" name="project_city">
+                <option value="">City</option>
+                <option value="Madrid">Madrid</option>
+                <option value="Buenos Aires">Buenos Aires</option>
+                <option value="CDMX">CDMX</option>
               </select>
             </div>
-            <div className="form-group"><input type="text" className="form-control" placeholder="County" /></div>
+            <div className="form-group">
+              <input type="text" className="form-control" name="project_county" placeholder="County" />
+            </div>
             <div className="form-group form-check">
-              <input type="checkbox" className="form-check-input" id="remoteProject" />
+              <input type="checkbox" className="form-check-input" name="remote_project" id="remoteProject" />
               <label className="form-check-label" htmlFor="remoteProject">Remote Project</label>
             </div>
           </div>
-          <div className="form-group"><input type="text" className="form-control" placeholder="Estimated Budget" /></div>
-          <div className="form-description"><textarea className="form-control" placeholder="Description" rows="6"></textarea></div>
-          <div className="form-submit"><button type="submit" className="submit-button">Create</button></div>
+          <div className="form-group">
+            <input type="text" className="form-control" name="estimated_budged" placeholder="Estimated Budget" />
+          </div>
+          <div className="form-description">
+            <textarea className="form-control" name="post_description" placeholder="Description" rows="6"></textarea>
+          </div>
+          <div className="form-submit">
+            <button type="submit" className="submit-button">Create</button>
+          </div>
         </form>
       </div>
 
