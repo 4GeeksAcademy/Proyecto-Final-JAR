@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6afde74c3983
+Revision ID: 7c9ff6118752
 Revises: 
-Create Date: 2025-06-18 19:04:41.782962
+Create Date: 2025-06-20 18:29:16.710741
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6afde74c3983'
+revision = '7c9ff6118752'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,6 +21,14 @@ def upgrade():
     op.create_table('categories',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('plans',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('stripe', sa.String(length=100), nullable=True),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('price', sa.Float(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -40,6 +48,8 @@ def upgrade():
     sa.Column('tax_number', sa.String(length=15), nullable=True),
     sa.Column('geo_dir', sa.String(length=150), nullable=True),
     sa.Column('active_user', sa.Boolean(), nullable=False),
+    sa.Column('plan_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['plan_id'], ['plans.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -98,7 +108,7 @@ def upgrade():
     sa.Column('renewal_date', sa.DateTime(), nullable=False),
     sa.Column('expiration_date', sa.DateTime(), nullable=False),
     sa.Column('auto_renewal', sa.Boolean(), nullable=False),
-    sa.Column('premium_types', sa.Enum('FREE', 'BASIC', 'STANDARD', 'PLUS', name='premiumtype'), nullable=False),
+    sa.Column('premium_types', sa.String(length=10), nullable=False),
     sa.Column('professional_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['professional_id'], ['professionals.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -154,5 +164,6 @@ def downgrade():
     op.drop_table('professionals')
     op.drop_table('clients')
     op.drop_table('users')
+    op.drop_table('plans')
     op.drop_table('categories')
     # ### end Alembic commands ###
