@@ -37,50 +37,48 @@ def get_user(user_id):
     return jsonify(user.serialize()), 200
 
 # POST: Add new user
-
-
 @api.route("/users", methods=["POST"])
 def create_user():
-    # extraemos la informacion del body puede ser con request.json
     data = request.get_json()
-    # verificamos que tenemos los elementos OBLIGATORIOS para crear un registro nuevo
 
     # Validate required fields
-    required_fields = [
-        "email", "password", "is_professional",
-
-    ]
-
+    required_fields = ["email", "password", "is_professional"]
     missing = [field for field in required_fields if field not in data]
     if missing:
-        return jsonify({"error": f"Missing fields: {", ".join(missing)}"}), 400
+        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+
+    # Check boolean
+    is_professional = data.get("is_professional")
+    if not isinstance(is_professional, bool):
+        return jsonify({"error": "is_professional must be a boolean"}), 400
 
     try:
+        # Create user
         new_user = User(
             email=data["email"],
-            # hash the password before storing it
-            # REMOVE SERIALIZATION IN PRODUCTION
             password=generate_password_hash(data["password"]),
-            is_professional=data["is_professional"],
-
+            is_professional=is_professional
         )
         db.session.add(new_user)
-        db.session.flush()  # Assigns ID without committing
+        db.session.flush()
 
-        # Create Professional if is_professional is True
+        # Create Professional or Client based on is_professional
         if new_user.is_professional:
             new_professional = Professional(user_id=new_user.id)
             db.session.add(new_professional)
+        else:
+            # Here you create a Client if is_professional is False
+            new_client = Client(user_id=new_user.id)
+            db.session.add(new_client)
 
         db.session.commit()
-        # Create JWT token for the new user
+
+        # Create JWT token
         token = create_access_token(identity=str(new_user.id))
-        # returns the new user and the token
         return jsonify({'user': new_user.serialize(), 'token': token}), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-
 
 @api.route("/login", methods=["POST"])
 def login():
