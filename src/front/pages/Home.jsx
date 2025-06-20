@@ -6,6 +6,7 @@ import { Search, ClipboardList, Monitor } from "lucide-react"
 
 import "../../front/home.css"
 
+import { LatestPosts } from "../components/Home.jsx";
 
 export const Home = () => {
 
@@ -79,7 +80,7 @@ export const Home = () => {
 				<div className="service-grid-container " id="service-scroll">
 					<div className="service-card">
 						<img src="https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" alt="Reformas" />
-						<h3>Reformas</h3>
+						<h3>Reforms</h3>
 						<div className="card-actions">
 
 
@@ -90,7 +91,7 @@ export const Home = () => {
 
 					<div className="service-card">
 						<img src="https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-						<h3>Jardinería</h3>
+						<h3>Gardening</h3>
 						<div className="card-actions">
 
 
@@ -99,7 +100,8 @@ export const Home = () => {
 
 					<div className="service-card">
 						<img className="service-img " src="https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-						<h3>Desarrollador</h3>
+						<h3>Programming & Tech</h3>
+
 						<div className="card-actions">
 
 
@@ -108,7 +110,7 @@ export const Home = () => {
 
 					<div className="service-card">
 						<img className="service-img "src="https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" alt="" />
-						<h3>Carpintería</h3>
+						<h3>Construction & Maintenance</h3>
 						<div className="card-actions">
 
 						</div>
@@ -120,8 +122,9 @@ export const Home = () => {
 
 
 			<div className="published-projects ">
-
 				<h2>Latest published projects</h2>
+				<LatestPosts />
+				{/* <h2>Latest published projects</h2>
 				<div className="">
 
 					<nav >
@@ -181,13 +184,13 @@ export const Home = () => {
 							<p className="custom-text">Building</p>
 							<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non .</p>
 
-						</div>
-					</div>
+						</div> */}
+					{/* </div> */}
 
 
 
 
-				</div>
+				{/* </div> */}
 
 			</div>
 
