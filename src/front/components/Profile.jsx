@@ -4,7 +4,6 @@ import "../../front/profile.css";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useNavigate } from "react-router-dom";
 
-
 export const Profile = () => {
   const { store, dispatch } = useGlobalReducer();
   const [form, setForm] = useState({
@@ -19,17 +18,21 @@ export const Profile = () => {
     tax_number: "",
     geo_dir: ""
   });
-  const [isEditing, setIsEditing] = useState(false); // Estado para controlar si está en edición
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [passwords, setPasswords] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  });
 
+  const navigate = useNavigate();
 
-  // Cargar datos de usuario al montar el componente
-  // Ejecuta loader al inicio
   useEffect(() => {
     loader();
   }, []);
 
-  // Este useEffect espera a que el usuario esté en el store y entonces actualiza el formulario
   useEffect(() => {
     if (store.user && Object.keys(store.user).length > 0) {
       setForm({
@@ -47,7 +50,6 @@ export const Profile = () => {
     }
   }, [store.user]);
 
-
   const loader = () => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -56,24 +58,12 @@ export const Profile = () => {
     }
   };
 
-
-  const profileLoader = () => {
-    if (store.user) {
-      console.log(store.user)
-      setForm({
-        firstname: store.user.firstname,
-      })
-    }
-  }
-  // Guardar cambios
   const handleSave = () => {
-    const token = localStorage.getItem("token"); // consumimos el token en login
+    const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found in localStorage");
       return;
     }
-
-
 
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
       method: "PUT",
@@ -86,42 +76,70 @@ export const Profile = () => {
       .then(res => res.json())
       .then(data => {
         alert("Perfil actualizado");
-
-        // ✅ Actualizamos el localStorage
         localStorage.setItem("user", JSON.stringify(data));
-        // Volvemos a cargar los datos directamente desde el loader
-
-        // <- Aquí se recarga desde el localStorage al store, y luego se actualiza el formulario con el useEffect
         loader();
-
-
-
+        setIsEditing(false);
       })
       .catch(err => console.error("Error updating user:", err));
   };
-
 
   const handleChange = (field) => (e) => {
     setForm({ ...form, [field]: e.target.value });
   };
 
-
-
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Eliminar token y usuario
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    // Limpiar el store global
-    dispatch({ type: "LOGOUT" }); 
-
-    // Redireccionar a home 
-    navigate("/"); // o navigate("/")
+  const handlePasswordChange = (field) => (e) => {
+    setPasswords({ ...passwords, [field]: e.target.value });
   };
 
+  const handleChangePassword = () => {
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      alert("La nueva contraseña no coincide con la confirmación.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("No se encontró el token. Inicia sesión de nuevo.");
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/change-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        currentPassword: passwords.currentPassword,
+        newPassword: passwords.newPassword
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Contraseña cambiada correctamente.");
+          setShowPasswordForm(false);
+          setPasswords({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+          });
+        } else {
+          alert(data.message || "Error al cambiar la contraseña.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Hubo un error al cambiar la contraseña.");
+      });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
   return (
     <div className="container-fluid profileCustom align-content-center my-5">
@@ -155,7 +173,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.lastname1 || ""}
+              value={form.lastname1}
               onChange={handleChange("lastname1")}
               disabled={!isEditing}
             />
@@ -165,14 +183,11 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.lastname2 || ""}
+              value={form.lastname2}
               onChange={handleChange("lastname2")}
               disabled={!isEditing}
             />
           </div>
-
-
-
         </div>
 
         <div className="row justify-content-center my-5">
@@ -181,7 +196,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.address_country || ""}
+              value={form.address_country}
               onChange={handleChange("address_country")}
               disabled={!isEditing}
             />
@@ -191,7 +206,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.address_county || ""}
+              value={form.address_county}
               onChange={handleChange("address_county")}
               disabled={!isEditing}
             />
@@ -201,7 +216,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.address_city || ""}
+              value={form.address_city}
               onChange={handleChange("address_city")}
               disabled={!isEditing}
             />
@@ -214,7 +229,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.address_postcode || ""}
+              value={form.address_postcode}
               onChange={handleChange("address_postcode")}
               disabled={!isEditing}
             />
@@ -224,7 +239,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.address_street || ""}
+              value={form.address_street}
               onChange={handleChange("address_street")}
               disabled={!isEditing}
             />
@@ -234,7 +249,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.tax_number || ""}
+              value={form.tax_number}
               onChange={handleChange("tax_number")}
               disabled={!isEditing}
             />
@@ -247,7 +262,7 @@ export const Profile = () => {
             <input
               type="text"
               className="form-control"
-              value={form.geo_dir || ""}
+              value={form.geo_dir}
               onChange={handleChange("geo_dir")}
               disabled={!isEditing}
             />
@@ -271,9 +286,53 @@ export const Profile = () => {
               Save
             </button>
           </div>
+
           <div className="row justify-content-center">
-            <button className="col-2 my-5 pricingButtonPlus">Change Password</button>
+            <button
+              className="col-2 my-5 pricingButtonPlus"
+              onClick={() => setShowPasswordForm(!showPasswordForm)}
+            >
+              {showPasswordForm ? "Cancel" : "Change Password"}
+            </button>
           </div>
+
+          {showPasswordForm && (
+            <div className="row justify-content-center">
+              <div className="col-lg-2 col-md-7 col-sm-7">
+                <label className="form-label">Current Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={passwords.currentPassword}
+                  onChange={handlePasswordChange("currentPassword")}
+                />
+              </div>
+              <div className="col-lg-2 col-md-7 col-sm-7">
+                <label className="form-label">New Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={passwords.newPassword}
+                  onChange={handlePasswordChange("newPassword")}
+                />
+              </div>
+              <div className="col-lg-2 col-md-7 col-sm-7">
+                <label className="form-label">Confirm New Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={passwords.confirmPassword}
+                  onChange={handlePasswordChange("confirmPassword")}
+                />
+              </div>
+              <div className="col-12 text-center mt-3">
+                <button className="btn btn-primary" onClick={handleChangePassword}>
+                  Save Password
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="row justify-content-center">
             <button
               className="col-2 my-2 pricingButtonPlus"
