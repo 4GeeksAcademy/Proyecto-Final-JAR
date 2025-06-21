@@ -948,22 +948,22 @@ def update_db():
     
 
 
-@api.route("change-password", methods=["POST"])
-@jwt_required()
-def change_password():
-    user_id = get_jwt_identity()
+@api.route("/change-password/<int:user_id>", methods=["PUT"])
+def change_password(user_id):
     data = request.get_json()
 
-    new_password = data.get("newPassword")
-
-    if not new_password:
+    if not data or not data.get("newPassword"):
         return jsonify({"success": False, "message": "Falta la nueva contraseña"}), 400
 
-    user = db.session.get(User, int(user_id))
-    if user is None:
-        return jsonify({"success": False, "message": "Usuario no encontrado"}), 404
+    hashed_password = generate_password_hash(data["newPassword"])
 
-    user.password = generate_password_hash(new_password)
+    stmt = select(User).where(User.id == user_id)
+    user = db.session.execute(stmt).scalar_one_or_none()
+
+    if user is None:
+        return jsonify({"success": False, "message": f"No se encontró el usuario con id: {user_id}"}), 404
+
+    user.password = hashed_password
     db.session.commit()
 
     return jsonify({"success": True, "message": "Contraseña actualizada con éxito"}), 200

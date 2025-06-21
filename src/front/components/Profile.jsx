@@ -58,74 +58,70 @@ export const Profile = () => {
       console.error("No user found in localStorage");
     }
   };
-// ... código inicial omitido por brevedad
 
-const handleSave = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("No token found in localStorage");
-    return;
-  }
+  const handleSave = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found in localStorage");
+      return;
+    }
 
-  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(form),
-  })
-    .then(res => res.json())
-    .then(data => {
-      // alert("Perfil actualizado");  <-- eliminado
-      localStorage.setItem("user", JSON.stringify(data));
-      loader();
-      setIsEditing(false);
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(form),
     })
-    .catch(err => console.error("Error updating user:", err));
-};
+      .then(res => res.json())
+      .then(data => {
+        localStorage.setItem("user", JSON.stringify(data));
+        loader();
+        setIsEditing(false);
+      })
+      .catch(err => console.error("Error updating user:", err));
+  };
 
-const handleChangePassword = () => {
-  if (passwords.newPassword !== passwords.confirmPassword) {
-    // alert("La nueva contraseña no coincide con la confirmación.");  <-- eliminado
-    return;
-  }
+  const handleChangePassword = () => {
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      console.error("Passwords do not match.");
+      return;
+    }
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    // alert("No se encontró el token. Inicia sesión de nuevo.");  <-- eliminado
-    return;
-  }
+    const token = localStorage.getItem("token");
+    const userId = store.user?.id;
 
-  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/change-password`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      newPassword: passwords.newPassword
+    if (!token || !userId) {
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/change-password/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        newPassword: passwords.newPassword
+      })
     })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        // alert("Contraseña cambiada correctamente.");  <-- eliminado
-        setShowPasswordForm(false);
-        setPasswords({
-          newPassword: "",
-          confirmPassword: ""
-        });
-      } else {
-        // alert(data.message || "Error al cambiar la contraseña.");  <-- eliminado
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      // alert("Hubo un error al cambiar la contraseña.");  <-- eliminado
-    });
-};
-
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setShowPasswordForm(false);
+          setPasswords({
+            newPassword: "",
+            confirmPassword: ""
+          });
+        } else {
+          console.error(data.message || "Error al cambiar la contraseña.");
+        }
+      })
+      .catch(err => {
+        console.error("Error al cambiar la contraseña:", err);
+      });
+  };
 
   const handleChange = (field) => (e) => {
     setForm({ ...form, [field]: e.target.value });
@@ -134,7 +130,6 @@ const handleChangePassword = () => {
   const handlePasswordChange = (field) => (e) => {
     setPasswords({ ...passwords, [field]: e.target.value });
   };
-
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -145,18 +140,16 @@ const handleChangePassword = () => {
 
   return (
     <div className="container-fluid profileCustom align-content-center my-5">
-
       <h2 className="text-center text-white">
         {store.user?.is_professional ? "Professional profile" : "Client profile"}
       </h2>
 
       <div className="container my-5">
-        
-        <div className=" justify-content-center align-items-center">
-          <div className="userIcon ">
+        <div className="justify-content-center align-items-center">
+          <div className="userIcon">
             <CircleUserRound size={200} />
           </div>
-          <div className="">
+          <div>
             <p className="userName">{form.firstname || "User Name"}</p>
           </div>
         </div>
@@ -302,7 +295,6 @@ const handleChangePassword = () => {
 
           {showPasswordForm && (
             <div className="row justify-content-center">
-             
               <div className="col-lg-2 col-md-7 col-sm-12">
                 <label className="form-label">New Password</label>
                 <input
@@ -313,7 +305,7 @@ const handleChangePassword = () => {
                 />
               </div>
               <div className="col-lg-2 col-md-7 col-sm-2">
-                <label className="form-label">Confirm New Password</label>
+                <label className="form-label">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
