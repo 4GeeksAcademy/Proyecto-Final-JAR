@@ -55,6 +55,8 @@ export const Profile = () => {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       dispatch({ type: "LOGIN", payload: { user } });
+    } else {
+      console.error("No user found in localStorage");
     }
   };
 
