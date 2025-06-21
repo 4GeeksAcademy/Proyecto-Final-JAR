@@ -156,3 +156,21 @@ form {
   margin-bottom: 0.5rem;
   letter-spacing: 0.5px;
 }
+
+
+.CustomRedirection {
+  margin-top: 20px;
+  text-align: center;
+  color:white ;
+  font-weight: 600;
+}
+
+.CustomRedirectionLink {
+  color: #94a6b9; /* azul para buen contraste */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.CustomRedirectionLink:hover {
+  color: #ffffff; /* azul más oscuro al hover */
+}
