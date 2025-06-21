@@ -945,3 +945,25 @@ def update_db():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+
+
+@api.route("/change-password/<int:user_id>", methods=["PUT"])
+def change_password(user_id):
+    data = request.get_json()
+
+    if not data or not data.get("newPassword"):
+        return jsonify({"success": False, "message": "Falta la nueva contraseña"}), 400
+
+    hashed_password = generate_password_hash(data["newPassword"])
+
+    stmt = select(User).where(User.id == user_id)
+    user = db.session.execute(stmt).scalar_one_or_none()
+
+    if user is None:
+        return jsonify({"success": False, "message": f"No se encontró el usuario con id: {user_id}"}), 404
+
+    user.password = hashed_password
+    db.session.commit()
+
+    return jsonify({"success": True, "message": "Contraseña actualizada con éxito"}), 200

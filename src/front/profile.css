@@ -20,7 +20,7 @@
 }
 
 
-.pricingButtonPlus{
+.customButton{
   font-weight: bolder;
   background-color:white ; /* Color personalizado */
   color: #005691; /* Color del texto */
@@ -29,10 +29,20 @@
   border-radius: 5px; /* Bordes redondeados */
 }
 
-.pricingButtonPlus:hover {
+.customButton:hover {
   background-color: #EDF9FC; /* Color más oscuro al hacer hover */
 }
 
-.pricingButtonPlus {
+.customButton {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
+
+
+/* Input cuando está deshabilitado (no editable) */
+input.form-control:disabled {
+  background-color: #003366; /* Azul más oscuro */
+  color: white; /* Para que el texto contraste */
+  border: 1px solid #002244; /* Un borde oscuro también */
+  opacity: 1; /* Para que no se vea opaco, ya que disabled reduce opacidad por defecto */
+  cursor: default; /* Mostrar cursor por defecto */
 }
