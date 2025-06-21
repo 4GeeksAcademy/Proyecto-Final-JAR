@@ -269,28 +269,31 @@ def get_post(id):
 
 # POST: Create new Post
 
-
-@api.route("/posts", methods=["POST"])
-@jwt_required()  # obligated to use the token to access this route
+@api.route("/api/posts", methods=["POST"])
+@jwt_required()
 def create_post():
-    # Extraction of data from body
     data = request.get_json()
-    user_id = get_jwt_identity()  # Get the user ID from the JWT token
-    # Buscar el client_id correspondiente al usuario autenticado
-    user = db.session.execute(select(User).where(
-        User.id == user_id)).scalar_one_or_none()
+    user_id = get_jwt_identity()
+
+    # Busca el User primero
+    user = db.session.execute(select(User).where(User.id == user_id)).scalar_one_or_none()
     if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    # Busca el cliente asociado al user
+    client = db.session.execute(select(Client).where(Client.user_id == user_id)).scalar_one_or_none()
+    if not client:
         return jsonify({"error": "Client not found"}), 404
-    # Validate required fields
+    
     required_fields = [
         "remote_project", "project_city", "project_county", "project_country",
-        "post_description", "estimated_budged", "post_open", "post_active", "post_completed", "category_id"
+        "post_description", "estimated_budged", "post_open", "post_active", "post_completed"
     ]
     missing = [field for field in required_fields if field not in data]
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+    
     try:
-        # Create new post
         new_post = Post(
             remote_project=data["remote_project"],
             project_city=data["project_city"],
@@ -301,8 +304,8 @@ def create_post():
             post_open=data["post_open"],
             post_active=data["post_active"],
             post_completed=data["post_completed"],
-            category_id=data.get("category_id"),  # Optional field
-            client_id=user.id  # Usar el client.id correcto
+            category_id=data.get("category_id"),  # opcional
+            client_id=client.client_id  # Usa el client_id, no el user.id
         )
         db.session.add(new_post)
         db.session.commit()

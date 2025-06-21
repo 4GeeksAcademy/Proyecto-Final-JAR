@@ -3,13 +3,13 @@ import "../../front/dashboard.css";
 import { createPost } from "../services/PostServices.jsx";
 
 const pruebaPosts = [
-  { id: 1, title: "App and Website Development", remote_project: false, project_city: "Madrid", project_county: "Madrid", project_country: "España", post_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", estimated_budged: "$20 - $50", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-10" },
-  { id: 2, title: "UX/UI Design", remote_project: true, project_city: "CDMX", project_county: "Ciudad de México", project_country: "México", post_description: "Diseño de interfaces para ecommerce mobile-first.", estimated_budged: "$30 - $60", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-12" },
-  { id: 3, title: "Marketing Strategy", remote_project: false, project_city: "Buenos Aires", project_county: "Buenos Aires", project_country: "Argentina", post_description: "Optimización de embudos de conversión.", estimated_budged: "$25 - $55", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-15" },
-  { id: 4, title: "Project Coordination", remote_project: false, project_city: "Bogotá", project_county: "Cundinamarca", project_country: "Colombia", post_description: "Gestión de proyectos internacionales.", estimated_budged: "$40 - $80", post_open: false, post_active: false, post_completed: false, post_date: "2025-06-18" },
-  { id: 5, title: "Financial Planning", remote_project: true, project_city: "Santiago", project_county: "Santiago", project_country: "Chile", post_description: "Inversiones en startups tech.", estimated_budged: "$50 - $100", post_open: false, post_active: false, post_completed: true, post_date: "2025-06-20" },
-  { id: 6, title: "AI Automation Software", remote_project: false, project_city: "París", project_county: "Île-de-France", project_country: "Francia", post_description: "Soluciones IA para automatización.", estimated_budged: "$60 - $120", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-21" },
-  { id: 7, title: "E-commerce Branding", remote_project: false, project_city: "Roma", project_county: "Lazio", project_country: "Italia", post_description: "Identidad visual para marca online.", estimated_budged: "$35 - $70", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-22" }
+  { id: 1, remote_project: false, project_city: "Madrid", project_county: "Madrid", project_country: "España", post_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", estimated_budged: "$20 - $50", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-10" },
+  { id: 2, remote_project: true, project_city: "CDMX", project_county: "Ciudad de México", project_country: "México", post_description: "Diseño de interfaces para ecommerce mobile-first.", estimated_budged: "$30 - $60", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-12" },
+  { id: 3, remote_project: false, project_city: "Buenos Aires", project_county: "Buenos Aires", project_country: "Argentina", post_description: "Optimización de embudos de conversión.", estimated_budged: "$25 - $55", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-15" },
+  { id: 4, remote_project: false, project_city: "Bogotá", project_county: "Cundinamarca", project_country: "Colombia", post_description: "Gestión de proyectos internacionales.", estimated_budged: "$40 - $80", post_open: false, post_active: false, post_completed: false, post_date: "2025-06-18" },
+  { id: 5, remote_project: true, project_city: "Santiago", project_county: "Santiago", project_country: "Chile", post_description: "Inversiones en startups tech.", estimated_budged: "$50 - $100", post_open: false, post_active: false, post_completed: true, post_date: "2025-06-20" },
+  { id: 6, remote_project: false, project_city: "París", project_county: "Île-de-France", project_country: "Francia", post_description: "Soluciones IA para automatización.", estimated_budged: "$60 - $120", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-21" },
+  { id: 7, remote_project: false, project_city: "Roma", project_county: "Lazio", project_country: "Italia", post_description: "Identidad visual para marca online.", estimated_budged: "$35 - $70", post_open: true, post_active: true, post_completed: false, post_date: "2025-06-22" }
 ];
 
 export const Dashboard = () => {
@@ -28,50 +28,52 @@ export const Dashboard = () => {
 
   // Maneja la creación del post
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
+  e.preventDefault();
+  const form = e.target;
 
-    const postData = {
-  title: form.title.value.trim(), // si no existe en modelo, bórralo
-  remote_project: form.remote_project.checked,
-  project_city: form.project_city.value.trim(),
-  project_county: form.project_county.value.trim(),
-  project_country: form.project_country.value,
-  post_description: form.post_description.value.trim(),
-  estimated_budged: form.estimated_budged.value.trim(),
-  post_open: true,
-  post_active: true,
-  post_completed: false,
-  post_date: new Date().toISOString(), // opcional si lo pones por defecto en DB
-  category_id: parseInt(form.category_id.value),
+  const postData = {
+    remote_project: form.remote_project.checked,
+    project_city: form.project_city.value.trim(),
+    project_county: form.project_county.value.trim(),
+    project_country: form.project_country.value,
+    post_description: form.post_description.value.trim(),
+    estimated_budged: form.estimated_budged.value.trim(),
+    post_open: true,
+    post_active: true,
+    post_completed: false,
+    category_id: parseInt(form.category_id.value),
+  };
+
+  // Validar los campos obligatorios según backend
+  if (
+    !postData.project_city ||
+    !postData.project_country ||
+    !postData.post_description ||
+    !postData.estimated_budged ||
+    !postData.category_id
+  ) {
+    alert("Please complete City, Country, Description, Estimated Budget, and Category fields.");
+    return;
+  }
+
+  try {
+    const newPost = await createPost(postData);
+    setPosts(prev => [...prev, newPost]);
+    alert("¡Publicación creada exitosamente!");
+    form.reset();
+  } catch (err) {
+    console.error("Failed to create post", err);
+    if (err.message === "Unauthorized") {
+      alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
+      // Aquí podrías redirigir a login o limpiar sesión si quieres
+    } else if (err.message === "Error creating post") {
+      alert("Hubo un problema al crear la publicación. Revisa los datos e intenta de nuevo.");
+    } else {
+      alert("Ocurrió un error inesperado al crear la publicación.");
+    }
+  }
 };
 
-
-
-    if (!postData.title || !postData.project_city || !postData.project_country || !postData.category_id) {
-      alert("Please complete Title, City, Country, and Category fields.");
-      return;
-    }
-
-    try {
-      // Espera la creación del post
-      const newPost = await createPost(postData);
-
-      // Agrega el nuevo post a la lista
-      setPosts(prev => [...prev, newPost]);
-
-      alert("¡Publicación creada exitosamente!");
-      form.reset();
-    } catch (err) {
-      console.error("Failed to create post", err);
-      if (err.message === "Unauthorized") {
-        alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
-        // Aquí puedes limpiar token y redirigir a login si usas react-router
-      } else {
-        alert("Hubo un error al crear la publicación");
-      }
-    }
-  };
 
   const handleToggle = (id, field) => {
     setPosts(prev => prev.map(p => p.id === id ? { ...p, [field]: !p[field] } : p));
@@ -94,7 +96,6 @@ export const Dashboard = () => {
       <div className="card findwork__card p-3 shadow-sm">
         <div className="row findwork__row w-100 align-items-center">
           <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-            <p className="customTittle">{post.title}</p>
             <p>{post.remote_project ? "Remote" : `${post.project_city}, ${post.project_county}, ${post.project_country}`}</p>
           </div>
           <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
@@ -142,9 +143,6 @@ export const Dashboard = () => {
         <h2 className="text-center text-white mb-4">Create a new Request</h2>
         <form className="create-request-form" onSubmit={handleSubmit}>
           <div className="form-top-row">
-            <div className="form-group">
-              <input type="text" className="form-control" name="title" placeholder="Title" />
-            </div>
             <div className="form-group">
               <select className="form-select" name="category_id">
                 <option value="">Category</option>
