@@ -20,10 +20,10 @@ export const ComponentHome = () => {
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL;
       if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
-      
+
       const response = await fetch(`${backendUrl}/api/hello`);
       const data = await response.json();
-      
+
       if (response.ok) {
         dispatch({ type: "set_hello", payload: data.message });
       }
@@ -82,15 +82,15 @@ export const ComponentHome = () => {
     <div className="container-fluid container-all">
       {/* Hero section */}
       <div className="image-wrapper">
-        <img 
-          src="https://picsum.photos/900/600" 
-          alt="Freelancer platform hero" 
+        <img
+          src="https://picsum.photos/900/600"
+          alt="Freelancer platform hero"
         />
         <h1 className="title">Get more dates with Freelancers</h1>
-        <input 
-          type="text" 
-          className="search-input" 
-          placeholder="Search Any Services" 
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search Any Services"
         />
       </div>
 
@@ -113,16 +113,16 @@ export const ComponentHome = () => {
 
       {/* Services scroll */}
       <div className="scroll-wrapper">
-        <button 
-          className="scroll-btn left" 
+        <button
+          className="scroll-btn left"
           onClick={() => scrollServices("left")}
           aria-label="Scroll services left"
         >
           ‹
         </button>
 
-        <div 
-          className="service-grid-container" 
+        <div
+          className="service-grid-container"
           id="service-scroll"
           ref={containerRef}
         >
@@ -133,9 +133,9 @@ export const ComponentHome = () => {
             { title: "Construction & Maintenance", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" }
           ].map((service, index) => (
             <div key={index} className="service-card">
-              <img 
-                src={service.img} 
-                alt={service.title} 
+              <img
+                src={service.img}
+                alt={service.title}
                 className="service-img"
               />
               <h3>{service.title}</h3>
@@ -144,8 +144,8 @@ export const ComponentHome = () => {
           ))}
         </div>
 
-        <button 
-          className="scroll-btn right" 
+        <button
+          className="scroll-btn right"
           onClick={() => scrollServices("right")}
           aria-label="Scroll services right"
         >
@@ -153,67 +153,66 @@ export const ComponentHome = () => {
         </button>
       </div>
 
-      {/* Projects section */}
       <div className="published-projects">
-        <h2>Latest published projects</h2>
-        
-        <div className="container">
-          <div className="row findwork__row customCard">
+        <div className="dashboard-container">
+          <h2 className="section-title">Latest Published Projects</h2>
+
+          {/* Pagination */}
+          <nav className="projects-pagination">
+            <ul className="pagination-list">
+              <li className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  &laquo;
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`pagination-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`pagination-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Projects Grid */}
+          <div className="projects-grid">
             {paginatedPosts.map(post => (
-              <div key={post.id} className="col-12 customCard">
-                <div className="card findwork__card p-3 shadow-sm">
-                  <div className="row findwork__row w-100 align-items-center">
-                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                      <p className="customTittle">
-                        {categoryMap[post.category_id] || "Unknown Category"}
-                      </p>
-                      <p>{post.project_city}, {post.project_country}</p>
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                      <p>📅 {post.post_date}</p>
-                    </div>
+              <div key={post.id} className="project-card">
+                <div className="card-header">
+                  <h3 className="card-title">{categoryMap[post.category_id] || "Unknown Category"}</h3>
+                  <div className="card-meta">
+                    <span>{post.project_city}, {post.project_country}</span>
+                    <span className="meta-separator">|</span>
+                    <span>📅 {post.post_date.split('T')[0] .split('-').reverse().join('-')}</span>
                   </div>
-                  <div className="row findwork__row">
-                    <p className="col-12 customDescription">{post.post_description}</p>
-                  </div>
+                </div>
+
+                <div className="card-body">
+                  <p className="card-description">{post.post_description}</p>
+                </div>
+
+                <div className="card-footer">
+                  <button className="primary-button">View more</button>
                 </div>
               </div>
             ))}
-          </div>
-          
-          {/* Pagination */}
-          <div className="row mt-4">
-            <div className="col-12 d-flex justify-content-center">
-              <nav>
-                <ul className="pagination">
-                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      aria-label="Previous page"
-                    >
-                      &laquo; Prev
-                    </button>
-                  </li>
-                  <li className="page-item">
-                    <span className="page-link">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                  </li>
-                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      aria-label="Next page"
-                    >
-                      Next &raquo;
-                    </button>
-                  </li>
-                </ul>
-              </nav>
-            </div>
           </div>
         </div>
       </div>
