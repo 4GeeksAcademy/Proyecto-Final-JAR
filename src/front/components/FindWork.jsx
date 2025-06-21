@@ -137,7 +137,6 @@ export const FindWork = () => {
         </div>
       </div>
       
-      {/* Sección de proyectos con el nuevo diseño */}
       <div className="published-projects">
         <div className="dashboard-container">
           <h2 className="section-title">Latest Projects</h2>
