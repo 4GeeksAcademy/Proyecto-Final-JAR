@@ -22,7 +22,6 @@ export const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwords, setPasswords] = useState({
-    currentPassword: "",
     newPassword: "",
     confirmPassword: ""
   });
@@ -59,31 +58,74 @@ export const Profile = () => {
       console.error("No user found in localStorage");
     }
   };
+// ... código inicial omitido por brevedad
 
-  const handleSave = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found in localStorage");
-      return;
-    }
+const handleSave = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found in localStorage");
+    return;
+  }
 
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(form),
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(form),
+  })
+    .then(res => res.json())
+    .then(data => {
+      // alert("Perfil actualizado");  <-- eliminado
+      localStorage.setItem("user", JSON.stringify(data));
+      loader();
+      setIsEditing(false);
     })
-      .then(res => res.json())
-      .then(data => {
-        alert("Perfil actualizado");
-        localStorage.setItem("user", JSON.stringify(data));
-        loader();
-        setIsEditing(false);
-      })
-      .catch(err => console.error("Error updating user:", err));
-  };
+    .catch(err => console.error("Error updating user:", err));
+};
+
+const handleChangePassword = () => {
+  if (passwords.newPassword !== passwords.confirmPassword) {
+    // alert("La nueva contraseña no coincide con la confirmación.");  <-- eliminado
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    // alert("No se encontró el token. Inicia sesión de nuevo.");  <-- eliminado
+    return;
+  }
+
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/change-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      newPassword: passwords.newPassword
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        // alert("Contraseña cambiada correctamente.");  <-- eliminado
+        setShowPasswordForm(false);
+        setPasswords({
+          newPassword: "",
+          confirmPassword: ""
+        });
+      } else {
+        // alert(data.message || "Error al cambiar la contraseña.");  <-- eliminado
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      // alert("Hubo un error al cambiar la contraseña.");  <-- eliminado
+    });
+};
+
 
   const handleChange = (field) => (e) => {
     setForm({ ...form, [field]: e.target.value });
@@ -93,48 +135,6 @@ export const Profile = () => {
     setPasswords({ ...passwords, [field]: e.target.value });
   };
 
-  const handleChangePassword = () => {
-    if (passwords.newPassword !== passwords.confirmPassword) {
-      alert("La nueva contraseña no coincide con la confirmación.");
-      return;
-    }
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("No se encontró el token. Inicia sesión de nuevo.");
-      return;
-    }
-
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/change-password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        currentPassword: passwords.currentPassword,
-        newPassword: passwords.newPassword
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("Contraseña cambiada correctamente.");
-          setShowPasswordForm(false);
-          setPasswords({
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: ""
-          });
-        } else {
-          alert(data.message || "Error al cambiar la contraseña.");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Hubo un error al cambiar la contraseña.");
-      });
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -145,16 +145,18 @@ export const Profile = () => {
 
   return (
     <div className="container-fluid profileCustom align-content-center my-5">
+
       <h2 className="text-center text-white">
         {store.user?.is_professional ? "Professional profile" : "Client profile"}
       </h2>
 
       <div className="container my-5">
-        <div className="row justify-content-center align-items-center">
-          <div className="userIcon col-4">
+        
+        <div className=" justify-content-center align-items-center">
+          <div className="userIcon ">
             <CircleUserRound size={200} />
           </div>
-          <div className="col-3">
+          <div className="">
             <p className="userName">{form.firstname || "User Name"}</p>
           </div>
         </div>
@@ -274,14 +276,14 @@ export const Profile = () => {
         <div className="row justify-content-center my-5">
           <div className="row justify-content-center">
             <button
-              className="col-2 mx-5 pricingButtonPlus"
+              className="col-lg-2 col-md-2 col-sm-3  m-3 pricingButtonPlus"
               onClick={() => setIsEditing(true)}
               disabled={isEditing}
             >
               Edit
             </button>
             <button
-              className="col-2 mx-5 pricingButtonPlus"
+              className="col-lg-2 col-md-2 col-sm-3   m-3 pricingButtonPlus"
               onClick={handleSave}
               disabled={!isEditing}
             >
@@ -291,7 +293,7 @@ export const Profile = () => {
 
           <div className="row justify-content-center">
             <button
-              className="col-2 my-5 pricingButtonPlus"
+              className="col-lg-2 col-md-2 col-sm-4 my-5 customButton"
               onClick={() => setShowPasswordForm(!showPasswordForm)}
             >
               {showPasswordForm ? "Cancel" : "Change Password"}
@@ -300,16 +302,8 @@ export const Profile = () => {
 
           {showPasswordForm && (
             <div className="row justify-content-center">
-              <div className="col-lg-2 col-md-7 col-sm-7">
-                <label className="form-label">Current Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  value={passwords.currentPassword}
-                  onChange={handlePasswordChange("currentPassword")}
-                />
-              </div>
-              <div className="col-lg-2 col-md-7 col-sm-7">
+             
+              <div className="col-lg-2 col-md-7 col-sm-12">
                 <label className="form-label">New Password</label>
                 <input
                   type="password"
@@ -318,7 +312,7 @@ export const Profile = () => {
                   onChange={handlePasswordChange("newPassword")}
                 />
               </div>
-              <div className="col-lg-2 col-md-7 col-sm-7">
+              <div className="col-lg-2 col-md-7 col-sm-2">
                 <label className="form-label">Confirm New Password</label>
                 <input
                   type="password"
@@ -337,7 +331,7 @@ export const Profile = () => {
 
           <div className="row justify-content-center">
             <button
-              className="col-2 my-2 pricingButtonPlus"
+              className="col-lg-1 col-md-3 col-sm-2 my-5 btn btn-danger"
               onClick={handleLogout}
             >
               Logout
