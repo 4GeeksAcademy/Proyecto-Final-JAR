@@ -2,14 +2,20 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Client, Professional, Post, Agreement, Candidature, Rating, Comment, Payment, Premium, Category
+from api.models import db, User, Client, Professional, Post, Plan, Agreement, Candidature, Rating, Comment, Payment, Premium, Category
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.models import CandidatureStatus
+import stripe
+import os
+from datetime import datetime, timedelta
 api = Blueprint("api", __name__)
+
+stripe.api_key=os.getenv("STRIPE_SECRET")
+FRONT=os.getenv("FRONT")
 
 # Allow CORS requests to this API
 CORS(api)
@@ -37,50 +43,48 @@ def get_user(user_id):
     return jsonify(user.serialize()), 200
 
 # POST: Add new user
-
-
 @api.route("/users", methods=["POST"])
 def create_user():
-    # extraemos la informacion del body puede ser con request.json
     data = request.get_json()
-    # verificamos que tenemos los elementos OBLIGATORIOS para crear un registro nuevo
 
     # Validate required fields
-    required_fields = [
-        "email", "password", "is_professional",
-
-    ]
-
+    required_fields = ["email", "password", "is_professional"]
     missing = [field for field in required_fields if field not in data]
     if missing:
-        return jsonify({"error": f"Missing fields: {", ".join(missing)}"}), 400
+        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+
+    # Check boolean
+    is_professional = data.get("is_professional")
+    if not isinstance(is_professional, bool):
+        return jsonify({"error": "is_professional must be a boolean"}), 400
 
     try:
+        # Create user
         new_user = User(
             email=data["email"],
-            # hash the password before storing it
-            # REMOVE SERIALIZATION IN PRODUCTION
             password=generate_password_hash(data["password"]),
-            is_professional=data["is_professional"],
-
+            is_professional=is_professional
         )
         db.session.add(new_user)
-        db.session.flush()  # Assigns ID without committing
+        db.session.flush()
 
-        # Create Professional if is_professional is True
+        # Create Professional or Client based on is_professional
         if new_user.is_professional:
             new_professional = Professional(user_id=new_user.id)
             db.session.add(new_professional)
+        else:
+            # Here you create a Client if is_professional is False
+            new_client = Client(user_id=new_user.id)
+            db.session.add(new_client)
 
         db.session.commit()
-        # Create JWT token for the new user
+
+        # Create JWT token
         token = create_access_token(identity=str(new_user.id))
-        # returns the new user and the token
         return jsonify({'user': new_user.serialize(), 'token': token}), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-
 
 @api.route("/login", methods=["POST"])
 def login():
@@ -858,3 +862,111 @@ def update_category(id):
     # Changes saved
     db.session.commit()
     return jsonify(category.serialize()), 200
+
+@api.route('/create-checkout-session', methods=['POST'])
+@jwt_required()  # obligated to use the token to access this route
+def create_checkout_session():
+    try:
+        body = request.json
+        if not body or 'items' not in body:
+            return jsonify({"error": "Invalid request, 'items' is required"}), 400
+        session = stripe.checkout.Session.create(
+            ui_mode = 'embedded',
+            line_items=body['items'],
+            mode='payment',
+            return_url=str(os.getenv("FRONT")) +
+            'return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return str(e)
+
+    return jsonify({"clientSecret":session.client_secret})
+
+
+@api.route('/session-status', methods=['GET'])
+def session_status():
+    session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+
+    return jsonify(status=session.status, customer_email=session.customer_details.email)
+
+
+#plans
+
+@api.route('/plans', methods=['GET'])
+def get_plans():
+    try:
+        stm = select(Plan)
+        plans = db.session.execute(stm).scalars().all()
+        if not plans:
+            return jsonify({"error": "No plans found"}), 404
+        # Serialize the plans
+        return jsonify([plan.serialize() for plan in plans]), 200
+    except Exception as e:
+        db.session.rollback()
+        # Handle any exceptions that occur
+        return jsonify({"error": str(e)}), 500
+
+# after stripe purchase is completed, we update premium and user plan in the database
+@api.route('/stripe-update-db', methods=['POST'])
+@jwt_required()  # obligated to use the token to access this route
+def update_db():
+    try:
+        id = get_jwt_identity()  # Get the user ID from the JWT token
+        user = db.session.execute(select(User).where(User.id == id)).scalar_one_or_none()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        # Check if the user is a professional
+        if not user.is_professional:
+            return jsonify({"error": "User is not a professional"}), 403
+        body = request.json
+        if not body or 'plan_id' not in body :
+            return jsonify({"error": "Invalid request, 'plan_id' is required"}), 400
+        
+        plan = db.session.execute(select(Plan).where(Plan.stripe == body['plan_id'])).scalar_one_or_none()
+        if not plan:
+            return jsonify({"error": "Plan not found"}), 404
+        
+        user = db.session.execute(select(User).where(User.id == id)).scalar_one_or_none()
+      
+        
+        # Update the user's plan
+        user.plan_id = plan.id
+        db.session.commit()
+
+        premium = Premium(
+            auto_renewal=True,
+            expiration_date=(datetime.utcnow() + timedelta(days=30)).date(),
+            premium_types=plan.name,
+            renewal_date=(datetime.utcnow() + timedelta(days=30)).date(),
+            professional_id=user.professional.id  # Assuming user has a professional relationship
+        )
+
+        db.session.add(premium)
+        db.session.commit()
+        
+        return jsonify({"message": "User's plan updated successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+
+
+@api.route("/change-password/<int:user_id>", methods=["PUT"])
+def change_password(user_id):
+    data = request.get_json()
+
+    if not data or not data.get("newPassword"):
+        return jsonify({"success": False, "message": "Falta la nueva contraseña"}), 400
+
+    hashed_password = generate_password_hash(data["newPassword"])
+
+    stmt = select(User).where(User.id == user_id)
+    user = db.session.execute(stmt).scalar_one_or_none()
+
+    if user is None:
+        return jsonify({"success": False, "message": f"No se encontró el usuario con id: {user_id}"}), 404
+
+    user.password = hashed_password
+    db.session.commit()
+
+    return jsonify({"success": True, "message": "Contraseña actualizada con éxito"}), 200

@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
 import { getCategories } from "../services/CategoryServices.jsx";
 import "../../front/FindWork.css";
+import storeReducer from "../store.js";
+import { useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 export const FindWork = () => {
+  const {store, dispatch} = useGlobalReducer();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryMap, setCategoryMap] = useState({});
@@ -20,7 +24,7 @@ export const FindWork = () => {
     cities: []
   });
   const itemsPerPage = 5;
- 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -75,6 +79,17 @@ export const FindWork = () => {
 
   if (loading) return <div className="container text-center my-5">Loading...</div>;
   if (error) return <div className="container text-center my-5">Error: {error}</div>;
+
+
+  const handleClick = (post) => {
+   if (store.user?.is_professional && store.user?.plan?.name?.length > 0) {
+      
+      console.log('poner aqui el navigate a la pagina de detalles del post', post);
+      
+    } else {
+      navigate('/pricing')
+    }
+  }
 
   return (
     <div className="container">
@@ -144,7 +159,7 @@ export const FindWork = () => {
           </ul>
         </nav>
         {paginatedPosts.map(post => (
-          <div key={post.id} className="col-12 customCard">
+          <div key={post.id} className="col-12 customCard" onClick={()=>handleClick(post)}>
             <div className="card findwork__card p-3 shadow-sm">
               <div className="row findwork__row w-100 align-items-center">
                 <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">

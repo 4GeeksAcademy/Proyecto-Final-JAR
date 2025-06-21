@@ -19,6 +19,11 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
+    case 'SELECT_PLAN':
+      return {
+        ...store,
+        selectedPlan: action.payload
+      };
     case 'LOGIN':
       return {
         ...store,

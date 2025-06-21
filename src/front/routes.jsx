@@ -1,9 +1,9 @@
 // Import necessary components and functions from react-router-dom.
 
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
 
 
@@ -11,44 +11,55 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-import { SignupPage } from "./pages/Signup"; 
-import { AboutPage } from "./pages/About"; 
+import { SignupPage } from "./pages/Signup";
+import { AboutPage } from "./pages/About";
 import { PricingPage } from "./pages/Pricing";
 import { LoginPage } from "./pages/Login";
-import { FindTalent} from "./components/FindTalent"
+import { FindTalent } from "./components/FindTalent"
 import { FindWork } from "./components/FindWork";
 import { UserProfile } from "./pages/Profile";
 import { DashboardPage } from "./pages/Dashboard"
 import { ProfessionalDetail } from "./components/ProfessionalDetail.jsx";
+import { Checkout } from "./pages/checkout.jsx";
+import PaymentReturn from "./components/paymentReturn.jsx";
+import { ReturnPage } from "./pages/returnPage.jsx";
 export const router = createBrowserRouter(
-    createRoutesFromElements(
+  createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
     // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
     // Root, on the contrary, create a sister Route, if you have doubts, try it!
     // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
     // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
 
-      // Root Route: All navigation will start from here.
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
+    // Root Route: All navigation will start from here.
+    <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
-        <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-         <Route path="/findTalent" element={<FindTalent />} />
-        <Route path="/findWork" element={<FindWork />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/profesional/:id" element={<ProfessionalDetail />} />
-      
+      {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
+      <Route path="/" element={<Home />} />
+      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
+      <Route path="/demo" element={<Demo />} />
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/findTalent" element={<FindTalent />} />
+      <Route path="/findWork" element={<FindWork />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/profesional/:id" element={<ProfessionalDetail />} />
+      <Route path='/checkout' element={<Checkout />} />
+           <Route path="/return" element={<ReturnPage />} />
 
-        
-      </Route>
-    )
+      <Route
+        path="*"
+        element={
+          <h1 className="text-center text-danger">
+            404 - Page Not Found
+          </h1>
+        } />
+
+    </Route>
+  )
 );
 
 
