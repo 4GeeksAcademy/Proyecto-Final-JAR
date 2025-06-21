@@ -153,72 +153,69 @@ export const ComponentHome = () => {
         </button>
       </div>
 
-    <div className="published-projects">
-  <div className="dashboard-container">
-    <h2 className="section-title">Latest Published Projects</h2>
-    
-    {/* Pagination */}
-    <nav className="projects-pagination">
-      <ul className="pagination-list">
-        <li className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}>
-          <button 
-            className="pagination-button" 
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            &laquo;
-          </button>
-        </li>
-        {Array.from({ length: totalPages }, (_, i) => (
-          <li key={i + 1} className={`pagination-item ${currentPage === i + 1 ? "active" : ""}`}>
-            <button 
-              className="pagination-button" 
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          </li>
-        ))}
-        <li className={`pagination-item ${currentPage === totalPages ? "disabled" : ""}`}>
-          <button 
-            className="pagination-button" 
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            &raquo;
-          </button>
-        </li>
-      </ul>
-    </nav>
+      <div className="published-projects">
+        <div className="dashboard-container">
+          <h2 className="section-title">Latest Published Projects</h2>
 
-    {/* Projects Grid */}
-    <div className="projects-grid">
-      {paginatedPosts.map(post => (
-        <div key={post.id} className="project-card">
-          <div className="card-header">
-            <h3 className="card-title">{categoryMap[post.category_id] || "Unknown Category"}</h3>
-            <div className="card-meta">
-              <span>{post.project_city}, {post.project_country}</span>
-              <span className="meta-separator">|</span>
-              <span>📅 {post.post_date.split('T')[0]}</span>
-            </div>
-          </div>
-          
-          <div className="card-body">
-            <p className="card-description">{post.post_description}</p>
-            <div className="card-price">
-              <span>💰 ${post.price_range_min || '20'} - ${post.price_range_max || '500'}</span>
-            </div>
-          </div>
-          
-          <div className="card-footer">
-            <button className="primary-button">View more</button>
+          {/* Pagination */}
+          <nav className="projects-pagination">
+            <ul className="pagination-list">
+              <li className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  &laquo;
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`pagination-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`pagination-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Projects Grid */}
+          <div className="projects-grid">
+            {paginatedPosts.map(post => (
+              <div key={post.id} className="project-card">
+                <div className="card-header">
+                  <h3 className="card-title">{categoryMap[post.category_id] || "Unknown Category"}</h3>
+                  <div className="card-meta">
+                    <span>{post.project_city}, {post.project_country}</span>
+                    <span className="meta-separator">|</span>
+                    <span>📅 {post.post_date.split('T')[0] .split('-').reverse().join('-')}</span>
+                  </div>
+                </div>
+
+                <div className="card-body">
+                  <p className="card-description">{post.post_description}</p>
+                </div>
+
+                <div className="card-footer">
+                  <button className="primary-button">View more</button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
+      </div>
     </div>
   );
 };

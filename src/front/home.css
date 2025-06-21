@@ -291,13 +291,9 @@
   font-size: 1rem;
   line-height: 1.5;
   margin: 0 0 1rem 0;
+  margin-top: 30px;
 }
 
-.card-price {
-  font-weight: 600;
-  color: #0a0a0a;
-  margin-bottom: 1rem;
-}
 
 .project-status {
   display: flex;
