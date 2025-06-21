@@ -20,10 +20,10 @@ export const ComponentHome = () => {
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL;
       if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
-      
+
       const response = await fetch(`${backendUrl}/api/hello`);
       const data = await response.json();
-      
+
       if (response.ok) {
         dispatch({ type: "set_hello", payload: data.message });
       }
@@ -82,15 +82,15 @@ export const ComponentHome = () => {
     <div className="container-fluid container-all">
       {/* Hero section */}
       <div className="image-wrapper">
-        <img 
-          src="https://picsum.photos/900/600" 
-          alt="Freelancer platform hero" 
+        <img
+          src="https://picsum.photos/900/600"
+          alt="Freelancer platform hero"
         />
         <h1 className="title">Get more dates with Freelancers</h1>
-        <input 
-          type="text" 
-          className="search-input" 
-          placeholder="Search Any Services" 
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search Any Services"
         />
       </div>
 
@@ -113,29 +113,37 @@ export const ComponentHome = () => {
 
       {/* Services scroll */}
       <div className="scroll-wrapper">
-        <button 
-          className="scroll-btn left" 
+        <button
+          className="scroll-btn left"
           onClick={() => scrollServices("left")}
           aria-label="Scroll services left"
         >
           ‹
         </button>
 
-        <div 
-          className="service-grid-container" 
+        <div
+          className="service-grid-container"
           id="service-scroll"
           ref={containerRef}
         >
           {[
-            { title: "Reforms", img: "https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" },
-            { title: "Gardening", img: "https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-            { title: "Programming & Tech", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-            { title: "Construction & Maintenance", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" }
+            { title: "Education and Training", img: "https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" },
+            { title: "Design and Creativity", img: "https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { title: "Technology and Development", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { title: "Health and Wellness", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Marketing and Sales", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Administration and Office", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Legal and Financial Services", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Logistics and Transportation", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+             { title: "Hospitality and Event", img:"https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+
+
+            
           ].map((service, index) => (
             <div key={index} className="service-card">
-              <img 
-                src={service.img} 
-                alt={service.title} 
+              <img
+                src={service.img}
+                alt={service.title}
                 className="service-img"
               />
               <h3>{service.title}</h3>
@@ -144,8 +152,8 @@ export const ComponentHome = () => {
           ))}
         </div>
 
-        <button 
-          className="scroll-btn right" 
+        <button
+          className="scroll-btn right"
           onClick={() => scrollServices("right")}
           aria-label="Scroll services right"
         >
@@ -156,7 +164,7 @@ export const ComponentHome = () => {
       {/* Projects section */}
       <div className="published-projects">
         <h2>Latest published projects</h2>
-        
+
         <div className="container">
           <div className="row findwork__row customCard">
             {paginatedPosts.map(post => (
@@ -180,7 +188,7 @@ export const ComponentHome = () => {
               </div>
             ))}
           </div>
-          
+
           {/* Pagination */}
           <div className="row mt-4">
             <div className="col-12 d-flex justify-content-center">
