@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
 import { getCategories } from "../services/CategoryServices.jsx";
 import "../../front/FindWork.css";
+import storeReducer from "../store.js";
+import { useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 export const FindWork = () => {
+  const {store, dispatch} = useGlobalReducer();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryMap, setCategoryMap] = useState({});
@@ -20,7 +24,7 @@ export const FindWork = () => {
     cities: []
   });
   const itemsPerPage = 5;
- 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -76,7 +80,18 @@ export const FindWork = () => {
   if (loading) return <div className="container text-center my-5">Loading...</div>;
   if (error) return <div className="container text-center my-5">Error: {error}</div>;
 
-    return (
+
+  const handleClick = (post) => {
+   if (store.user?.is_professional && store.user?.plan?.name?.length > 0) {
+      
+      console.log('poner aqui el navigate a la pagina de detalles del post', post);
+      
+    } else {
+      navigate('/pricing')
+    }
+  }
+
+  return (
     <div className="container">
       <div className="container-fluid filtersCustom align-content-center my-5">
         <h2 className="text-center text-white my-5">🔍 Search Options</h2>

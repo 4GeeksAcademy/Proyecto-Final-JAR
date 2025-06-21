@@ -2,11 +2,12 @@ import { Navbar } from "./Navbar"
 import "../login.css";
 import { useState } from "react";
 import { login } from "../services/UserServices";
-import  useGlobalReducer  from "../hooks/useGlobalReducer";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
-    const {store, dispatch} = useGlobalReducer();
+    const { store, dispatch } = useGlobalReducer();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -19,20 +20,20 @@ export const Login = () => {
         });
     };
 
-    const handleSubmit =  (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Datos enviados:", formData);
 
-            login(formData).then(data=> {
-                if (data.error) {
-                    console.error("Error logging in:", data.error);
-                    return;
-                }
-                dispatch({type: "LOGIN", payload: data});
-                console.log("User logged in successfully:", data);
-                navigate("/profile");
-            }).catch(error => {
-            });
+        login(formData).then(data => {
+            if (data.error) {
+                console.error("Error logging in:", data.error);
+                return;
+            }
+            dispatch({ type: "LOGIN", payload: data });
+            console.log("User logged in successfully:", data);
+            navigate("/profile");
+        }).catch(error => {
+        });
     };
 
 
@@ -75,6 +76,16 @@ export const Login = () => {
                             </div>
                         </div>
                     </form>
+
+
+                    {/* Mensaje para usuarios sin cuenta */}
+                    <p className="CustomRedirection">
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="CustomRedirectionLink">
+                            Sign up
+                        </Link>
+                    </p>
+
                 </div>
             </div>
         </div>
