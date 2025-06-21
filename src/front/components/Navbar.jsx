@@ -9,7 +9,7 @@ export const Navbar = () => {
   return (
   
 
-<nav className="navbar navbarCustom navbar-expand-lg navbar-dark text-white " >
+<nav className="navbar navbarCustom navbar-expand-lg navbar-dark text-white sticky-top " >
   <div className="container-fluid  d-flex justify-content-between">
   <a href="/">
     <img className="LogoStarGig" src="src/front/assets/img/LogoStarGig.png" alt="Logo StarGig" />
