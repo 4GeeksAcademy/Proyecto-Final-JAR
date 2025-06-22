@@ -37,27 +37,39 @@ export const fetchPostById = async (postId) => {
 
 // POST Create Post 
 export const createPost = async (formData) => {
-  const token = localStorage.getItem("token"); // Ajusta si usas otro almacenamiento
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No authentication token found. Please log in again.");
+  }
+
+  // 👇 Log para depurar lo que se envía al servidor
+  console.log("POST DATA:", formData);
+
   try {
     const resp = await fetch(`${backendUrl}/api/posts`, {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,  // <--- Aquí agregas el token
+        'Authorization': `Bearer ${token}`,
       },
     });
+
     if (!resp.ok) {
       if (resp.status === 401) {
         throw new Error('Unauthorized');
       }
       throw new Error('Error creating post');
     }
+
     return await resp.json();
   } catch (error) {
     throw error;
   }
 };
+
+
 
 // PUT Update Post
 export const updatePost = async (postId, formData) => {

@@ -17,6 +17,10 @@ export const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
+  // Obtener el client_id desde localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const client_id = user?.client_id;
+
   // Filtra posts activos y archivados
   const publishedPosts = posts.filter(p => p.post_active);
   const archivedPosts = posts.filter(p => !p.post_active);
@@ -26,54 +30,63 @@ export const Dashboard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedPosts = publishedPosts.slice(startIndex, startIndex + itemsPerPage);
 
-  // Maneja la creación del post
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const form = e.target;
+    e.preventDefault();
 
-  const postData = {
-    remote_project: form.remote_project.checked,
-    project_city: form.project_city.value.trim(),
-    project_county: form.project_county.value.trim(),
-    project_country: form.project_country.value,
-    post_description: form.post_description.value.trim(),
-    estimated_budged: form.estimated_budged.value.trim(),
-    post_open: true,
-    post_active: true,
-    post_completed: false,
-    category_id: parseInt(form.category_id.value),
-  };
+    
+  const form = e.target; // <-- Esta línea es CLAVE
+ 
+    const categoryId = parseInt(form.category_id.value);
 
-  // Validar los campos obligatorios según backend
-  if (
-    !postData.project_city ||
-    !postData.project_country ||
-    !postData.post_description ||
-    !postData.estimated_budged ||
-    !postData.category_id
-  ) {
-    alert("Please complete City, Country, Description, Estimated Budget, and Category fields.");
-    return;
-  }
-
-  try {
-    const newPost = await createPost(postData);
-    setPosts(prev => [...prev, newPost]);
-    alert("¡Publicación creada exitosamente!");
-    form.reset();
-  } catch (err) {
-    console.error("Failed to create post", err);
-    if (err.message === "Unauthorized") {
-      alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
-      // Aquí podrías redirigir a login o limpiar sesión si quieres
-    } else if (err.message === "Error creating post") {
-      alert("Hubo un problema al crear la publicación. Revisa los datos e intenta de nuevo.");
-    } else {
-      alert("Ocurrió un error inesperado al crear la publicación.");
+    if (!categoryId) {
+      alert("Por favor selecciona una categoría.");
+      return;
     }
-  }
-};
 
+
+    const postData = {
+      remote_project: form.remote_project.checked,
+      project_city: form.project_city.value.trim(),
+      project_county: form.project_county.value.trim(),
+      project_country: form.project_country.value,
+      post_description: form.post_description.value.trim(),
+      estimated_budged: form.estimated_budged.value.trim(),
+      post_open: true,
+      post_active: true,
+      post_completed: false,
+      category_id: categoryId,
+      client_id: client_id,
+
+    };
+
+
+    if (
+      !postData.project_city ||
+      !postData.project_country ||
+      !postData.post_description ||
+      !postData.estimated_budged ||
+      !postData.category_id
+    ) {
+      alert("Please complete City, Country, Description, Estimated Budget, and Category fields.");
+      return;
+    }
+
+    try {
+      const newPost = await createPost(postData);
+      setPosts(prev => [...prev, newPost]);
+      alert("¡Publicación creada exitosamente!");
+      form.reset();
+    } catch (err) {
+      console.error("Failed to create post", err);
+      if (err.message === "Unauthorized") {
+        alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
+      } else if (err.message === "Error creating post") {
+        alert("Hubo un problema al crear la publicación. Revisa los datos e intenta de nuevo.");
+      } else {
+        alert("Ocurrió un error inesperado al crear la publicación.");
+      }
+    }
+  };
 
   const handleToggle = (id, field) => {
     setPosts(prev => prev.map(p => p.id === id ? { ...p, [field]: !p[field] } : p));

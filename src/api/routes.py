@@ -273,30 +273,25 @@ def get_post(id):
 
 # POST: Create new Post
 
-@api.route("/api/posts", methods=["POST"])
-@jwt_required()
-def create_post():
-    data = request.get_json()
-    user_id = get_jwt_identity()
 
-    # Busca el User primero
+@api.route("/posts", methods=["POST"])
+@jwt_required()  # obligated to use the token to access this route
+def create_post():
+    # Extraction of data from body
+    data = request.get_json()
+    user_id = get_jwt_identity()  # Get the user ID from the JWT token
+
+    # Buscar el client_id correspondiente al usuario autenticado
     user = db.session.execute(select(User).where(User.id == user_id)).scalar_one_or_none()
     if not user:
-        return jsonify({"error": "User not found"}), 404
-    
-    # Busca el cliente asociado al user
-    client = db.session.execute(select(Client).where(Client.user_id == user_id)).scalar_one_or_none()
-    if not client:
         return jsonify({"error": "Client not found"}), 404
-    
-    required_fields = [
-        "remote_project", "project_city", "project_county", "project_country",
-        "post_description", "estimated_budged", "post_open", "post_active", "post_completed"
-    ]
-    missing = [field for field in required_fields if field not in data]
-    if missing:
-        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
-    
+
+    # ✅ Validar que se haya enviado category_id
+    category_id = data.get("category_id")
+    if not category_id:
+        return jsonify({"error": "Category ID is required"}), 400
+
+    # Validar campos y crear post
     try:
         new_post = Post(
             remote_project=data["remote_project"],
@@ -308,8 +303,8 @@ def create_post():
             post_open=data["post_open"],
             post_active=data["post_active"],
             post_completed=data["post_completed"],
-            category_id=data.get("category_id"),  # opcional
-            client_id=client.client_id  # Usa el client_id, no el user.id
+            category_id=data["category_id"],
+            client_id=data["client_id"]  # Ya se obtiene desde el token
         )
         db.session.add(new_post)
         db.session.commit()
@@ -317,6 +312,7 @@ def create_post():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 # DELETE Post by id - IT DOES NOT WORK PROPERLY BUT IT MAY NOT BE NECESSARY
 
