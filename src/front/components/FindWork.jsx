@@ -136,46 +136,69 @@ export const FindWork = () => {
           </div>
         </div>
       </div>
-      <div className="row findwork__row customCard">
-        <nav>
-          <ul className="pagination">
-            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)} aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </button>
-            </li>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <li key={index + 1} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
-                <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
-                  {index + 1}
+      
+      <div className="published-projects">
+        <div className="dashboard-container">
+          <h2 className="section-title">Latest Projects</h2>
+
+          {/* Paginación */}
+          <nav className="projects-pagination">
+            <ul className="pagination-list">
+              <li className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  &laquo;
                 </button>
               </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`pagination-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`pagination-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Grid de proyectos */}
+          <div className="projects-grid">
+            {paginatedPosts.map(post => (
+              <div key={post.id} className="project-card">
+                <div className="card-header">
+                  <h3 className="card-title">{categoryMap[post.category_id] || "Unknown Category"}</h3>
+                  <div className="card-meta">
+                    <span>{post.project_city}, {post.project_country}</span>
+                    <span className="meta-separator">|</span>
+                    <span>📅 {post.post_date.split('T')[0].split('-').reverse().join('-')}</span>
+                  </div>
+                </div>
+
+                <div className="card-body">
+                  <p className="card-description">{post.post_description}</p>
+                </div>
+
+                <div className="card-footer">
+                  <button className="primary-button">View more</button>
+                </div>
+              </div>
             ))}
-            <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)} aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
-        {paginatedPosts.map(post => (
-          <div key={post.id} className="col-12 customCard" onClick={()=>handleClick(post)}>
-            <div className="card findwork__card p-3 shadow-sm">
-              <div className="row findwork__row w-100 align-items-center">
-                <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                  <p className="customTittle">{categoryMap[post.category_id] || "Unknown Category"}</p>
-                  <p>{post.project_city}, {post.project_country}</p>
-                </div>
-                <div className="col-lg-4 col-md-4 col6-sm-6 d-flex justify-content-between">
-                  <p>📅 {post.post_date}</p>
-                </div>
-              </div>
-              <div className="row findwork__row">
-                <p className="col-12 customDescription">{post.post_description}</p>
-              </div>
-            </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
