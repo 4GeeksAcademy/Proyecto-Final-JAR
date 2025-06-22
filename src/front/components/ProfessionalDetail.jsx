@@ -34,7 +34,7 @@ export const ProfessionalDetail = () => {
 
   return (
     <div className="container profileCustom align-content-center my-5">
-      <h2 className="text-center text-white">Perfil Profesional</h2>
+      <h2 className="text-center text-white">Professional Profile</h2>
 
       <div className="container my-5">
         <div className="row justify-content-center align-items-center">
@@ -48,7 +48,7 @@ export const ProfessionalDetail = () => {
 
         <div className="row justify-content-center my-5">
           <div className="col-8 text-white">
-            <h5>🧠 Experiencia Profesional:</h5>
+            <h5>🧠 Professional Experience:</h5>
             <p>
               {professional.prof_experience
                 ? professional.prof_experience
@@ -66,7 +66,7 @@ export const ProfessionalDetail = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                Ver Portafolio / Perfil Externo
+                View Portfolio / External Profile
               </a>
             </div>
           </div>
@@ -74,7 +74,7 @@ export const ProfessionalDetail = () => {
 
         <div className="row justify-content-center my-5">
           <button className="col-3 pricingButtonPlus" onClick={() => navigate(-1)}>
-            ← Volver Atrás
+            ← Go back
           </button>
         </div>
       </div>

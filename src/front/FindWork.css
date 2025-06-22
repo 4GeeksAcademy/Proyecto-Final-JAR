@@ -152,3 +152,172 @@
 a {
   text-decoration: none;
 }
+
+.post-view-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 980px;
+  margin: 2rem auto;
+}
+
+.post-header-card {
+  text-align: center;
+  color: #005691;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.details-grid-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-item-card {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.detail-item-card:hover {
+  transform: translateY(-3px);
+}
+
+.detail-item-card strong {
+  color: #004a7c;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.detail-item-card p {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.post-date-card {
+  margin: 1rem 0;
+  color: #666;
+  font-style: italic;
+  padding-left: 0.5rem;
+  border-left: 3px solid #005691;
+}
+
+.description-container-card {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #005691;
+}
+
+.description-content {
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-line;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.actions-container-card {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  gap: 1rem;
+}
+
+.action-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  flex: 1;
+  text-align: center;
+  max-width: 200px;
+}
+
+.btn-back {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.btn-back:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-contact {
+  background-color: transparent;
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.btn-contact:hover {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-apply {
+  background-color: #004a7c;
+  color: white;
+  border-color: #004a7c;
+}
+
+.btn-apply:hover {
+  background-color: #003d66;
+  border-color: #003d66;
+}
+
+.form-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #005691;
+  font-weight: 500;
+}
+
+.form-container textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.alert-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  color: white;
+}
+
+.alert-message.bg-danger {
+  background-color: #dc3545;
+}
+
+.alert-message.bg-success {
+  background-color: #28a745;
+}
