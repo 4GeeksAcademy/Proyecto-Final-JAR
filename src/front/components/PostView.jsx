@@ -33,11 +33,11 @@ export const PostView = () => {
     fetchData();
   }, [id]);
 
-  if (!post) return <div className="container text-center my-5">Cargando publicación...</div>;
+  if (!post) return <div className="container text-center my-5">Loading publication...</div>;
 
   const handleClickPostularse = () => {
     if (!user || !user.is_professional) {
-      alert("Solo los usuarios profesionales pueden postularse a esta oferta.");
+      alert("Only professional users can apply to this offer.");
       return;
     }
     setShowForm(true);
@@ -48,7 +48,7 @@ export const PostView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!candidatureMessage.trim()) {
-      setError("El mensaje de postulación es obligatorio.");
+      setError("Application message is required.");
       return;
     }
 
@@ -63,11 +63,11 @@ export const PostView = () => {
       };
 
       await createCandidature(formData);
-      setSuccess("¡Postulación enviada con éxito!");
+      setSuccess("Application sent successfully!");
       setCandidatureMessage("");
       setShowForm(false);
     } catch (err) {
-      setError("Error al enviar la postulación: " + (err.message || "Error desconocido"));
+      setError("Error sending application: " + (err.message || "Unknown error"));
     } finally {
       setLoading(false);
     }
@@ -75,66 +75,107 @@ export const PostView = () => {
 
   return (
     <div className="container my-5">
-      <div className="findwork__card">
-        <div className="card-body w-100 text-start">
-          <h3 className="text-center mb-4">📋 Detalles del proyecto</h3>
+      <div className="post-view-card">
+        <h3 className="post-header-card">📋 Project Details</h3>
 
-          <div className="row mb-3">
-            <div className="col-md-3 col-sm-6 mb-2">
-              <p><strong>Categoría:</strong><br /> {categoryName}</p>
-            </div>
-            <div className="col-md-3 col-sm-6 mb-2">
-              <p><strong> País:</strong><br /> {post.project_country}</p>
-            </div>
-            <div className="col-md-3 col-sm-6 mb-2">
-              <p><strong> Ciudad:</strong><br /> {post.project_city}</p>
-            </div>
-            <div className="col-md-3 col-sm-6 mb-2">
-              <p><strong> Provincia:</strong><br /> {post.project_county}</p>
-            </div>
+        <div className="details-grid-card">
+          <div className="detail-item-card">
+            <strong>Category:</strong>
+            <p>{categoryName}</p>
           </div>
-
-          <div className="mb-4">
-            <p><strong>Fecha de publicación:</strong> {post.post_date?.split("T")[0].split("-").reverse().join("-")}</p>
+          <div className="detail-item-card">
+            <strong>Country:</strong>
+            <p>{post.project_country}</p>
           </div>
-
-          <div className="description-section mb-4">
-            <h5 className="customTittle">📝 Descripción del proyecto</h5>
-            <p className="customDescription">{post.post_description}</p>
+          <div className="detail-item-card">
+            <strong>City:</strong>
+            <p>{post.project_city}</p>
           </div>
-
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <button className="btn btn-secondary" onClick={() => window.history.back()}>🔙 Volver</button>
-
-            {!showForm && (
-              <button
-                className="btn btn-primary"
-                onClick={handleClickPostularse}
-              >
-                Postularse
-              </button>
-            )}
+          <div className="detail-item-card">
+            <strong>County:</strong>
+            <p>{post.project_county}</p>
           </div>
+        </div>
 
-          {showForm && (
-            <form onSubmit={handleSubmit} className="mt-3">
+        <div className="post-date-card">
+          <strong>Post date:</strong> {post.post_date?.split("T")[0].split("-").reverse().join("-")}
+        </div>
+
+        <div className="description-container-card">
+          <h5 className="description-title">📝 Project Description</h5>
+          <p className="description-content">{post.post_description}</p>
+        </div>
+
+        <div className="actions-container-card">
+          <button
+            className="action-btn btn-back"
+            onClick={() => window.history.back()}
+          >
+            ← Go back
+          </button>
+          {!showForm && (
+            <button
+              className="action-btn btn-apply"
+              onClick={handleClickPostularse}
+            >
+              Apply
+            </button>
+          )}
+        </div>
+
+        {showForm && (
+          <form onSubmit={handleSubmit} className="form-container">
+            <div className="mb-3">
+              <label htmlFor="candidatureMessage" className="form-label">
+                <strong>Application Message:</strong>
+              </label>
               <textarea
-                rows={4}
+                id="candidatureMessage"
+                rows={6}
                 className="form-control"
-                placeholder="Escribe tu mensaje para la postulación"
+                placeholder="Explain why you're the ideal candidate for this project..."
                 value={candidatureMessage}
                 onChange={(e) => setCandidatureMessage(e.target.value)}
                 required
               />
-              <button className="btn btn-success mt-2" type="submit" disabled={loading}>
-                {loading ? "Enviando..." : "Enviar"}
+            </div>
+            <div className="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                className="action-btn btn-back"
+                onClick={() => setShowForm(false)}
+                disabled={loading}
+              >
+                Cancel
               </button>
-            </form>
-          )}
+              <button
+                className="action-btn btn-apply"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Sending...
+                  </>
+                ) : (
+                  "Submit Application"
+                )}
+              </button>
+            </div>
+          </form>
+        )}
 
-          {error && <p className="text-danger mt-3">{error}</p>}
-          {success && <p className="text-success mt-3">{success}</p>}
-        </div>
+        {error && (
+          <div className="alert-message bg-danger">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="alert-message bg-success">
+            {success}
+          </div>
+        )}
       </div>
     </div>
   );
