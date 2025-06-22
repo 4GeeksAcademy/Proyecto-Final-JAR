@@ -167,29 +167,6 @@ export const ComponentHome = () => {
         <h2>Latest published projects</h2>
 
         <div className="container">
-          <div className="row findwork__row customCard">
-            {paginatedPosts.map(post => (
-              <div key={post.id} className="col-12 customCard">
-                <div className="card findwork__card p-3 shadow-sm">
-                  <div className="row findwork__row w-100 align-items-center">
-                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                      <p className="customTittle">
-                        {categoryMap[post.category_id] || "Unknown Category"}
-                      </p>
-                      <p>{post.project_city}, {post.project_country}</p>
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-                      <p>📅 {post.post_date}</p>
-                    </div>
-                  </div>
-                  <div className="row findwork__row">
-                    <p className="col-12 customDescription">{post.post_description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {/* Pagination */}
           <nav className="projects-pagination">
             <ul className="pagination-list">

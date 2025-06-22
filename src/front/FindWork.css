@@ -57,7 +57,7 @@
   gap: 20px;
 }
 
-/* Estilo de cada tarjeta */
+
 .findwork__card {
   background-color: #ffffff;
   border-radius: 12px;
@@ -65,15 +65,11 @@
   padding: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%; 
-  max-width: 980px; 
-  margin: auto; 
-  height: 900px;
+  width: 100%;
+  max-width: 980px;
+  margin: auto;
 }
+
 
 
 .findwork__card:hover {
@@ -87,6 +83,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   display: flex;
+  font-family: inherit;
 }
 
 
@@ -100,4 +97,58 @@
   font-size: 20px;
 }
 
+.profname {
+  font-size: 1.8rem;
+  color: #005691;
+  font-weight: 600;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%; 
+}
 
+.findwork__card {
+  height: auto; 
+}
+
+.customDescription {
+  padding-left: 0; 
+  margin-top: 10px; 
+  text-align: left;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #333;
+}
+
+.name-rating-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.rating-container {
+  margin-left: auto; 
+}
+
+.btn-custom-details {
+  display: inline-block;
+  padding: 0.375rem 1.5rem;
+  border: 1px solid #004a7c;
+  color: white;
+  background-color: #004a7c;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+}
