@@ -280,21 +280,19 @@ def create_post():
     # Extraction of data from body
     data = request.get_json()
     user_id = get_jwt_identity()  # Get the user ID from the JWT token
+
     # Buscar el client_id correspondiente al usuario autenticado
-    user = db.session.execute(select(User).where(
-        User.id == user_id)).scalar_one_or_none()
+    user = db.session.execute(select(User).where(User.id == user_id)).scalar_one_or_none()
     if not user:
         return jsonify({"error": "Client not found"}), 404
-    # Validate required fields
-    required_fields = [
-        "remote_project", "project_city", "project_county", "project_country",
-        "post_description", "estimated_budged", "post_open", "post_active", "post_completed", "category_id"
-    ]
-    missing = [field for field in required_fields if field not in data]
-    if missing:
-        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+
+    # ✅ Validar que se haya enviado category_id
+    category_id = data.get("category_id")
+    if not category_id:
+        return jsonify({"error": "Category ID is required"}), 400
+
+    # Validar campos y crear post
     try:
-        # Create new post
         new_post = Post(
             remote_project=data["remote_project"],
             project_city=data["project_city"],
@@ -305,8 +303,8 @@ def create_post():
             post_open=data["post_open"],
             post_active=data["post_active"],
             post_completed=data["post_completed"],
-            category_id=data.get("category_id"),  # Optional field
-            client_id=user.id  # Usar el client.id correcto
+            category_id=data["category_id"],
+            client_id=data["client_id"]  # Ya se obtiene desde el token
         )
         db.session.add(new_post)
         db.session.commit()
@@ -314,6 +312,7 @@ def create_post():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 # DELETE Post by id - IT DOES NOT WORK PROPERLY BUT IT MAY NOT BE NECESSARY
 

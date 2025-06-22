@@ -21,8 +21,10 @@ export const ComponentHome = () => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL;
       if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
 
+
       const response = await fetch(`${backendUrl}/api/hello`);
       const data = await response.json();
+
 
       if (response.ok) {
         dispatch({ type: "set_hello", payload: data.message });
@@ -87,10 +89,10 @@ export const ComponentHome = () => {
           alt="Freelancer platform hero"
         />
         <h1 className="title">Get more dates with Freelancers</h1>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search Any Services"
+        <input 
+          type="text" 
+          className="search-input" 
+          placeholder="Search Any Services" 
         />
       </div>
 
@@ -161,7 +163,6 @@ export const ComponentHome = () => {
         </button>
       </div>
 
-      {/* Projects section */}
       <div className="published-projects">
         <h2>Latest published projects</h2>
 
@@ -190,38 +191,61 @@ export const ComponentHome = () => {
           </div>
 
           {/* Pagination */}
-          <div className="row mt-4">
-            <div className="col-12 d-flex justify-content-center">
-              <nav>
-                <ul className="pagination">
-                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      aria-label="Previous page"
-                    >
-                      &laquo; Prev
-                    </button>
-                  </li>
-                  <li className="page-item">
-                    <span className="page-link">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                  </li>
-                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      aria-label="Next page"
-                    >
-                      Next &raquo;
-                    </button>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+          <nav className="projects-pagination">
+            <ul className="pagination-list">
+              <li className={`pagination-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  &laquo;
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`pagination-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button
+                    className="pagination-button"
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`pagination-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button
+                  className="pagination-button"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  &raquo;
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Projects Grid */}
+          <div className="projects-grid">
+            {paginatedPosts.map(post => (
+              <div key={post.id} className="project-card">
+                <div className="card-header">
+                  <h3 className="card-title">{categoryMap[post.category_id] || "Unknown Category"}</h3>
+                  <div className="card-meta">
+                    <span>{post.project_city}, {post.project_country}</span>
+                    <span className="meta-separator">|</span>
+                    <span>📅 {post.post_date.split('T')[0] .split('-').reverse().join('-')}</span>
+                  </div>
+                </div>
+
+                <div className="card-body">
+                  <p className="card-description">{post.post_description}</p>
+                </div>
+
+                <div className="card-footer">
+                  <button className="primary-button">View more</button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
