@@ -1,0 +1,66 @@
+/* Para el contenedor de la tarjeta: quitar altura fija para que sea más flexible */
+.findwork__card {
+  height: auto; /* en vez de 900px fijo */
+  padding: 30px 25px; /* un poco más espacioso */
+  text-align: left; /* mejor para leer textos largos */
+  align-items: stretch; /* para que el contenido use todo el ancho */
+}
+
+/* Títulos más llamativos y consistentes */
+.customTittle {
+  font-size: 20px;
+  color: #005691; /* tu azul corporativo */
+  margin: 10px 0 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Descripción más cómoda de leer */
+.customDescription {
+  height: auto; /* quitar altura fija para que crezca según texto */
+  padding-left: 0; /* quitar padding para que se alinee con el resto */
+  font-weight: 400;
+  line-height: 1.6;
+  color: #444;
+  white-space: pre-wrap; /* para respetar saltos de línea */
+}
+
+/* Contenedor de info para que quede alineado y ordenado */
+.info-section {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Ajustar párrafos para que tengan separación */
+.info-section p {
+  margin: 8px 0;
+}
+
+/* Botones más consistentes y accesibles */
+.findwork__card .btn {
+  min-width: 140px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+/* Espacio entre botones */
+.findwork__card .btn + .btn {
+  margin-left: 12px;
+}
+
+/* Hover más suave y definido */
+.findwork__card .btn-primary:hover {
+  background-color: #004a8c;
+  border-color: #004a8c;
+}
+
+.findwork__card .btn-danger:hover {
+  background-color: #b02a37;
+  border-color: #b02a37;
+}
+
+.findwork__card .btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}

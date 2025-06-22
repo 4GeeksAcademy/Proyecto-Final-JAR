@@ -5,20 +5,20 @@ import "../../front/FindWork.css";
 import storeReducer from "../store.js";
 import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-
+import { Link } from "react-router-dom";
 
 
 export const FindWork = () => {
-  const {store, dispatch} = useGlobalReducer();
+  const { store, dispatch } = useGlobalReducer();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryMap, setCategoryMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({ 
-    category_name: "", 
-    project_country: "", 
-    project_city: "" 
+  const [filters, setFilters] = useState({
+    category_name: "",
+    project_country: "",
+    project_city: ""
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [uniqueData, setUniqueData] = useState({
@@ -27,37 +27,37 @@ export const FindWork = () => {
   });
   const itemsPerPage = 5;
   const navigate = useNavigate();
-useEffect(() => {
-  const fetchAllData = async () => {
-    try {
-      const [postData, categoryData] = await Promise.all([
-        getPosts(),          // ✅ Trae todos los posts
-        getCategories()
-      ]);
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const [postData, categoryData] = await Promise.all([
+          getPosts(),          // ✅ Trae todos los posts
+          getCategories()
+        ]);
 
-      setPosts(postData);
-      setCategories(categoryData);
+        setPosts(postData);
+        setCategories(categoryData);
 
-      const map = categoryData.reduce((acc, cat) => {
-        acc[cat.id] = cat.name;
-        return acc;
-      }, {});
-      setCategoryMap(map);
+        const map = categoryData.reduce((acc, cat) => {
+          acc[cat.id] = cat.name;
+          return acc;
+        }, {});
+        setCategoryMap(map);
 
-      setUniqueData({
-        countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
-        cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean),
-      });
+        setUniqueData({
+          countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
+          cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean),
+        });
 
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
-  fetchAllData();
-}, []);
+    fetchAllData();
+  }, []);
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({ ...prev, [filterType]: value }));
@@ -83,10 +83,10 @@ useEffect(() => {
 
 
   const handleClick = (post) => {
-   if (store.user?.is_professional && store.user?.plan?.name?.length > 0) {
-      
+    if (store.user?.is_professional && store.user?.plan?.name?.length > 0) {
+
       console.log('poner aqui el navigate a la pagina de detalles del post', post);
-      
+
     } else {
       navigate('/pricing')
     }
@@ -99,8 +99,8 @@ useEffect(() => {
         <div className="container my-5">
           <div className="row findwork__row g-3">
             <div className="col-lg-2 col-md-6 col-sm-12">
-              <select 
-                className="form-select" 
+              <select
+                className="form-select"
                 value={filters.category_name}
                 onChange={(e) => handleFilterChange("category_name", e.target.value)}
               >
@@ -111,7 +111,7 @@ useEffect(() => {
               </select>
             </div>
             <div className="col-lg-2 col-md-6 col-sm-12">
-              <select 
+              <select
                 className="form-select"
                 value={filters.project_country}
                 onChange={(e) => handleFilterChange("project_country", e.target.value)}
@@ -123,7 +123,7 @@ useEffect(() => {
               </select>
             </div>
             <div className="col-lg-2 col-md-6 col-sm-12">
-              <select 
+              <select
                 className="form-select"
                 value={filters.project_city}
                 onChange={(e) => handleFilterChange("project_city", e.target.value)}
@@ -137,7 +137,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      
+
       <div className="published-projects">
         <div className="dashboard-container">
           <h2 className="section-title">Latest Projects</h2>
@@ -194,7 +194,9 @@ useEffect(() => {
                 </div>
 
                 <div className="card-footer">
-                  <button className="primary-button">View more</button>
+                  <Link to={`/post/${post.id}`}>
+                    <button className="primary-button">View more</button>
+                  </Link>
                 </div>
               </div>
             ))}
