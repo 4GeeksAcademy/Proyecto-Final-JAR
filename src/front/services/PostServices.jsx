@@ -14,20 +14,21 @@ export const getPosts = async () => {
 };
 
 // GET a post by ID
-export const fetchPostById = async (postId) => {
-  const numericId = Number(postId);
+// GET posts by client ID
+export const fetchPostsByClient = async (clientId) => {
+  const numericId = Number(clientId);
   if (isNaN(numericId)) {
-    throw new Error("Post ID must be a number");
+    throw new Error("Client ID must be a number");
   }
   try {
     const response = await fetch(
-      `${backendUrl}/api/posts/${numericId}`
+      `${backendUrl}/api/posts/client/${numericId}`
     );
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error("Post not found");
+        throw new Error("No posts found for this client");
       }
-      throw new Error("Error fetching post");
+      throw new Error("Error fetching posts");
     }
     return await response.json();
   } catch (error) {
@@ -85,3 +86,8 @@ export const updatePost = async (postId, formData) => {
     throw error;
   }
 };
+
+
+
+
+
