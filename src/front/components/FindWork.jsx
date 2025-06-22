@@ -6,6 +6,8 @@ import storeReducer from "../store.js";
 import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
+
+
 export const FindWork = () => {
   const {store, dispatch} = useGlobalReducer();
   const [posts, setPosts] = useState([]);
@@ -25,38 +27,37 @@ export const FindWork = () => {
   });
   const itemsPerPage = 5;
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        const [postData, categoryData] = await Promise.all([
-          getPosts(),
-          getCategories()
-        ]);
+useEffect(() => {
+  const fetchAllData = async () => {
+    try {
+      const [postData, categoryData] = await Promise.all([
+        getPosts(),          // ✅ Trae todos los posts
+        getCategories()
+      ]);
 
-        setPosts(postData);
-        setCategories(categoryData);
-        
-        // Create category map
-        const map = categoryData.reduce((acc, cat) => {
-          acc[cat.id] = cat.name;
-          return acc;
-        }, {});
-        setCategoryMap(map);
+      setPosts(postData);
+      setCategories(categoryData);
 
-        // Extract unique locations
-        setUniqueData({
-          countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
-          cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean)
-        });
-        
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-    fetchAllData();
-  }, []);
+      const map = categoryData.reduce((acc, cat) => {
+        acc[cat.id] = cat.name;
+        return acc;
+      }, {});
+      setCategoryMap(map);
+
+      setUniqueData({
+        countries: [...new Set(postData.map(p => p.project_country))].filter(Boolean),
+        cities: [...new Set(postData.map(p => p.project_city))].filter(Boolean),
+      });
+
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  fetchAllData();
+}, []);
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({ ...prev, [filterType]: value }));
