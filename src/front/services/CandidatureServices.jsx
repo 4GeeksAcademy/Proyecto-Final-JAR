@@ -39,17 +39,21 @@ export const fetchCandidatureById = async (candidatureId) => {
 
 // POST Create Candidature 
 export const createCandidature = async (formData) => {
-    try {
-        const resp = await fetch(`${backendUrl}/api/candidatures`, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (!resp.ok) throw new Error('Error creating candidature');
-        return await resp.json();
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const token = localStorage.getItem('token'); // o como guardes el token
+    const resp = await fetch(`${backendUrl}/api/candidatures`, {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`  // <--- aquí el token
+      }
+    });
+    if (!resp.ok) throw new Error('Error creating candidature');
+    return await resp.json();
+  } catch (error) {
+    throw error;
+  }
 }
 
 // PUT Update Candidature
