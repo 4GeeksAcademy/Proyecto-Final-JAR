@@ -21,8 +21,10 @@ export const ComponentHome = () => {
       const backendUrl = import.meta.env.VITE_BACKEND_URL;
       if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file");
 
+
       const response = await fetch(`${backendUrl}/api/hello`);
       const data = await response.json();
+
 
       if (response.ok) {
         dispatch({ type: "set_hello", payload: data.message });
@@ -87,10 +89,10 @@ export const ComponentHome = () => {
           alt="Freelancer platform hero"
         />
         <h1 className="title">Get more dates with Freelancers</h1>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search Any Services"
+        <input 
+          type="text" 
+          className="search-input" 
+          placeholder="Search Any Services" 
         />
       </div>
 
@@ -127,10 +129,18 @@ export const ComponentHome = () => {
           ref={containerRef}
         >
           {[
-            { title: "Reforms", img: "https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" },
-            { title: "Gardening", img: "https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-            { title: "Programming & Tech", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-            { title: "Construction & Maintenance", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" }
+            { title: "Education and Training", img: "https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" },
+            { title: "Design and Creativity", img: "https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { title: "Technology and Development", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { title: "Health and Wellness", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Marketing and Sales", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Administration and Office", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Legal and Financial Services", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+            { title: "Logistics and Transportation", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+             { title: "Hospitality and Event", img:"https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
+
+
+            
           ].map((service, index) => (
             <div key={index} className="service-card">
               <img
@@ -154,8 +164,31 @@ export const ComponentHome = () => {
       </div>
 
       <div className="published-projects">
-        <div className="dashboard-container">
-          <h2 className="section-title">Latest Published Projects</h2>
+        <h2>Latest published projects</h2>
+
+        <div className="container">
+          <div className="row findwork__row customCard">
+            {paginatedPosts.map(post => (
+              <div key={post.id} className="col-12 customCard">
+                <div className="card findwork__card p-3 shadow-sm">
+                  <div className="row findwork__row w-100 align-items-center">
+                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+                      <p className="customTittle">
+                        {categoryMap[post.category_id] || "Unknown Category"}
+                      </p>
+                      <p>{post.project_city}, {post.project_country}</p>
+                    </div>
+                    <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
+                      <p>📅 {post.post_date}</p>
+                    </div>
+                  </div>
+                  <div className="row findwork__row">
+                    <p className="col-12 customDescription">{post.post_description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
           {/* Pagination */}
           <nav className="projects-pagination">
