@@ -89,8 +89,7 @@ export const FindWork = () => {
         navigate("/pricing");
       }
     } else {
-      // No es profesional, puedes manejarlo a tu gusto, aquí alert
-      alert("Only professional users can access this page.");
+      
     }
   };
 

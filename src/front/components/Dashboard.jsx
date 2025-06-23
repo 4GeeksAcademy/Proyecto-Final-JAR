@@ -60,13 +60,11 @@ const handleSubmit = async (e) => {
   const categoryId = parseInt(form.category_id.value); 
 
   if (!categoryId) {
-    alert("Please, select a category");
     return;
   }
 
   const location = form.project_location.value;
   if (!location) {
-    alert("Please select a location");
     return;
   }
   const [project_country, project_city] = location.split("|");
@@ -92,23 +90,23 @@ const handleSubmit = async (e) => {
       !postData.estimated_budged ||
       !postData.category_id
     ) {
-      alert("Please complete City, Country, Description, Estimated Budget, and Category fields.");
+    
       return;
     }
 
     try {
       const newPost = await createPost(postData);
       setPosts((prev) => [...prev, newPost]);
-      alert("Post created successfully!");
+     
       form.reset();
     } catch (err) {
       console.error("Failed to create post", err);
       if (err.message === "Unauthorized") {
-        alert("Your session has expired. Please, log in");
+       
       } else if (err.message === "Error creating post") {
-        alert("There was a problem creating your request. Please, review your inputs and try again.");
+        
       } else {
-        alert("Unexpected error creating your request.");
+        
       }
     }
   };

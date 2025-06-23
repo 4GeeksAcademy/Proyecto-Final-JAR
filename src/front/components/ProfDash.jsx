@@ -15,6 +15,8 @@ export const ProfessionalDashboard = () => {
   const pageSize = 5;
   const navigate = useNavigate();
 
+
+  
   useEffect(() => {
     const fetchApplications = async () => {
       await new Promise(res => setTimeout(res, 300));
