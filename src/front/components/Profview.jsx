@@ -19,7 +19,7 @@ export const ProfessionalView = () => {
     setIsSaving(true);
 
     setTimeout(() => {
-      console.log("Datos guardados:", formData);
+      console.log("Details saved:", formData);
       setIsSaving(false);
       alert("Updated!");
     }, 1500);

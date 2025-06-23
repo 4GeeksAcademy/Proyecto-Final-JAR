@@ -31,7 +31,7 @@ export const Navbar = () => {
           <Link className="nav-link text-light  px-2"  to="/about">About</Link> 
         </li>
         <li className="nav-item  mx-2">
-          <Link className="nav-link text-light m-2px px-2" to="/findTalent">Find Talent</Link>
+          <Link className="nav-link text-light m-2px px-2" to="/findTalent">Find Professionals</Link>
         </li>
         <li className="nav-item  mx-2">
           <Link className="nav-link text-light m-2px px-2" to="/findWork">Find Work</Link>

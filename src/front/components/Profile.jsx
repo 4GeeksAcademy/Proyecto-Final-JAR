@@ -115,11 +115,11 @@ export const Profile = () => {
             confirmPassword: ""
           });
         } else {
-          console.error(data.message || "Error al cambiar la contraseña.");
+          console.error(data.message || "Error changing password");
         }
       })
       .catch(err => {
-        console.error("Error al cambiar la contraseña:", err);
+        console.error("Error changing password:", err);
       });
   };
 
@@ -253,7 +253,7 @@ export const Profile = () => {
           </div>
         </div>
 
-        <div className="row justify-content-center my-5">
+        {/* <div className="row justify-content-center my-5">
           <div className="col-lg-2 col-md-7 col-sm-7">
             <label className="form-label">Geo Dir</label>
             <input
@@ -264,7 +264,7 @@ export const Profile = () => {
               disabled={!isEditing}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="row justify-content-center my-5">
           <div className="row justify-content-center">

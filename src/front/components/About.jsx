@@ -17,11 +17,11 @@ export const About = () => {
 
             <div className="about-text">
 
-                <p className="about-text">Star Gigs: The perfect bridge between clients and businesses</p>
+                <p className="about-text">StarGig: The perfect bridge connecting professionals with people in need of their services</p>
 
-                <p className="about-text">
-                    In a world where connection and efficiency are key, Star Gigs stands as the ideal link between clients and businesses, ensuring smooth communication, real opportunities, and effective results.
-                </p>
+                {/* <p className="about-text">
+                    In a world where connection and efficiency are key, StarGig stands as the ideal link between clients and businesses, ensuring smooth communication, real opportunities, and effective results.
+                </p> */}
 
                 <p className="about-text">
                     Our platform makes it easier for professionals from various industries to connect with clients seeking reliable solutions, providing a space where experience and innovation come together to drive successful projects.
