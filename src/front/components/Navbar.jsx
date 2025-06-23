@@ -12,12 +12,8 @@ export const Navbar = () => {
 <nav className="navbar navbarCustom navbar-expand-lg navbar-dark text-white sticky-top " >
   <div className="container-fluid  d-flex justify-content-between">
   <a href="/">
-    <img className="LogoStarGig" src="src/front/assets/img/LogoStarGig.png" alt="Logo StarGig" />
+    <img className="LogoStarGig" src="src/front/assets/img/StargigLogo.png" alt="Logo StarGig" />
 </a>
-
-
-
-
 
 <button className="navbar-toggler my-2 border-white border-2" type="button" data-bs-toggle="collapse" 
   data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
