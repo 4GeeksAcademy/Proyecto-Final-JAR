@@ -53,35 +53,35 @@ export const Dashboard = () => {
     return cat ? cat.name : "No category";
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const form = e.target;
-  const categoryId = parseInt(form.category_id.value); 
+    const form = e.target;
+    const categoryId = parseInt(form.category_id.value);
 
-  if (!categoryId) {
-    return;
-  }
+    if (!categoryId) {
+      return;
+    }
 
-  const location = form.project_location.value;
-  if (!location) {
-    return;
-  }
-  const [project_country, project_city] = location.split("|");
+    const location = form.project_location.value;
+    if (!location) {
+      return;
+    }
+    const [project_country, project_city] = location.split("|");
 
-  const postData = {
-    remote_project: form.remote_project.checked,
-    project_city,
-    project_county: form.project_county.value.trim(),
-    project_country,
-    post_description: form.post_description.value.trim(), 
-    estimated_budged: form.estimated_budged.value.trim(),
-    post_open: true,
-    post_active: true,
-    post_completed: false,
-    category_id: categoryId,
-    client_id: client_id,
-  };
+    const postData = {
+      remote_project: form.remote_project.checked,
+      project_city,
+      project_county: form.project_county.value.trim(),
+      project_country,
+      post_description: form.post_description.value.trim(),
+      estimated_budged: form.estimated_budged.value.trim(),
+      post_open: true,
+      post_active: true,
+      post_completed: false,
+      category_id: categoryId,
+      client_id: client_id,
+    };
 
     if (
       !postData.project_city ||
@@ -90,23 +90,23 @@ const handleSubmit = async (e) => {
       !postData.estimated_budged ||
       !postData.category_id
     ) {
-    
+
       return;
     }
 
     try {
       const newPost = await createPost(postData);
       setPosts((prev) => [...prev, newPost]);
-     
+
       form.reset();
     } catch (err) {
       console.error("Failed to create post", err);
       if (err.message === "Unauthorized") {
-       
+
       } else if (err.message === "Error creating post") {
-        
+
       } else {
-        
+
       }
     }
   };
@@ -127,57 +127,79 @@ const handleSubmit = async (e) => {
     }
   };
 
-  const renderPostCard = (post, isArchived = false) => (
-    <div key={post.id} className="col-12 customCard">
-      <div className="card findwork__card p-3 shadow-sm">
-        <div className="row findwork__row w-100 align-items-center">
-          <div className="col-lg-4 col-md-4 col-sm-6 d-flex flex-column gap-1">
-            <p><strong>Category:</strong> {getCategoryName(post.category_id)}</p>
-            <p><strong>Location:</strong> {post.project_country},{post.project_county},{post.project_city}</p>
-            <p><strong>Remote Project:</strong> {post.remote_project ? "Sí" : "No"}</p>
-          </div>
-          <div className="col-lg-4 col-md-4 col-sm-6 d-flex flex-column gap-1">
-            <p><strong>Estimated Budget:</strong> {post.estimated_budged} - €</p>
-            <p><strong>Date:</strong> {new Date(post.post_date).toLocaleDateString("es-ES")}</p>
-            {isArchived && <p className="text-success">Archived</p>}
-          </div>
-        </div>
-        <div className="row findwork__row mt-3">
-          <p className="col-12 customDescription">{post.post_description}</p>
-        </div>
-        <div className="row findwork__row">
-          <div className="col-12 d-flex align-items-center gap-3">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" checked={post.post_active}
-                onChange={() => handleActiveToggle(post.id)} id={`active-${post.id}`} />
-              <label className="form-check-label" htmlFor={`active-${post.id}`}>Active</label>
-            </div>
-            {!isArchived && (
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" checked={post.post_open}
-                  disabled={!post.post_active} onChange={() => handleToggle(post.id, "post_open")}
-                  id={`open-${post.id}`} />
-                <label className="form-check-label" htmlFor={`open-${post.id}`}>Open</label>
-              </div>
-            )}
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" checked={post.post_completed}
-                onChange={() => handleToggle(post.id, "post_completed")} id={`completed-${post.id}`} />
-              <label className="form-check-label" htmlFor={`completed-${post.id}`}>Completed</label>
-            </div>
-          </div>
-        </div>
+const renderPostCard = (post, isArchived = false) => (
+  <div key={post.id} className="project-card">
+    <div className="project-card__header">
+      <h3 className="project-card__title">{getCategoryName(post.category_id)}</h3>
+      <div className="project-card__meta">
+        <span className="project-card__meta-item">
+          {post.project_country}, {post.project_city}
+        </span>
+        <span className="project-card__meta-sep">·</span>
+        <span className="project-card__meta-item">
+          📅 {new Date(post.post_date).toLocaleDateString('es-ES')}
+        </span>
+        <span className="project-card__meta-sep">·</span>
+        <span className="project-card__meta-item">
+          <strong>Remote:</strong> {post.remote_project ? 'Sí' : 'No'}
+        </span>
+        <span className="project-card__meta-sep">·</span>
+        <span className="project-card__meta-item">
+          <strong>Budget:</strong> {post.estimated_budged} €
+        </span>
+      </div>
+    </div>
+    <div className="project-card__body">
+      <p className="project-card__description">
+        {post.post_description}
+      </p>
+    </div>
+    <div className="project-card__footer">
+      <div className="project-card__status-filter">
+        <label className="project-card__status-item">
+          <input
+            type="checkbox"
+            checked={post.post_active}
+            onChange={() => handleActiveToggle(post.id)}
+          /> Active
+        </label>
         {!isArchived && (
-          <div className="row findwork__row">
-            <div className="col-12 text-end">
-              <button className="btn btn-primary btn-sm me-2">View more</button>
-              <button className="btn btn-secondary btn-sm me-2">Edit</button>
-            </div>
-          </div>
+          <label className="project-card__status-item">
+            <input
+              type="checkbox"
+              checked={post.post_open}
+              disabled={!post.post_active}
+              onChange={() => handleToggle(post.id, 'post_open')}
+            /> Open
+          </label>
+        )}
+        <label className="project-card__status-item">
+          <input
+            type="checkbox"
+            checked={post.post_completed}
+            onChange={() => handleToggle(post.id, 'post_completed')}
+          /> Completed
+        </label>
+      </div>
+      <div className="project-card__actions">
+        <button
+          className="project-card__btn project-card__btn--view"
+          onClick={() => handleView(post.id)}
+        >
+          View more
+        </button>
+        {!isArchived && (
+          <button
+            className="project-card__btn project-card__btn--edit"
+            onClick={() => handleEdit(post.id)}
+          >
+            Edit
+          </button>
         )}
       </div>
     </div>
-  );
+  </div>
+);
 
   const locationOptions = [
     { country: "France", city: "Paris" },
@@ -204,7 +226,7 @@ const handleSubmit = async (e) => {
                 ))}
               </select>
             </div>
-             <div className="form-group">
+            <div className="form-group">
               <select className="form-select" name="project_location" required>
                 <option value="">Location</option>
                 {locationOptions.map((opt, idx) => (
@@ -214,8 +236,8 @@ const handleSubmit = async (e) => {
                 ))}
               </select>
             </div>
-            
-            
+
+
             <div className="form-group">
               <input type="text" className="form-control" name="project_county" placeholder="County" />
             </div>
