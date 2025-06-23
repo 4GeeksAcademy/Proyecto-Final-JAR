@@ -22,10 +22,12 @@ export const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwords, setPasswords] = useState({
+    currentPassword: "",
     newPassword: "",
     confirmPassword: ""
   });
 
+  const [notice, setNotice] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,10 +61,17 @@ export const Profile = () => {
     }
   };
 
+  const showTemporaryNotice = (message) => {
+    setNotice(message);
+    setTimeout(() => {
+      setNotice(null);
+    }, 4000);
+  };
+
   const handleSave = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      console.error("No token found in localStorage");
+      showTemporaryNotice("No se encontró el token.");
       return;
     }
 
@@ -79,13 +88,17 @@ export const Profile = () => {
         localStorage.setItem("user", JSON.stringify(data));
         loader();
         setIsEditing(false);
+        showTemporaryNotice("Tu perfil se ha actualizado correctamente.");
       })
-      .catch(err => console.error("Error updating user:", err));
+      .catch(err => {
+        console.error("Error actualizando usuario:", err);
+        showTemporaryNotice("Hubo un error al actualizar el perfil.");
+      });
   };
 
   const handleChangePassword = () => {
     if (passwords.newPassword !== passwords.confirmPassword) {
-      console.error("Passwords do not match.");
+      showTemporaryNotice("Las contraseñas no coinciden.");
       return;
     }
 
@@ -93,6 +106,7 @@ export const Profile = () => {
     const userId = store.user?.id;
 
     if (!token || !userId) {
+      showTemporaryNotice("Falta token o ID de usuario.");
       return;
     }
 
@@ -103,6 +117,7 @@ export const Profile = () => {
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
+        currentPassword: passwords.currentPassword,
         newPassword: passwords.newPassword
       })
     })
@@ -111,15 +126,18 @@ export const Profile = () => {
         if (data.success) {
           setShowPasswordForm(false);
           setPasswords({
+            currentPassword: "",
             newPassword: "",
             confirmPassword: ""
           });
+          showTemporaryNotice("Contraseña cambiada exitosamente.");
         } else {
-          console.error(data.message || "Error changing password");
+          showTemporaryNotice(data.message || "Error al cambiar la contraseña.");
         }
       })
       .catch(err => {
-        console.error("Error changing password:", err);
+        console.error("Error cambiando contraseña:", err);
+        showTemporaryNotice("Hubo un error al cambiar la contraseña.");
       });
   };
 
@@ -143,7 +161,6 @@ export const Profile = () => {
       <h2 className="text-center text-white">
         {store.user?.is_professional ? "Professional profile" : "Client profile"}
       </h2>
-
       <div className="container my-5">
         <div className="justify-content-center align-items-center">
           <div className="userIcon">
@@ -152,6 +169,10 @@ export const Profile = () => {
           <div>
             <p className="userName">{form.firstname || "User Name"}</p>
           </div>
+          
+      {notice && (
+        <div className="alert alert-info text-center my-3">{notice}</div>
+      )}
         </div>
 
         <div className="row mt-5 justify-content-center g-3">
@@ -163,26 +184,29 @@ export const Profile = () => {
               value={form.firstname}
               onChange={handleChange("firstname")}
               disabled={!isEditing}
+              maxLength={20}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
-            <label className="form-label">Last Name 1</label>
+            <label className="form-label">First Last Name</label>
             <input
               type="text"
               className="form-control"
               value={form.lastname1}
               onChange={handleChange("lastname1")}
               disabled={!isEditing}
+              maxLength={20}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
-            <label className="form-label">Last Name 2</label>
+            <label className="form-label">Second Last Name</label>
             <input
               type="text"
               className="form-control"
               value={form.lastname2}
               onChange={handleChange("lastname2")}
               disabled={!isEditing}
+              maxLength={20}
             />
           </div>
         </div>
@@ -196,6 +220,7 @@ export const Profile = () => {
               value={form.address_country}
               onChange={handleChange("address_country")}
               disabled={!isEditing}
+              maxLength={40}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
@@ -206,6 +231,7 @@ export const Profile = () => {
               value={form.address_county}
               onChange={handleChange("address_county")}
               disabled={!isEditing}
+              maxLength={40}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
@@ -216,6 +242,7 @@ export const Profile = () => {
               value={form.address_city}
               onChange={handleChange("address_city")}
               disabled={!isEditing}
+              maxLength={40}
             />
           </div>
         </div>
@@ -229,6 +256,7 @@ export const Profile = () => {
               value={form.address_postcode}
               onChange={handleChange("address_postcode")}
               disabled={!isEditing}
+              maxLength={10}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
@@ -239,6 +267,7 @@ export const Profile = () => {
               value={form.address_street}
               onChange={handleChange("address_street")}
               disabled={!isEditing}
+              maxLength={40}
             />
           </div>
           <div className="col-lg-2 col-md-7 col-sm-7">
@@ -249,34 +278,22 @@ export const Profile = () => {
               value={form.tax_number}
               onChange={handleChange("tax_number")}
               disabled={!isEditing}
+              maxLength={50}
             />
           </div>
         </div>
 
-        {/* <div className="row justify-content-center my-5">
-          <div className="col-lg-2 col-md-7 col-sm-7">
-            <label className="form-label">Geo Dir</label>
-            <input
-              type="text"
-              className="form-control"
-              value={form.geo_dir}
-              onChange={handleChange("geo_dir")}
-              disabled={!isEditing}
-            />
-          </div>
-        </div> */}
-
         <div className="row justify-content-center my-5">
           <div className="row justify-content-center">
             <button
-              className="col-lg-2 col-md-2 col-sm-3  m-3 pricingButtonPlus"
+              className="col-lg-2 col-md-2 col-sm-3 m-3 pricingButtonPlus"
               onClick={() => setIsEditing(true)}
               disabled={isEditing}
             >
               Edit
             </button>
             <button
-              className="col-lg-2 col-md-2 col-sm-3   m-3 pricingButtonPlus"
+              className="col-lg-2 col-md-2 col-sm-3 m-3 pricingButtonPlus"
               onClick={handleSave}
               disabled={!isEditing}
             >
@@ -296,6 +313,15 @@ export const Profile = () => {
           {showPasswordForm && (
             <div className="row justify-content-center">
               <div className="col-lg-2 col-md-7 col-sm-12">
+                <label className="form-label">Current Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={passwords.currentPassword}
+                  onChange={handlePasswordChange("currentPassword")}
+                />
+              </div>
+              <div className="col-lg-2 col-md-7 col-sm-12">
                 <label className="form-label">New Password</label>
                 <input
                   type="password"
@@ -304,7 +330,7 @@ export const Profile = () => {
                   onChange={handlePasswordChange("newPassword")}
                 />
               </div>
-              <div className="col-lg-2 col-md-7 col-sm-2">
+              <div className="col-lg-2 col-md-7 col-sm-12">
                 <label className="form-label">Confirm Password</label>
                 <input
                   type="password"
