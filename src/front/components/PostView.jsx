@@ -19,6 +19,9 @@ export const PostView = () => {
   const [showForm, setShowForm] = useState(false);
   const [candidatureMessage, setCandidatureMessage] = useState("");
 
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState(""); // "error" or "success"
+
   useEffect(() => {
     const fetchData = async () => {
       const [allPosts, allCategories] = await Promise.all([getPosts(), getCategories()]);
@@ -35,9 +38,18 @@ export const PostView = () => {
 
   if (!post) return <div className="container text-center my-5">Loading publication...</div>;
 
+  const showTimedAlert = (message, type = "error") => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setTimeout(() => {
+      setAlertMessage("");
+      setAlertType("");
+    }, 4000);
+  };
+
   const handleClickPostularse = () => {
     if (!user || !user.is_professional) {
-      alert("Only professional users can apply to this offer.");
+      showTimedAlert("Only professional users can apply to this offer.", "error");
       return;
     }
     setShowForm(true);
@@ -48,7 +60,7 @@ export const PostView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!candidatureMessage.trim()) {
-      setError("Application message is required.");
+      showTimedAlert("Application message is required.", "error");
       return;
     }
 
@@ -64,10 +76,11 @@ export const PostView = () => {
 
       await createCandidature(formData);
       setSuccess("Application sent successfully!");
+      showTimedAlert("Application sent successfully!", "success");
       setCandidatureMessage("");
       setShowForm(false);
     } catch (err) {
-      setError("Error sending application: " + (err.message || "Unknown error"));
+      showTimedAlert("Error sending application: " + (err.message || "Unknown error"), "error");
     } finally {
       setLoading(false);
     }
@@ -106,7 +119,14 @@ export const PostView = () => {
           <p className="description-content">{post.post_description}</p>
         </div>
 
-        <div className="actions-container-card">
+        {/* ALERTA DEBAJO DE LA DESCRIPCIÓN */}
+        {alertMessage && (
+          <div className={`alert text-center alert-${alertType === "success" ? "success" : "danger"} mt-3`}>
+            {alertMessage}
+          </div>
+        )}
+
+        <div className="actions-container-card mt-4">
           <button
             className="action-btn btn-back"
             onClick={() => window.history.back()}
@@ -124,7 +144,7 @@ export const PostView = () => {
         </div>
 
         {showForm && (
-          <form onSubmit={handleSubmit} className="form-container">
+          <form onSubmit={handleSubmit} className="form-container mt-4">
             <div className="mb-3">
               <label htmlFor="candidatureMessage" className="form-label">
                 <strong>Application Message:</strong>
@@ -164,17 +184,6 @@ export const PostView = () => {
               </button>
             </div>
           </form>
-        )}
-
-        {error && (
-          <div className="alert-message bg-danger">
-            {error}
-          </div>
-        )}
-        {success && (
-          <div className="alert-message bg-success">
-            {success}
-          </div>
         )}
       </div>
     </div>
