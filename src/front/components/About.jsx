@@ -30,9 +30,9 @@ export const About = () => {
             </div>
 
             <div className="container-fluid d-flex justify-content-center">
-                <div className="form-container m-5">
+                <div className="form-container contenedorFormStyles m-5">
                     <h2 className="form-tittle">Contact Form</h2>
-                    <form className="contenedorForm"onSubmit={handleSubmit}>
+                    <form className="contenedorForm "onSubmit={handleSubmit}>
                         <div className="row justify-content-center">
                             <div className="col-lg-4 col-md-12 col-sm-12 py-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Email</label>

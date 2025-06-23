@@ -18,13 +18,11 @@
     font-weight: bold;
 }
 
-.form-container {
+.contenedorFormStyles {
     width: 90%;
-    background-color: #004A7C;
     padding: 40px;
     border-radius: 10px;
     color: #004a7c;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,3 +58,4 @@
 .contenedorForm{
  max-width: 90%;
 }
+
