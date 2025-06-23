@@ -28,9 +28,9 @@ export const ProfessionalDetail = () => {
     getProfessional();
   }, [id]);
 
-  if (loading) return <div className="container text-center my-5">Cargando...</div>;
+  if (loading) return <div className="container text-center my-5">Loading...</div>;
   if (error) return <div className="container text-center my-5 text-danger">Error: {error}</div>;
-  if (!professional) return <div className="container text-center my-5">Profesional no encontrado</div>;
+  if (!professional) return <div className="container text-center my-5">Professional not found</div>;
 
   return (
     <div className="container profileCustom align-content-center my-5">
@@ -42,7 +42,7 @@ export const ProfessionalDetail = () => {
             <CircleUserRound size={200} />
           </div>
           <div className="col-3">
-            <p className="userName">{professional.firstname || "Nombre no disponible"}</p>
+            <p className="userName">{professional.firstname || "First name not available"}</p>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ export const ProfessionalDetail = () => {
             <p>
               {professional.prof_experience
                 ? professional.prof_experience
-                : "Este profesional aún no ha agregado una descripción."}
+                : "This professional has not added additional details"}
             </p>
           </div>
         </div>
