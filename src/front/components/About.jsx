@@ -1,7 +1,7 @@
 import { Navbar } from "./Navbar"
 
 import "../about.css";
-import imagenLogo from "../assets/img/StargigLogo.png"
+import imagenLogo from "../assets/img/Stargig Logo.png"
 
 export const About = () => {
 
