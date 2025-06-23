@@ -2,14 +2,11 @@ import { useState, useEffect } from "react";
 import { getPosts } from "../services/PostServices.jsx";
 import { getCategories } from "../services/CategoryServices.jsx";
 import "../../front/FindWork.css";
-import storeReducer from "../store.js";
 import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { Link } from "react-router-dom";
-
 
 export const FindWork = () => {
-  const { store, dispatch } = useGlobalReducer();
+  const { store } = useGlobalReducer();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryMap, setCategoryMap] = useState({});
@@ -27,11 +24,12 @@ export const FindWork = () => {
   });
   const itemsPerPage = 5;
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchAllData = async () => {
       try {
         const [postData, categoryData] = await Promise.all([
-          getPosts(),          // ✅ Trae todos los posts
+          getPosts(),
           getCategories()
         ]);
 
@@ -81,16 +79,20 @@ export const FindWork = () => {
   if (loading) return <div className="container text-center my-5">Loading...</div>;
   if (error) return <div className="container text-center my-5">Error: {error}</div>;
 
-
   const handleClick = (post) => {
-    if (store.user?.is_professional && store.user?.plan?.name?.length > 0) {
-
-      console.log('poner aqui el navigate a la pagina de detalles del post', post);
-
+    if (store.user?.is_professional) {
+      if (store.user.plan) {
+        // Tiene plan, permite acceder al detalle
+        navigate(`/post/${post.id}`);
+      } else {
+        // No tiene plan, redirige a pricing
+        navigate("/pricing");
+      }
     } else {
-      navigate('/pricing')
+      // No es profesional, puedes manejarlo a tu gusto, aquí alert
+      alert("Only professional users can access this page.");
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -194,9 +196,12 @@ export const FindWork = () => {
                 </div>
 
                 <div className="card-footer">
-                  <Link to={`/post/${post.id}`}>
-                    <button className="primary-button">View more</button>
-                  </Link>
+                  <button
+                    className="primary-button"
+                    onClick={() => handleClick(post)}
+                  >
+                    View more
+                  </button>
                 </div>
               </div>
             ))}
