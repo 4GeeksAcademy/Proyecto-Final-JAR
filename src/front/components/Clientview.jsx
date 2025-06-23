@@ -23,7 +23,6 @@ export const ClientView = () => {
     setTimeout(() => {
       console.log("Solicitud enviada:", formData);
       setIsSending(false);
-      alert("¡Tu solicitud fue enviada con éxito!");
     }, 1500);
   };
 
