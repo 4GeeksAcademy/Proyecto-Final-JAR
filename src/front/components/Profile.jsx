@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { CircleUserRound } from "lucide-react";
 import "../../front/profile.css";
@@ -16,7 +17,8 @@ export const Profile = () => {
     address_postcode: "",
     address_street: "",
     tax_number: "",
-    geo_dir: ""
+    geo_dir: "",
+    prof_experience: "" // atributo profesional
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -46,7 +48,8 @@ export const Profile = () => {
         address_postcode: store.user.address_postcode || "",
         address_street: store.user.address_street || "",
         tax_number: store.user.tax_number || "",
-        geo_dir: store.user.geo_dir || ""
+        geo_dir: store.user.geo_dir || "",
+        prof_experience: store.user.prof_experience || "" // sincronizar experiencia si viene
       });
     }
   }, [store.user]);
@@ -68,6 +71,7 @@ export const Profile = () => {
     }, 4000);
   };
 
+  // Guardar cambios generales del usuario
   const handleSave = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -79,26 +83,87 @@ export const Profile = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(form)
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Error actualizando usuario");
+        return res.json();
+      })
       .then(data => {
         localStorage.setItem("user", JSON.stringify(data));
         loader();
         setIsEditing(false);
-        showTemporaryNotice("Profile successfully updated");
+        showTemporaryNotice("Tu perfil se ha actualizado correctamente.");
       })
       .catch(err => {
-        console.error("Error updating user:", err);
-        showTemporaryNotice("Error updating profile");
+        console.error("Error actualizando usuario:", err);
+        showTemporaryNotice("Hubo un error al actualizar el perfil.");
       });
+  };
+
+  const handleSaveProfessionalInfo = () => {
+    const token = localStorage.getItem("token");
+    const professionalId = store.user?.professional_id;
+
+    if (!token) {
+      showTemporaryNotice("No se encontró el token.");
+      return;
+    }
+    if (!professionalId) {
+      showTemporaryNotice("No se encontró el ID del profesional.");
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/professionals/${professionalId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        prof_experience: form.prof_experience
+      })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Error actualizando info profesional");
+        return res.json();
+      })
+      .then(data => {
+        if (data.prof_experience) {
+          // Actualiza el usuario global y local
+          const updatedUser = { ...store.user, prof_experience: data.prof_experience };
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+          dispatch({ type: "LOGIN", payload: { user: updatedUser } });
+
+          // 👇 Esta línea es la clave: actualiza también el form (para que el textarea muestre el nuevo valor)
+          setForm(prev => ({
+            ...prev,
+            prof_experience: data.prof_experience
+          }));
+        }
+
+        showTemporaryNotice("Información profesional guardada correctamente.");
+      })
+      .catch(err => {
+        console.error("Error guardando info profesional:", err);
+        showTemporaryNotice("Hubo un error al guardar la información profesional.");
+      });
+  };
+
+
+  const handleChange = (field) => (e) => {
+    setForm({ ...form, [field]: e.target.value });
+  };
+
+  const handlePasswordChange = (field) => (e) => {
+    setPasswords({ ...passwords, [field]: e.target.value });
   };
 
   const handleChangePassword = () => {
     if (passwords.newPassword !== passwords.confirmPassword) {
-      showTemporaryNotice("Passwords don't match. Try again");
+      showTemporaryNotice("Las contraseñas no coinciden.");
       return;
     }
 
@@ -106,7 +171,7 @@ export const Profile = () => {
     const userId = store.user?.id;
 
     if (!token || !userId) {
-      showTemporaryNotice("Missing token or user ID");
+      showTemporaryNotice("Falta token o ID de usuario.");
       return;
     }
 
@@ -130,23 +195,15 @@ export const Profile = () => {
             newPassword: "",
             confirmPassword: ""
           });
-          showTemporaryNotice("Password successfully changed");
+          showTemporaryNotice("Contraseña cambiada exitosamente.");
         } else {
-          showTemporaryNotice(data.message || "There was an error changing password. Try again");
+          showTemporaryNotice(data.message || "Error al cambiar la contraseña.");
         }
       })
       .catch(err => {
-        console.error("Error changing password:", err);
-        showTemporaryNotice("There was an error changing password. Try again");
+        console.error("Error cambiando contraseña:", err);
+        showTemporaryNotice("Hubo un error al cambiar la contraseña.");
       });
-  };
-
-  const handleChange = (field) => (e) => {
-    setForm({ ...form, [field]: e.target.value });
-  };
-
-  const handlePasswordChange = (field) => (e) => {
-    setPasswords({ ...passwords, [field]: e.target.value });
   };
 
   const handleLogout = () => {
@@ -167,12 +224,12 @@ export const Profile = () => {
             <CircleUserRound size={200} />
           </div>
           <div>
-            <p className="userName">{form.firstname || "Complete your details"}</p>
+            <p className="userName">{form.firstname || "User Name"}</p>
           </div>
-          
-      {notice && (
-        <div className="alert alert-info text-center my-3">{notice}</div>
-      )}
+
+          {notice && (
+            <div className="alert alert-info text-center my-3">{notice}</div>
+          )}
         </div>
 
         <div className="row mt-5 justify-content-center g-3">
@@ -284,6 +341,34 @@ export const Profile = () => {
         </div>
 
         <div className="row justify-content-center my-5">
+          {store.user?.is_professional && (
+            <>
+              <div className="col-lg-6 col-md-8 col-sm-12">
+                <label className="form-label">Professional Experience</label>
+                <textarea
+                  className="form-control"
+                  rows={4}
+                  value={form.prof_experience}
+                  onChange={handleChange("prof_experience")}
+                  placeholder="Describe your professional experience"
+                  disabled={!isEditing}
+                />
+              </div>
+
+              <div className="col-12 text-center mt-3">
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSaveProfessionalInfo}
+                  disabled={!isEditing}
+                >
+                  Save Professional Experience
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="row justify-content-center">
           <div className="row justify-content-center">
             <button
               className="col-lg-2 col-md-2 col-sm-3 m-3 pricingButtonPlus"
@@ -312,8 +397,9 @@ export const Profile = () => {
 
           {showPasswordForm && (
             <div className="row justify-content-center">
-              <div className="col-lg-2 col-md-7 col-sm-12">
-                <label className="form-label">Current Password</label>
+              <div className="col-lg-3 col-md-7 col-sm-7">
+                <label
+                  className="form-label">Current Password</label>
                 <input
                   type="password"
                   className="form-control"
@@ -321,7 +407,7 @@ export const Profile = () => {
                   onChange={handlePasswordChange("currentPassword")}
                 />
               </div>
-              <div className="col-lg-2 col-md-7 col-sm-12">
+              <div className="col-lg-3 col-md-7 col-sm-7">
                 <label className="form-label">New Password</label>
                 <input
                   type="password"
@@ -330,7 +416,7 @@ export const Profile = () => {
                   onChange={handlePasswordChange("newPassword")}
                 />
               </div>
-              <div className="col-lg-2 col-md-7 col-sm-12">
+              <div className="col-lg-3 col-md-7 col-sm-7">
                 <label className="form-label">Confirm Password</label>
                 <input
                   type="password"
@@ -339,9 +425,13 @@ export const Profile = () => {
                   onChange={handlePasswordChange("confirmPassword")}
                 />
               </div>
+
               <div className="col-12 text-center mt-3">
-                <button className="btn btn-primary" onClick={handleChangePassword}>
-                  Save Password
+                <button
+                  className="btn btn-primary"
+                  onClick={handleChangePassword}
+                >
+                  Change Password
                 </button>
               </div>
             </div>
@@ -349,7 +439,7 @@ export const Profile = () => {
 
           <div className="row justify-content-center">
             <button
-              className="col-lg-1 col-md-3 col-sm-2 my-5 btn btn-danger"
+              className="col-lg-2 col-md-2 col-sm-4 my-5 customButton"
               onClick={handleLogout}
             >
               Logout

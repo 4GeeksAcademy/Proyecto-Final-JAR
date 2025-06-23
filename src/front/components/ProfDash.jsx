@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../front/profdash.css"; 
+import "../../front/profdash.css";
+import { getProfessionalCandidatures } from "../services/CandidatureServices.jsx";
 
 const statusLabels = {
   IN_PROCESS: "In Progress",
@@ -12,169 +13,29 @@ export const ProfessionalDashboard = () => {
   const [applications, setApplications] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const [pastPage, setPastPage] = useState(1);
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState(null);
   const pageSize = 5;
   const navigate = useNavigate();
 
-
-  
   useEffect(() => {
-    const fetchApplications = async () => {
-      await new Promise(res => setTimeout(res, 300));
-      setApplications([
-        {
-          id: 1,
-          candidature_status: "IN_PROCESS",
-          candidature_date: "2025-06-12T10:30:00Z",
-          candidature_message: "Me interesa mucho este proyecto, tengo experiencia en apps mobile...",
-          post: {
-            id: 101,
-            title: "E-commerce Mobile-First UI Design",
-            remote_project: false,
-            project_city: "Madrid",
-            project_county: "Madrid",
-            project_country: "España",
-            post_description: "Diseño de UI mobile-first para e-commerce. Se busca diseñador con experiencia probada en flows de conversión.",
-            estimated_budged: "$30 – $60",
-            post_open: true,
-            post_active: true,
-            post_completed: false,
-            post_date: "2025-06-10",
-            category: { name: "Design" }
-          }
-        },
-        {
-          id: 2,
-          candidature_status: "ACCEPTED",
-          candidature_date: "2025-06-15T14:45:00Z",
-          candidature_message: "Puedo aportar ideas de automatización. Consultame!",
-          post: {
-            id: 102,
-            title: "AI Automation Solutions",
-            remote_project: true,
-            project_city: "Remote",
-            project_county: "",
-            project_country: "",
-            post_description: "Herramientas AI para automatización de procesos de datos, requiere experiencia en ML.",
-            estimated_budged: "$60 – $120",
-            post_open: true,
-            post_active: true,
-            post_completed: false,
-            post_date: "2025-06-21",
-            category: { name: "Technology" }
-          }
-        },
-        {
-          id: 3,
-          candidature_status: "REJECTED",
-          candidature_date: "2025-06-21T11:15:00Z",
-          candidature_message: "He trabajado QA en e-commerce para Alemania.",
-          post: {
-            id: 103,
-            title: "QA para E-commerce",
-            remote_project: false,
-            project_city: "Berlin",
-            project_county: "Berlin",
-            project_country: "Alemania",
-            post_description: "Pruebas E2E para plataformas de e-commerce mobile. Se espera experiencia previa.",
-            estimated_budged: "$20 – $40",
-            post_open: false,
-            post_active: false,
-            post_completed: false,
-            post_date: "2025-06-23",
-            category: { name: "QA" }
-          }
-        },
-        {
-          id: 4,
-          candidature_status: "REJECTED",
-          candidature_date: "2025-06-21T11:15:00Z",
-          candidature_message: "He trabajado QA en e-commerce para Alemania.",
-          post: {
-            id: 103,
-            title: "QA para E-commerce",
-            remote_project: false,
-            project_city: "Berlin",
-            project_county: "Berlin",
-            project_country: "Alemania",
-            post_description: "Pruebas E2E para plataformas de e-commerce mobile. Se espera experiencia previa.",
-            estimated_budged: "$20 – $40",
-            post_open: false,
-            post_active: false,
-            post_completed: false,
-            post_date: "2025-06-23",
-            category: { name: "QA" }
-          }
-        },
-        {
-          id: 5,
-          candidature_status: "REJECTED",
-          candidature_date: "2025-06-21T11:15:00Z",
-          candidature_message: "He trabajado QA en e-commerce para Alemania.",
-          post: {
-            id: 103,
-            title: "QA para E-commerce",
-            remote_project: false,
-            project_city: "Berlin",
-            project_county: "Berlin",
-            project_country: "Alemania",
-            post_description: "Pruebas E2E para plataformas de e-commerce mobile. Se espera experiencia previa.",
-            estimated_budged: "$20 – $40",
-            post_open: false,
-            post_active: false,
-            post_completed: false,
-            post_date: "2025-06-23",
-            category: { name: "QA" }
-          }
-        },
-        {
-          id: 6,
-          candidature_status: "REJECTED",
-          candidature_date: "2025-06-21T11:15:00Z",
-          candidature_message: "He trabajado QA en e-commerce para Alemania.",
-          post: {
-            id: 103,
-            title: "QA para E-commerce",
-            remote_project: false,
-            project_city: "Berlin",
-            project_county: "Berlin",
-            project_country: "Alemania",
-            post_description: "Pruebas E2E para plataformas de e-commerce mobile. Se espera experiencia previa.",
-            estimated_budged: "$20 – $40",
-            post_open: false,
-            post_active: false,
-            post_completed: false,
-            post_date: "2025-06-23",
-            category: { name: "QA" }
-          }
-        },
-        {
-          id: 7,
-          candidature_status: "REJECTED",
-          candidature_date: "2025-06-21T11:15:00Z",
-          candidature_message: "He trabajado QA en e-commerce para Alemania.",
-          post: {
-            id: 103,
-            title: "QA para E-commerce",
-            remote_project: false,
-            project_city: "Berlin",
-            project_county: "Berlin",
-            project_country: "Alemania",
-            post_description: "Pruebas E2E para plataformas de e-commerce mobile. Se espera experiencia previa.",
-            estimated_budged: "$20 – $40",
-            post_open: false,
-            post_active: false,
-            post_completed: false,
-            post_date: "2025-06-23",
-            category: { name: "QA" }
-          }
-        },
-        
-      ]);
-    };
-    fetchApplications();
-  }, []);
+  const fetchApplications = async () => {
+    try {
+      setLoading(true)
+      const data = await getProfessionalCandidatures();
+      console.log("Received data:", data); 
+      setApplications(data || []); 
+      setLoading(false);
+    } catch (err) {
+      console.error("Full error:", err); 
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+  fetchApplications();
+}, []);
 
-  const activeApps = applications.filter(a => a.post.post_active);
+  const activeApps = applications.filter(a => a.post?.post_active);
   const pastApps = applications.filter(a => !a.post.post_active);
 
   const totalActivePages = Math.ceil(activeApps.length / pageSize) || 1;
@@ -281,23 +142,43 @@ export const ProfessionalDashboard = () => {
     );
   };
 
-  return (
-    <div className="dashboard-container">
-      <section className="posts-section">
-        <h3>My Active Applications</h3>
-        {renderPagination(activePage, totalActivePages, setActivePage)}
-        <div className="row findwork__row customCard">
-          {slicePage(activeApps, activePage).map(app => renderCard(app, false))}
-        </div>
-      </section>
+  if (loading) {
+    return <div className="text-center mt-5">Loading applications...</div>;
+  }
 
-      <section className="posts-section archived">
-        <h3>My Past Applications</h3>
-        {renderPagination(pastPage, totalPastPages, setPastPage)}
-        <div className="row findwork__row customCard">
-          {slicePage(pastApps, pastPage).map(app => renderCard(app, true))}
-        </div>
-      </section>
-    </div>
-  );
-};
+  if (error) {
+    return <div className="text-center mt-5 text-danger">Error: {error}</div>;
+  }
+
+return (
+  <div className="dashboard-container">
+    <section className="posts-section">
+      <h3>My Active Applications</h3>
+      {activeApps.length === 0 ? (
+        <div className="text-center mt-3">You have no active candidatures</div>
+      ) : (
+        <>
+          {renderPagination(activePage, totalActivePages, setActivePage)}
+          <div className="row findwork__row customCard">
+            {slicePage(activeApps, activePage).map(app => renderCard(app, false))}
+          </div>
+        </>
+      )}
+    </section>
+
+    <section className="posts-section archived">
+      <h3>My Past Applications</h3>
+      {pastApps.length === 0 ? (
+        <div className="text-center mt-3">You have no past candidatures</div>
+      ) : (
+        <>
+          {renderPagination(pastPage, totalPastPages, setPastPage)}
+          <div className="row findwork__row customCard">
+            {slicePage(pastApps, pastPage).map(app => renderCard(app, true))}
+          </div>
+        </>
+      )}
+    </section>
+  </div>
+);
+}
