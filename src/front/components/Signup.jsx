@@ -136,7 +136,7 @@ export const Signup = () => {
                                 onChange={handleChange}
                             />
                             <label className="terms-label" htmlFor="terms">
-                                I agree to Star Gig's{" "}
+                                I agree to StarGig's{" "}
                                 <a href="#" className="terms-link">Terms</a>
                                 and <a href="#" className="terms-link">Privacy Policy</a>
                             </label>

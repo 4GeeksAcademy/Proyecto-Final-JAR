@@ -95,7 +95,7 @@ export const FindWork = () => {
   return (
     <div className="container">
       <div className="container-fluid filtersCustom align-content-center my-5">
-        <h2 className="text-center text-white my-5">🔍 Search Options</h2>
+        <h2 className="text-center text-white my-5">🔍 Apply for Open Projects</h2>
         <div className="container my-5">
           <div className="row findwork__row g-3">
             <div className="col-lg-2 col-md-6 col-sm-12">
@@ -140,7 +140,7 @@ export const FindWork = () => {
 
       <div className="published-projects">
         <div className="dashboard-container">
-          <h2 className="section-title">Latest Projects</h2>
+          <h2 className="section-title">Projects accepting candidatures</h2>
 
           {/* Paginación */}
           <nav className="projects-pagination">

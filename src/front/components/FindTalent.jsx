@@ -39,21 +39,23 @@ export const FindTalent = () => {
   const endIndex = startIndex + itemsPerPage;
   const paginatedProfessionals = filteredProfessionals.slice(startIndex, endIndex);
 
-  if (loading) return <div className="container text-center my-5">Cargando profesionales...</div>;
+  if (loading) return <div className="container text-center my-5">Loading Professionals...</div>;
   if (error) return <div className="container text-center my-5 text-danger">Error: {error}</div>;
 
   return (
     <div className="container">
       <div className="container-fluid filtersCustom align-content-center my-5">
-        <h2 className="text-center text-white my-5">🔍 Buscar Profesionales</h2>
+        <h2 className="text-center text-white my-5">🔍 Find Professionals</h2>
         <div className="container my-5">
           <div className="row findwork__row g-3">
             <div className="col-lg-3 col-md-6 col-sm-12">
               <select className="form-select" onChange={(e) => handleFilterChange("min_rating", e.target.value)}>
-                <option value="">Filtrar por rating</option>
-                <option value="3">⭐ 3+ estrellas</option>
-                <option value="4">⭐ 4+ estrellas</option>
-                <option value="4.5">⭐ 4.5+ estrellas</option>
+                <option value="">All professionals</option>
+                <option value="4.5">⭐ 4.5+ stars</option>
+                <option value="4">⭐ 4+ stars</option>
+                <option value="3">⭐ 3+ stars</option>
+                <option value="2">⭐ 2+ stars</option>
+
               </select>
             </div>
           </div>

@@ -48,7 +48,7 @@ export const Dashboard = () => {
   // Cambiado category_name por name
   const getCategoryName = (id) => {
     const cat = categoriesList.find((c) => c.id === id);
-    return cat ? cat.name : "Sin categoría";
+    return cat ? cat.name : "No category";
   };
 
   const handleSubmit = async (e) => {
@@ -58,7 +58,7 @@ export const Dashboard = () => {
     const categoryId = parseInt(form.category_id.value);
 
     if (!categoryId) {
-      alert("Por favor selecciona una categoría.");
+      alert("Please, select a category");
       return;
     }
 
@@ -90,16 +90,16 @@ export const Dashboard = () => {
     try {
       const newPost = await createPost(postData);
       setPosts((prev) => [...prev, newPost]);
-      alert("¡Publicación creada exitosamente!");
+      alert("Post created successfully!");
       form.reset();
     } catch (err) {
       console.error("Failed to create post", err);
       if (err.message === "Unauthorized") {
-        alert("Tu sesión ha expirado o no estás autorizado. Por favor, inicia sesión nuevamente.");
+        alert("Your session has expired. Please, log in");
       } else if (err.message === "Error creating post") {
-        alert("Hubo un problema al crear la publicación. Revisa los datos e intenta de nuevo.");
+        alert("There was a problem creating your request. Please, review your inputs and try again.");
       } else {
-        alert("Ocurrió un error inesperado al crear la publicación.");
+        alert("Unexpected error creating your request.");
       }
     }
   };
@@ -125,14 +125,14 @@ export const Dashboard = () => {
       <div className="card findwork__card p-3 shadow-sm">
         <div className="row findwork__row w-100 align-items-center">
           <div className="col-lg-4 col-md-4 col-sm-6 d-flex flex-column gap-1">
-            <p><strong>Categoría:</strong> {getCategoryName(post.category_id)}</p>
-            <p><strong>Ubicación:</strong> {post.project_country},{post.project_county},{post.project_city}</p>
+            <p><strong>Category:</strong> {getCategoryName(post.category_id)}</p>
+            <p><strong>Location:</strong> {post.project_country},{post.project_county},{post.project_city}</p>
             <p><strong>Remote Project:</strong> {post.remote_project ? "Sí" : "No"}</p>
           </div>
           <div className="col-lg-4 col-md-4 col-sm-6 d-flex flex-column gap-1">
-            <p><strong>Presupuesto Estimado:</strong> {post.estimated_budged} - €</p>
-            <p><strong>Fecha:</strong> {new Date(post.post_date).toLocaleDateString("es-ES")}</p>
-            {isArchived && <p className="text-success">Archivado</p>}
+            <p><strong>Estimated Budget:</strong> {post.estimated_budged} - €</p>
+            <p><strong>Date:</strong> {new Date(post.post_date).toLocaleDateString("es-ES")}</p>
+            {isArchived && <p className="text-success">Archived</p>}
           </div>
         </div>
         <div className="row findwork__row mt-3">
@@ -225,7 +225,7 @@ export const Dashboard = () => {
       </div>
 
       <section className="posts-section">
-        <h3>My Published Posts</h3>
+        <h3>My Published Requests</h3>
         <nav>
           <ul className="pagination">
             <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
@@ -251,7 +251,7 @@ export const Dashboard = () => {
       </section>
 
       <section className="posts-section archived">
-        <h3>Archived Posts</h3>
+        <h3>Archived Requests</h3>
         <div className="row findwork__row customCard">{archivedPosts.map((post) => renderPostCard(post, true))}</div>
       </section>
     </div>
