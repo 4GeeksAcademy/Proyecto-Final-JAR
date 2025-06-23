@@ -89,11 +89,7 @@ export const ComponentHome = () => {
           alt="Freelancer platform hero"
         />
         <h1 className="title">Find professionals for your projects</h1>
-        {/* <input 
-          type="text" 
-          className="search-input" 
-          placeholder="Search Any Services" 
-        /> */}
+
       </div>
 
       {/* Features section */}
@@ -102,13 +98,14 @@ export const ComponentHome = () => {
           <div className="feature-box">
             <span className="fa-solid fa-lightbulb fa-10x"></span>
             <h3>You don’t need to do it all yourself</h3>
-            <p>Spend more time on what you do best & start getting more done</p>
+            <p>Focus on what you do best & get more done with our professionals</p>
           </div>
 
           <div className="feature-box">
             <span className="fa-regular fa-id-card fa-10x"></span>
             <h3>Don’t regret a bad hire</h3>
-            <p>Read reviews from real people and know you’re getting the best</p>
+            <p></p>
+            <p>Read reviews from real people and know you’re getting the best professionals</p>
           </div>
         </div>
       </div>

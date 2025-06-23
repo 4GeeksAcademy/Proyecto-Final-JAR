@@ -88,17 +88,17 @@ export const Profile = () => {
         localStorage.setItem("user", JSON.stringify(data));
         loader();
         setIsEditing(false);
-        showTemporaryNotice("Tu perfil se ha actualizado correctamente.");
+        showTemporaryNotice("Profile successfully updated");
       })
       .catch(err => {
-        console.error("Error actualizando usuario:", err);
-        showTemporaryNotice("Hubo un error al actualizar el perfil.");
+        console.error("Error updating user:", err);
+        showTemporaryNotice("Error updating profile");
       });
   };
 
   const handleChangePassword = () => {
     if (passwords.newPassword !== passwords.confirmPassword) {
-      showTemporaryNotice("Las contraseñas no coinciden.");
+      showTemporaryNotice("Passwords don't match. Try again");
       return;
     }
 
@@ -106,7 +106,7 @@ export const Profile = () => {
     const userId = store.user?.id;
 
     if (!token || !userId) {
-      showTemporaryNotice("Falta token o ID de usuario.");
+      showTemporaryNotice("Missing token or user ID");
       return;
     }
 
@@ -130,14 +130,14 @@ export const Profile = () => {
             newPassword: "",
             confirmPassword: ""
           });
-          showTemporaryNotice("Contraseña cambiada exitosamente.");
+          showTemporaryNotice("Password successfully changed");
         } else {
-          showTemporaryNotice(data.message || "Error al cambiar la contraseña.");
+          showTemporaryNotice(data.message || "There was an error changing password. Try again");
         }
       })
       .catch(err => {
-        console.error("Error cambiando contraseña:", err);
-        showTemporaryNotice("Hubo un error al cambiar la contraseña.");
+        console.error("Error changing password:", err);
+        showTemporaryNotice("There was an error changing password. Try again");
       });
   };
 
@@ -167,7 +167,7 @@ export const Profile = () => {
             <CircleUserRound size={200} />
           </div>
           <div>
-            <p className="userName">{form.firstname || "User Name"}</p>
+            <p className="userName">{form.firstname || "Complete your details"}</p>
           </div>
           
       {notice && (
