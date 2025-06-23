@@ -12,6 +12,8 @@ export const Dashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const client_id = user?.client_id;
 
+
+
   // Fetch posts by client
   useEffect(() => {
     if (!client_id) return;
@@ -51,30 +53,37 @@ export const Dashboard = () => {
     return cat ? cat.name : "No category";
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const form = e.target;
-    const categoryId = parseInt(form.category_id.value);
+  const form = e.target;
+  const categoryId = parseInt(form.category_id.value); 
 
-    if (!categoryId) {
-      alert("Please, select a category");
-      return;
-    }
+  if (!categoryId) {
+    alert("Please, select a category");
+    return;
+  }
 
-    const postData = {
-      remote_project: form.remote_project.checked,
-      project_city: form.project_city.value.trim(),
-      project_county: form.project_county.value.trim(),
-      project_country: form.project_country.value,
-      post_description: form.post_description.value.trim(),
-      estimated_budged: form.estimated_budged.value.trim(),
-      post_open: true,
-      post_active: true,
-      post_completed: false,
-      category_id: categoryId,
-      client_id: client_id,
-    };
+  const location = form.project_location.value;
+  if (!location) {
+    alert("Please select a location");
+    return;
+  }
+  const [project_country, project_city] = location.split("|");
+
+  const postData = {
+    remote_project: form.remote_project.checked,
+    project_city,
+    project_county: form.project_county.value.trim(),
+    project_country,
+    post_description: form.post_description.value.trim(), 
+    estimated_budged: form.estimated_budged.value.trim(),
+    post_open: true,
+    post_active: true,
+    post_completed: false,
+    category_id: categoryId,
+    client_id: client_id,
+  };
 
     if (
       !postData.project_city ||
@@ -172,6 +181,15 @@ export const Dashboard = () => {
     </div>
   );
 
+  const locationOptions = [
+    { country: "France", city: "Paris" },
+    { country: "France", city: "Marseille" },
+    { country: "Germany", city: "Berlin" },
+    { country: "Germany", city: "Hamburg" },
+    { country: "Spain", city: "Madrid" },
+    { country: "Spain", city: "Barcelona" }
+  ];
+
   return (
     <div className="dashboard-container">
       <div className="create-request-container">
@@ -188,22 +206,18 @@ export const Dashboard = () => {
                 ))}
               </select>
             </div>
-            <div className="form-group">
-              <select className="form-select" name="project_country">
-                <option value="">Country</option>
-                <option value="España">Spain</option>
-                <option value="Argentina">Argentina</option>
-                <option value="México">Mexico</option>
+             <div className="form-group">
+              <select className="form-select" name="project_location" required>
+                <option value="">Location</option>
+                {locationOptions.map((opt, idx) => (
+                  <option key={idx} value={`${opt.country}|${opt.city}`}>
+                    {opt.country}: {opt.city}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="form-group">
-              <select className="form-select" name="project_city">
-                <option value="">City</option>
-                <option value="Madrid">Madrid</option>
-                <option value="Buenos Aires">Buenos Aires</option>
-                <option value="CDMX">CDMX</option>
-              </select>
-            </div>
+            
+            
             <div className="form-group">
               <input type="text" className="form-control" name="project_county" placeholder="County" />
             </div>
