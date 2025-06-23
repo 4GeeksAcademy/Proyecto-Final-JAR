@@ -86,14 +86,16 @@ export const FindTalent = () => {
         </nav>
 
         {paginatedProfessionals.map(pro => (
-          <div key={pro.id} className="col-12 customCard">
-            <div className="card findwork__card p-3 shadow-sm">
-              <div className="name-rating-container">
-                <h5 className="profname">{pro.name || "Nombre del Profesional"}</h5>
-                <div className="rating-container">
-                  <p className="mb-0">⭐ <strong>{pro.average_rating ? pro.average_rating.toFixed(1) : "No rating"}</strong></p>
-                </div>
+        <div key={pro.id} className="col-12 customCard">
+          <div className="card findwork__card p-3 shadow-sm">
+            <div className="name-rating-container">
+              <h5 className="profname">
+                {pro.user?.firstname || "Professional"}
+              </h5>
+              <div className="rating-container">
+                <p className="mb-0">⭐ <strong>{pro.average_rating ? pro.average_rating.toFixed(1) : "No rating"}</strong></p>
               </div>
+            </div>
 
               <div className="row findwork__row">
                 <p className="col-12 customDescription">
