@@ -3,6 +3,7 @@ import  "../../front/navbar.css"
 import { CircleUserRound } from "lucide-react"
 
 import useGlobalReducer from "../hooks/useGlobalReducer"
+import logo from "../assets/img/Stargig Logo.png"
 
 export const Navbar = () => {
   const {store, dispatch } = useGlobalReducer()
@@ -12,7 +13,7 @@ export const Navbar = () => {
 <nav className="navbar navbarCustom navbar-expand-lg navbar-dark text-white sticky-top " >
   <div className="container-fluid  d-flex justify-content-between">
   <a href="/">
-    <img className="LogoStarGig" src="src/front/assets/img/Stargig Logo.png" alt="Logo StarGig" />
+    <img className="LogoStarGig" src={logo} alt="Logo StarGig" />
 </a>
 
 <button className="navbar-toggler my-2 border-white border-2" type="button" data-bs-toggle="collapse" 
