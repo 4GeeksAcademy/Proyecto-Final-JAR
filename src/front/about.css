@@ -23,7 +23,7 @@
     background-color: #004A7C;
     padding: 40px;
     border-radius: 10px;
-    color: white;
+    color: #004a7c;
 
     display: flex;
     flex-direction: column;
@@ -33,26 +33,27 @@
 /* Ajuste en inputs y textarea para mejor tamaño */
 .form-input, 
 .form-textarea {
-    padding: 18px; /* Inputs más cómodos */
-    font-size: 18px; /* Texto más grande */
+    padding: 18px; 
+    font-size: 18px; 
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-/* Botón con tamaño mejorado */
+/* Botón */
 .form-button {
     padding: 12px 24px;
     font-size: 20px;
     font-weight: bold;
     border: none;
-    background-color: #007bff;
+    background-color: #004a7c;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    
 }
 
-/* Mejor espaciado entre elementos */
+
 .message-form {
     margin-top: 15px;
 }
