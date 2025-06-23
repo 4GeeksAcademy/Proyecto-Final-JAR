@@ -17,13 +17,13 @@
 
 .image-wrapper img {
   width: 100%;
-  height: auto;
+  height: 30%;
   border-radius: 10px;
 }
 
 .title {
   position: absolute;
-  top: 20px;
+  top: 170px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 2rem;

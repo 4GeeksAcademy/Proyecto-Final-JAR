@@ -85,15 +85,15 @@ export const ComponentHome = () => {
       {/* Hero section */}
       <div className="image-wrapper">
         <img
-          src="https://picsum.photos/900/600"
+          src="https://picsum.photos/500/250"
           alt="Freelancer platform hero"
         />
-        <h1 className="title">Get more dates with Freelancers</h1>
-        <input 
+        <h1 className="title">Find professionals for your projects</h1>
+        {/* <input 
           type="text" 
           className="search-input" 
           placeholder="Search Any Services" 
-        />
+        /> */}
       </div>
 
       {/* Features section */}
