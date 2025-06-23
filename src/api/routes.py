@@ -6,6 +6,8 @@ from api.models import db, User, Client, Professional, Post, Plan, Agreement, Ca
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from sqlalchemy import select
+from sqlalchemy.orm import joinedload
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from api.models import CandidatureStatus
@@ -538,6 +540,48 @@ def update_candidature(id):
     # Changes saved
     db.session.commit()
     return jsonify(candidature.serialize()), 200
+
+#GET candidatures per professional
+
+@api.route("/professional/candidatures", methods=["GET"])
+@jwt_required()
+def get_professional_candidatures():
+    user_id = get_jwt_identity()
+    professional = Professional.query.filter_by(user_id=user_id).first()
+    
+    if not professional:
+        return jsonify({"error": "Professional not found"}), 404
+
+    candidatures = Candidature.query.filter_by(
+        professional_id=professional.id
+    ).options(
+        joinedload(Candidature.post).joinedload(Post.category)
+    ).all()
+
+    result = []
+    for c in candidatures:
+        result.append({
+            "id": c.id,
+            "candidature_status": c.candidature_status.name,
+            "candidature_date": c.candidature_date.isoformat(),
+            "candidature_message": c.candidature_message,
+            "post": {
+                "id": c.post.id,
+                "title": c.post.title,
+                "remote_project": c.post.remote_project,
+                "project_city": c.post.project_city,
+                "project_county": c.post.project_county,
+                "project_country": c.post.project_country,
+                "post_description": c.post.post_description,
+                "estimated_budged": c.post.estimated_budged,
+                "post_open": c.post.post_open,
+                "post_active": c.post.post_active,
+                "post_completed": c.post.post_completed,
+                "post_date": c.post.post_date.isoformat(),
+                "category": {"name": c.post.category.name}
+            }
+        })
+    return jsonify(result), 200
 
 # GET: list of Ratings
 
