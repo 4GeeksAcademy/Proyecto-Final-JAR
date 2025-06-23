@@ -93,7 +93,7 @@ export const ComponentHome = () => {
       </div>
 
       {/* Features section */}
-      <div className="features-content">
+      <div className="features-content container">
         <div className="content-wrapper features-section">
           <div className="feature-box">
             <span className="fa-solid fa-lightbulb fa-10x"></span>
@@ -126,16 +126,15 @@ export const ComponentHome = () => {
           ref={containerRef}
         >
           {[
-            { title: "Education and Training", img: "https://cdn.pixabay.com/photo/2023/12/22/09/26/worker-8463424_1280.jpg" },
-            { title: "Design and Creativity", img: "https://images.unsplash.com/photo-1643730530591-ea80de0a79e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { title: "Education and Training", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgsG4PyXxrJw6LM0zOkoXXy4ciwrcHUb7JMg&s" },
+            { title: "Design and Creativity", img: "https://skye-studio.com/wp-content/uploads/2023/04/5-Steps-to-Design-Your-Career-Using-Design-Thinking-1024x585.jpg" },
             { title: "Technology and Development", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-            { title: "Health and Wellness", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-            { title: "Marketing and Sales", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-            { title: "Administration and Office", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-            { title: "Legal and Financial Services", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-            { title: "Logistics and Transportation", img: "https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-             { title: "Hospitality and Event", img:"https://www.prevengoprevencion.com/imgblog/387887704100c25896552d7adcd05f2c.png" },
-
+            { title: "Health and Wellness", img: "https://img.freepik.com/foto-gratis/doctor-estetoscopio-cerca_23-2149191355.jpg?semt=ais_hybrid&w=740" },
+            { title: "Marketing and Sales", img: "https://demandscience.com/wp-content/uploads/2024/05/feature-image_sales-and-marketing-dont-always-meet-eye-to-eye.jpg" },
+            { title: "Administration and Office", img: "https://img.freepik.com/foto-gratis/especialista-incorporacion-al-centro-llamadas-tutoria-interno-sobre-como-usar-sistema-csm_482257-117972.jpg?semt=ais_hybrid&w=740" },
+            { title: "Legal and Financial Services", img: "https://www.rug.nl/rechten/images/shutterstock-financial-law.jpg" },
+            { title: "Logistics and Transportation", img: "https://www.monedaunica.net/wp-content/uploads/2023/07/el-sector-de-la-logistica-y-transporte-motor-de-la-economia-espanola.jpg" },
+            { title: "Hospitality and Event", img:"https://media.istockphoto.com/id/1468499951/es/foto/manos-juntas-de-m%C3%A9dicos-y-enfermeras-en-el-trabajo-en-equipo-de-atenci%C3%B3n-m%C3%A9dica-solidaridad-y.jpg?s=612x612&w=0&k=20&c=0hptFwiJ6douSjkTV4jzH69fAZz751m2AzrZ8hF11ag=" },
 
             
           ].map((service, index) => (
@@ -161,7 +160,7 @@ export const ComponentHome = () => {
       </div>
 
       <div className="published-projects">
-        <h2>Latest published projects</h2>
+        <h2 className="text-center m-5">Latest published projects</h2>
 
         <div className="container">
           {/* Pagination */}
