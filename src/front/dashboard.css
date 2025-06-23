@@ -201,3 +201,109 @@ textarea.form-control {
   border-color: #dc3545;
   color: white;
 }
+
+.project-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.project-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+
+.project-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+.project-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #004a7c;
+  margin: 0;
+}
+.project-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+.project-card__meta-sep {
+  margin: 0 0.2rem;
+  color: #ccc;
+}
+.project-card__meta-item strong {
+  font-weight: 500;
+}
+
+
+.project-card__body {
+  margin: 1rem 0;
+}
+.project-card__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+
+.project-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+.project-card__status-filter {
+  display: flex;
+  gap: 0.75rem;
+}
+.project-card__status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.project-card__actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+.project-card__btn {
+  padding: 0.375rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.project-card__btn--view {
+  background: #004a7c;
+  color: #fff;
+}
+.project-card__btn--view:hover {
+  background: #003d66;
+}
+.project-card__btn--edit {
+  background: #6c757d;
+  color: #fff;
+}
+.project-card__btn--edit:hover {
+  background: #5a6268;
+}
