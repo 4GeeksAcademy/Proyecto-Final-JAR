@@ -94,11 +94,11 @@ export const Profile = () => {
         localStorage.setItem("user", JSON.stringify(data));
         loader();
         setIsEditing(false);
-        showTemporaryNotice("Tu perfil se ha actualizado correctamente.");
+        showTemporaryNotice("Your profile has been updated");
       })
       .catch(err => {
         console.error("Error actualizando usuario:", err);
-        showTemporaryNotice("Hubo un error al actualizar el perfil.");
+        showTemporaryNotice("Error updating your profile.");
       });
   };
 
@@ -107,11 +107,11 @@ export const Profile = () => {
     const professionalId = store.user?.professional_id;
 
     if (!token) {
-      showTemporaryNotice("No se encontró el token.");
+      showTemporaryNotice("No token found");
       return;
     }
     if (!professionalId) {
-      showTemporaryNotice("No se encontró el ID del profesional.");
+      showTemporaryNotice("No ID for professional");
       return;
     }
 
@@ -140,11 +140,11 @@ export const Profile = () => {
           }));
           setIsEditingExperience(false);
         }
-        showTemporaryNotice("Información profesional guardada correctamente.");
+        showTemporaryNotice("Information updated correctly.");
       })
       .catch(err => {
-        console.error("Error guardando info profesional:", err);
-        showTemporaryNotice("Hubo un error al guardar la información profesional.");
+        console.error("Error saving info:", err);
+        showTemporaryNotice("Error saving info");
       });
   };
 
@@ -158,7 +158,7 @@ export const Profile = () => {
 
   const handleChangePassword = () => {
     if (passwords.newPassword !== passwords.confirmPassword) {
-      showTemporaryNotice("Las contraseñas no coinciden.");
+      showTemporaryNotice("Passwords don't match");
       return;
     }
 
@@ -166,7 +166,7 @@ export const Profile = () => {
     const userId = store.user?.id;
 
     if (!token || !userId) {
-      showTemporaryNotice("Falta token o ID de usuario.");
+      showTemporaryNotice("Missing Token or user ID");
       return;
     }
 
@@ -190,14 +190,14 @@ export const Profile = () => {
             newPassword: "",
             confirmPassword: ""
           });
-          showTemporaryNotice("Contraseña cambiada exitosamente.");
+          showTemporaryNotice("Password succesfully changed.");
         } else {
-          showTemporaryNotice(data.message || "Error al cambiar la contraseña.");
+          showTemporaryNotice(data.message || "Error changing the password.");
         }
       })
       .catch(err => {
-        console.error("Error cambiando contraseña:", err);
-        showTemporaryNotice("Hubo un error al cambiar la contraseña.");
+        console.error("Error changing the password:", err);
+        showTemporaryNotice("Error changing the password");
       });
   };
 

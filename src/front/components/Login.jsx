@@ -32,12 +32,12 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", formData);
+    console.log("Data sent:", formData);
 
     login(formData).then(data => {
       if (data.error) {
         console.error("Error logging in:", data.error);
-        showTemporaryAlert("Contraseña incorrecta");
+        showTemporaryAlert("Wrong Password");
         return;
       }
       dispatch({ type: "LOGIN", payload: data });
@@ -45,7 +45,7 @@ export const Login = () => {
       navigate("/profile");
     }).catch(error => {
       console.error(error);
-      showTemporaryAlert("Contraseña incorrecta");
+      showTemporaryAlert("Wrong Password");
     });
   };
 

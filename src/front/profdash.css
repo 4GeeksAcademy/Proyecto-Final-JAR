@@ -235,7 +235,7 @@
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 20px;
-  max-width: 900px;
+  width: 85%;
   margin: 1.5rem auto;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -326,7 +326,6 @@
   background: #003d66;
 }
 
-/* Estilos para los badges de estado */
 .badge {
   padding: 0.3rem 0.8rem;
   border-radius: 20px;

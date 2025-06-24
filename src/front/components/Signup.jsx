@@ -45,12 +45,12 @@ export const Signup = () => {
     e.preventDefault();
 
     if (formData.password.length < 8) {
-      showTemporaryAlert("Contraseña mínimo 8 caracteres", "warning");
+      showTemporaryAlert("Minimum 8 characters", "warning");
       return;
     }
 
     if (!termsAccepted) {
-      showTemporaryAlert("Debes aceptar los términos y condiciones", "warning");
+      showTemporaryAlert("You must accept T&C's", "warning");
       return;
     }
 
@@ -65,9 +65,9 @@ export const Signup = () => {
         error.response?.status === 409 ||
         error.response?.data?.message?.toLowerCase().includes("already exists")
       ) {
-        showTemporaryAlert("El usuario ya tiene cuenta", "warning");
+        showTemporaryAlert("This user already has an account", "warning");
       } else {
-        showTemporaryAlert("Error al crear usuario", "danger");
+        showTemporaryAlert("Error creating the user", "danger");
       }
     }
   };

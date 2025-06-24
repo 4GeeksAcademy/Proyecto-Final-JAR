@@ -120,9 +120,9 @@ export const ProfessionalDashboard = () => {
           <span className="project-card__meta-item">
             {location || "Location not specified"}
           </span>
-          <span className="project-card__meta-sep">-</span>
+          <span className="project-card__meta-sep"></span>
           <span className="project-card__meta-item">
-             {formattedDate}
+             📅 {formattedDate}
           </span>
           <span className="project-card__meta-sep">-</span>
           <span className="project-card__meta-item">
