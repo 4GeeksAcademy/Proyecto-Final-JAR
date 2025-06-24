@@ -20,20 +20,20 @@ export const ProfessionalDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCandidatures = async () => {
-      try {
-        setLoading(true);
-        const data = await getProfessionalCandidatures();
-        setCandidatures(data || []);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError(err.message || "Failed to load candidatures");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCandidatures();
-  }, []);
+  const fetchCandidatures = async () => {
+    try {
+      setLoading(true);
+      const data = await getProfessionalCandidatures();
+      setCandidatures(data || []);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(err.message || "Failed to load candidatures");
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchCandidatures();
+}, []);
 
   // Categorize candidatures
   const activeCandidatures = candidatures.filter(c => 
@@ -97,67 +97,68 @@ export const ProfessionalDashboard = () => {
   };
 
   const renderCard = (candidature, isArchived = false) => {
-    const { post } = candidature;
-    const location = post?.remote_project
-      ? "Remote"
-      : [post?.project_city, post?.project_county, post?.project_country]
-          .filter(Boolean)
-          .join(", ");
-    
-    const formattedDate = new Date(candidature.candidature_date).toLocaleDateString("es-ES", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
+  const { post } = candidature;
+  const location = post?.remote_project
+    ? "Remote"
+    : [post?.project_city, post?.project_county, post?.project_country]
+        .filter(Boolean)
+        .join(", ");
+  
+  const formattedDate = new Date(candidature.candidature_date).toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  });
 
-    return (
-      <div key={candidature.id} className="col-12 customCard mb-3">
-        <div className="card findwork__card p-3 shadow-sm">
-          <div className="row findwork__row w-100 align-items-center">
-            <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-              <p className="customTitle fw-bold">{post?.category?.name || "Project"}</p>
-              <p className="text-muted">{location || "Location not specified"}</p>
-            </div>
-            <div className="col-lg-4 col-md-4 col-sm-6 d-flex justify-content-between">
-              <p>📅 {formattedDate}</p>
-              <p>💰 {post?.estimated_budged || "N/A"}</p>
-            </div>
-          </div>
-          <div className="row findwork__row mt-2">
-            <p className="col-12 customDescription">
-              {post?.post_description 
-                ? `${post.post_description.substring(0, 120)}${post.post_description.length > 120 ? '...' : ''}`
-                : "No description available"}
-            </p>
-          </div>
-          <div className="row findwork__row mt-2">
-            <div className="col-12 d-flex align-items-center gap-3">
-              <span className={`badge status-badge status-${candidature.candidature_status.toLowerCase()}`}>
-                {statusLabels[candidature.candidature_status]}
-              </span>
-              {isArchived && <span className="badge bg-secondary">Archived</span>}
-            </div>
-          </div>
-          <div className="row findwork__row mt-3">
-            <div className="col-12 text-end">
-              <button
-                className="btn btn-primary btn-sm me-2"
-                onClick={() => navigate(`/post/${post?.id}`)}
-              >
-                View Details
-              </button>
-              {/* <button
-                className="btn btn-outline-primary btn-sm"
-                onClick={() => navigate(`/messages/${candidature.id}`)}
-              >
-                Contact Client
-              </button> */}
-            </div>
-          </div>
+  const statusClass = `status-${candidature.candidature_status.toLowerCase()}`;
+
+  return (
+    <div key={candidature.id} className="project-card">
+      <div className="project-card__header">
+        <h3 className="project-card__title">{post?.category?.name || "Project"}</h3>
+        <div className="project-card__meta">
+          <span className="project-card__meta-item">
+            {location || "Location not specified"}
+          </span>
+          <span className="project-card__meta-sep">-</span>
+          <span className="project-card__meta-item">
+             {formattedDate}
+          </span>
+          <span className="project-card__meta-sep">-</span>
+          <span className="project-card__meta-item">
+             {post?.estimated_budged || "N/A"}
+          </span>
         </div>
       </div>
-    );
-  };
+      
+      <div className="project-card__body">
+        <p className="project-card__description">
+          {post?.post_description 
+            ? `${post.post_description.substring(0, 400)}${post.post_description.length > 300 ? '...' : ''}`
+            : "No description available"}
+        </p>
+      </div>
+      
+      <div className="project-card__footer">
+        <div className="project-card__status-filter">
+          <span className={`badge ${statusClass}`}>
+            {statusLabels[candidature.candidature_status]}
+          </span>
+          {isArchived && <span className="badge bg-secondary">Archived</span>}
+        </div>
+        
+        <div className="project-card__actions">
+          <button
+            className="project-card__btn project-card__btn--view"
+            onClick={() => navigate(`/post/${post?.id}`)}
+          >
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
   if (loading) {
     return (
