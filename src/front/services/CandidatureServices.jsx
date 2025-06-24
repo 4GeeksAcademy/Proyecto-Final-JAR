@@ -74,19 +74,20 @@ export const updateCandidature = async (candidatureId, formData) => {
 // GET candidatures per professional
 export const getProfessionalCandidatures = async () => {
   const token = localStorage.getItem('token');
-  if (!token) throw new Error('Authentication token missing'); // Add validation
-  
+  if (!token) throw new Error('Authentication token missing');
+
   try {
     const resp = await fetch(`${backendUrl}/api/professional/candidatures`, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    
-    // Response logging:
+
     console.log("API Response Status:", resp.status);
     const data = await resp.json();
     console.log("API Response Data:", data);
-    
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}: Failed to fetch candidatures`);
+
+    if (!resp.ok) {
+      throw new Error(`HTTP ${resp.status}: Failed to fetch candidatures. ${data.error || ''}`);
+    }
     return data;
   } catch (error) {
     console.error("Fetch error details:", error);

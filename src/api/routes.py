@@ -546,28 +546,28 @@ def update_candidature(id):
 @api.route("/professional/candidatures", methods=["GET"])
 @jwt_required()
 def get_professional_candidatures():
-    user_id = get_jwt_identity()
-    professional = Professional.query.filter_by(user_id=user_id).first()
-    
-    if not professional:
-        return jsonify({"error": "Professional not found"}), 404
+    try:
+        user_id = get_jwt_identity()
+        professional = db.session.execute(
+            select(Professional).where(Professional.user_id == user_id)
+        ).scalar_one_or_none()
+        
+        if not professional:
+            return jsonify({"error": "Professional not found"}), 404
 
-    candidatures = Candidature.query.filter_by(
-        professional_id=professional.id
-    ).options(
-        joinedload(Candidature.post).joinedload(Post.category)
-    ).all()
+        # Use SQLAlchemy query with joinedload for optimized loading
+        candidatures = db.session.execute(
+            select(Candidature)
+            .where(Candidature.professional_id == professional.id)
+            .options(
+                joinedload(Candidature.post).joinedload(Post.category)
+            )
+        ).scalars().all()
 
-    result = []
-    for c in candidatures:
-        result.append({
-            "id": c.id,
-            "candidature_status": c.candidature_status.name,
-            "candidature_date": c.candidature_date.isoformat(),
-            "candidature_message": c.candidature_message,
-            "post": {
+        result = []
+        for c in candidatures:
+            post_data = {
                 "id": c.post.id,
-                "title": c.post.title,
                 "remote_project": c.post.remote_project,
                 "project_city": c.post.project_city,
                 "project_county": c.post.project_county,
@@ -577,11 +577,28 @@ def get_professional_candidatures():
                 "post_open": c.post.post_open,
                 "post_active": c.post.post_active,
                 "post_completed": c.post.post_completed,
-                "post_date": c.post.post_date.isoformat(),
-                "category": {"name": c.post.category.name}
-            }
-        })
-    return jsonify(result), 200
+                "post_date": c.post.post_date.isoformat() if c.post.post_date else None,
+                "client_id": c.post.client_id,
+                "category_id": c.post.category_id,
+                "category": {
+                    "id": c.post.category.id,
+                    "name": c.post.category.name
+                } if c.post.category else None
+            } if c.post else None
+
+            result.append({
+                "id": c.id,
+                "candidature_status": c.candidature_status.name,
+                "candidature_date": c.candidature_date.isoformat(),
+                "candidature_message": c.candidature_message,
+                "post": post_data
+            })
+
+        return jsonify(result), 200
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
 # GET: list of Ratings
 
