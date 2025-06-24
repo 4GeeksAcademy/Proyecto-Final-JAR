@@ -122,6 +122,7 @@ class Professional(db.Model):
         back_populates="professional")  # one to many
     comments: Mapped[list["Comment"]] = relationship(
         back_populates="professional")  # one to many
+    candidatures: Mapped[list["Candidature"]] = relationship(back_populates="professional")
 
     @property
     def average_rating(self):
@@ -255,9 +256,9 @@ class Candidature(db.Model):
         "Agreement", back_populates="candidature", uselist=False)  # one to one
     # Scalar. Each candidature is linked to one post.
     post: Mapped["Post"] = relationship(back_populates="candidatures")
-    professional: Mapped["Professional"] = relationship(
-        back_populates="candidatures")
+    professional: Mapped["Professional"] = relationship(back_populates="candidatures")
     client: Mapped["Client"] = relationship(back_populates="candidatures")
+
 
     def serialize(self):
         return {
