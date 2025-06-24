@@ -184,7 +184,8 @@ const renderPostCard = (post, isArchived = false) => (
       <div className="project-card__actions">
         <button
           className="project-card__btn project-card__btn--view"
-          onClick={() => handleView(post.id)}
+          // onClick={() => handleView(post.id)}
+          onClick={() => navigate(`/post/${post?.id}`)}
         >
           View more
         </button>
