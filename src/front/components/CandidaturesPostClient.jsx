@@ -4,8 +4,9 @@ import { getPosts } from "../services/PostServices.jsx";
 import { getCategories } from "../services/CategoryServices.jsx";
 import { createCandidature } from "../services/CandidatureServices.jsx";
 import "../../front/FindWork.css";
+
 export const CandidaturesPostClient = () => {
- const { id } = useParams();
+  const { id } = useParams();
   const [post, setPost] = useState(null);
   const [categoryName, setCategoryName] = useState("");
   const storedUser = localStorage.getItem("user");

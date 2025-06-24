@@ -1028,3 +1028,53 @@ def change_password(user_id):
     db.session.commit()
 
     return jsonify({"success": True, "message": "Contraseña actualizada con éxito"}), 200
+
+
+
+
+@api.route("/client/candidatures", methods=["GET"])
+@jwt_required()
+def get_client_candidatures():
+    try:
+        user_id = get_jwt_identity()
+        client = db.session.execute(
+            select(Client).join(User).where(User.id == user_id)
+        ).scalar_one_or_none()
+        if not client:
+            return jsonify({"error": "Client not found"}), 404
+
+        candidatures = db.session.execute(
+            select(Candidature)
+            .options(
+                joinedload(Candidature.professional).joinedload(Professional.user),
+                joinedload(Candidature.post)
+            )
+            .where(Candidature.client_id == client.id)
+        ).scalars().all()
+
+        result = []
+        for c in candidatures:
+            result.append({
+                "id": c.id,
+                "candidature_message": c.candidature_message,
+                "candidature_date": c.candidature_date.isoformat(),
+                "candidature_status": c.candidature_status.name,
+                "professional": {
+                    "id": c.professional.id,
+                    "firstname": c.professional.user.firstname if c.professional and c.professional.user else None,
+                    "prof_experience": c.professional.prof_experience,
+                    "prof_url": c.professional.prof_url
+                },
+                "post": {
+                    "id": c.post.id,
+                    "category_id": c.post.category_id,
+                    "project_city": c.post.project_city
+                } if c.post else None
+            })
+        return jsonify(result), 200
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
+
+
