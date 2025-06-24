@@ -24,6 +24,7 @@ import { Checkout } from "./pages/checkout.jsx";
 import PaymentReturn from "./components/paymentReturn.jsx";
 import { ReturnPage } from "./pages/returnPage.jsx";
 import { PostViewPage } from "./pages/PostViewPage.jsx";
+import { CandidaturesPostClient } from "./components/CandidaturesPostClient.jsx";
 export const router = createBrowserRouter(
   createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
@@ -51,6 +52,7 @@ export const router = createBrowserRouter(
       <Route path='/checkout' element={<Checkout />} />
       <Route path="/return" element={<ReturnPage />} />
       <Route path="/post/:id" element={<PostViewPage />} />
+      <Route path="/candidaturesViewClient/:id" element={<CandidaturesPostClient/>} /> 
 
       <Route
         path="*"
