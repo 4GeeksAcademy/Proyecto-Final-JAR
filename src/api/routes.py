@@ -20,7 +20,15 @@ stripe.api_key=os.getenv("STRIPE_SECRET")
 FRONT=os.getenv("FRONT")
 
 # Allow CORS requests to this API
-CORS(api)
+#CORS(api)
+cors = CORS(api, resources={
+        r"/*": {
+            # O especifica dominios como ["http://localhost:3000"]
+            "origins":[ "https://sample-service-name-qd92.onrender.com", "https://automatic-space-trout-r6v7xwqj9rjhw9x-3000.app.github.dev"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type"]
+        }
+    })
 
 # Get a list of users
 
