@@ -32,7 +32,7 @@ export const Footer = () => (
         height="50"
         src="https://img.icons8.com/ios/50/FFFFFF/tiktok--v1.png"
         alt="tiktok--v1"
-      />
+      /> 
     </a>
   </footer>
 );
