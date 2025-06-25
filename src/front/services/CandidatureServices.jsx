@@ -94,3 +94,14 @@ export const getProfessionalCandidatures = async () => {
     throw error;
   }
 };
+//GET candidature by post id
+export const getCandidaturesByPostId = async (postId) => {
+  try {
+    const response = await fetch(`${backendUrl}/api/posts/${postId}/candidatures`);
+    if (!response.ok) throw new Error('Failed to fetch candidatures');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching candidatures:', error);
+    return [];
+  }
+};

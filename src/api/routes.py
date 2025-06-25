@@ -397,25 +397,43 @@ def get_agreement(agreement_id):
 
 # POST: Add new Agreement
 @api.route("/agreements", methods=["POST"])
+@jwt_required()
 def create_agreement():
-    #extraemos la informacion del body puede ser con request.json
     data = request.get_json()
-        
+    required_fields = [
+        "agreement_status", 
+        "candidature_id", 
+        "client_id", 
+        "post_id", 
+        "professional_id"
+    ]
+    
+    # Validate required fields
+    if not all(field in data for field in required_fields):
+        return jsonify({"error": "Missing required fields"}), 400
+    
     try:
+        # Ensure status is uppercase
+        status = data["agreement_status"].upper()
+        if status not in ["ACCEPTED", "REJECTED", "IN_PROCESS"]:
+            return jsonify({"error": "Invalid agreement_status"}), 400
+        
         new_agreement = Agreement(
-            agreement_date=data["agreement_date"],
-            agreement_status=data["agreement_status"],
+            agreement_status=status,
+            agreement_date=datetime.utcnow(),
             candidature_id=data["candidature_id"],
             client_id=data["client_id"],
             post_id=data["post_id"],
-            professional_id=data["professional_id"],            
+            professional_id=data["professional_id"]
         )
-        db.session.add(new_agreement)  
+        
+        db.session.add(new_agreement)
         db.session.commit()
         return jsonify(new_agreement.serialize()), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
     
 #PUT: Modify Agreement
 @api.route("/agreements/<int:id>", methods=["PUT"]) #Dynamic route
@@ -523,24 +541,24 @@ def get_candidature(id):
 
 
 
-#PUT: Modify Candidature
-@api.route("/candidatures/<int:id>", methods=["PUT"]) #Dynamic route
-def update_candidature(id):
-    # Extraction of data from body
-    data = request.get_json()
-    stmt = select(Candidature).where(Candidature.id == id)
-    candidature = db.session.execute(stmt).scalar_one_or_none()
-    # If candidature does not exist:
-    if candidature is None:
-        return jsonify({"error": "Candidature not found"}), 404
+# #PUT: Modify Candidature
+# @api.route("/candidatures/<int:id>", methods=["PUT"]) #Dynamic route
+# def update_candidature(id):
+#     # Extraction of data from body
+#     data = request.get_json()
+#     stmt = select(Candidature).where(Candidature.id == id)
+#     candidature = db.session.execute(stmt).scalar_one_or_none()
+#     # If candidature does not exist:
+#     if candidature is None:
+#         return jsonify({"error": "Candidature not found"}), 404
 
-    # Modification of properties of object
-    candidature.candidature_message = data.get(
-        "candidature_message", candidature.candidature_message)
+#     # Modification of properties of object
+#     candidature.candidature_message = data.get(
+#         "candidature_message", candidature.candidature_message)
 
-    # Changes saved
-    db.session.commit()
-    return jsonify(candidature.serialize()), 200
+#     # Changes saved
+#     db.session.commit()
+#     return jsonify(candidature.serialize()), 200
 
 #GET candidatures per professional
 
@@ -1077,4 +1095,49 @@ def get_client_candidatures():
         traceback.print_exc()
         return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
+@api.route("/posts/<int:post_id>/candidatures", methods=["GET"])
+def get_candidatures_by_post_id(post_id):
+    candidatures = db.session.execute(
+        select(Candidature)
+        .options(
+            joinedload(Candidature.professional).joinedload(Professional.user)
+        )
+        .where(Candidature.post_id == post_id)
+    ).scalars().all()
+
+    result = []
+    for c in candidatures:
+        result.append({
+            "id": c.id,
+            "candidature_message": c.candidature_message,
+            "candidature_date": c.candidature_date.isoformat(),
+            "candidature_status": c.candidature_status.name,
+            "professional": {
+                "id": c.professional.id,
+                "firstname": c.professional.user.firstname if c.professional and c.professional.user else None
+            }
+        })
+    return jsonify(result), 200
+
+#PUT update candidature
+@api.route("/candidatures/<int:id>", methods=["PUT"])
+def update_candidature(id):
+    data = request.get_json()
+    stmt = select(Candidature).where(Candidature.id == id)
+    candidature = db.session.execute(stmt).scalar_one_or_none()
+    
+    if candidature is None:
+        return jsonify({"error": "Candidature not found"}), 404
+
+    # Update status if provided
+    if "candidature_status" in data:
+        try:
+            # Convert string to enum value
+            new_status = CandidatureStatus[data["candidature_status"]]
+            candidature.candidature_status = new_status
+        except KeyError:
+            return jsonify({"error": "Invalid candidature_status"}), 400
+
+    db.session.commit()
+    return jsonify(candidature.serialize()), 200
 

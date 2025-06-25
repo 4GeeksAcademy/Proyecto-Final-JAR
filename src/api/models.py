@@ -268,7 +268,8 @@ class Candidature(db.Model):
             "candidature_status": self.candidature_status.value if self.candidature_status else None,
             "post_id": self.post_id,
             "professional_id": self.professional_id,
-            "client_id": self.client_id
+            "client_id": self.client_id,
+            "professional_firstname": self.professional.user.firstname if self.professional and self.professional.user else None
         }
 
 
