@@ -30,7 +30,7 @@ export const PostView = () => {
 
       if (foundPost) {
         const foundCategory = allCategories.find((cat) => cat.id === foundPost.category_id);
-        setCategoryName(foundCategory?.name || "Sin categoría");
+        setCategoryName(foundCategory?.name || "No category");
       }
     };
     fetchData();

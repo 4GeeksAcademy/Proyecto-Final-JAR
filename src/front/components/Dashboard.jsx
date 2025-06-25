@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../front/dashboard.css";
 import { createPost, fetchPostsByClient } from "../services/PostServices.jsx";
 import { getCategories } from "../services/CategoryServices.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ export const Dashboard = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const client_id = user?.client_id;
-
+  const navigate = useNavigate();
 
 
   // Fetch posts by client
@@ -185,7 +186,7 @@ const renderPostCard = (post, isArchived = false) => (
         <button
           className="project-card__btn project-card__btn--view"
           // onClick={() => handleView(post.id)}
-          onClick={() => navigate(`/post/${post?.id}`)}
+          onClick={() => navigate(`/candidaturesViewClient/${post?.id}`)}
         >
           View more
         </button>
