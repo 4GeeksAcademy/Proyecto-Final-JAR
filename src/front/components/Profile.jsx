@@ -221,7 +221,7 @@ export const Profile = () => {
             <div className="card-body">
               <h5 className="card-title">Plan: {store.user.plan.name.charAt(0).toUpperCase() + store.user.plan.name.slice(1)}</h5>
               <p className="card-text">{store.user.plan.description}</p>
-              <p className="card-text">Price: ${store.user.plan.price.toFixed(2)}</p>
+              <p className="card-text">Price: €{store.user.plan.price.toFixed(2)}</p>
               {store.user.subscription_end && (
                 <p className="card-text">Valid until: {new Date(store.user.subscription_end).toLocaleDateString()}</p>
               )}
