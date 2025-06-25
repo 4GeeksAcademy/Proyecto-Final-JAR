@@ -35,20 +35,31 @@ export const fetchAgreementById = async (agreementId) => {
   }
 };
 
-// POST Create Agreement **DOUBLE CHECK IT REQUIRED** NO ENDPOINT
-export const createAgreement = async (formData) => {
-    try {
-        const resp = await fetch(`${backendUrl}/api/agreements`, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (!resp.ok) throw new Error('Error creating agreement');
-        return await resp.json();
-    } catch (error) {
-        throw error;
+export const createAgreement = async (formData, token) => {
+  try {
+    const resp = await fetch(`${backendUrl}/api/agreements`, {
+      method: 'POST',
+      body: JSON.stringify({
+        ...formData,
+        agreement_status: formData.agreement_status.toUpperCase()
+      }),
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    
+    if (!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(errorData.error || 'Error creating agreement');
     }
+    
+    return await resp.json();
+  } catch (error) {
+    throw error;
+  }
 }
+
 
 // PUT Update Agreement
 export const updateAgreement = async (agreementId, formData) => {
