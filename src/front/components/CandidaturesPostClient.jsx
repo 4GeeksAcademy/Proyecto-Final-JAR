@@ -42,7 +42,7 @@ export const CandidaturesPostClient = () => {
           const foundCategory = allCategories.find(
             cat => cat.id === foundPost.category_id
           );
-          setCategoryName(foundCategory?.name || "Sin categoría");
+          setCategoryName(foundCategory?.name || "No category");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
