@@ -1077,4 +1077,27 @@ def get_client_candidatures():
         traceback.print_exc()
         return jsonify({"error": "Internal server error", "details": str(e)}), 500
 
+@api.route("/posts/<int:post_id>/candidatures", methods=["GET"])
+def get_candidatures_by_post_id(post_id):
+    candidatures = db.session.execute(
+        select(Candidature)
+        .options(
+            joinedload(Candidature.professional).joinedload(Professional.user)
+        )
+        .where(Candidature.post_id == post_id)
+    ).scalars().all()
+
+    result = []
+    for c in candidatures:
+        result.append({
+            "id": c.id,
+            "candidature_message": c.candidature_message,
+            "candidature_date": c.candidature_date.isoformat(),
+            "candidature_status": c.candidature_status.name,
+            "professional": {
+                "id": c.professional.id,
+                "firstname": c.professional.user.firstname if c.professional and c.professional.user else None
+            }
+        })
+    return jsonify(result), 200
 
