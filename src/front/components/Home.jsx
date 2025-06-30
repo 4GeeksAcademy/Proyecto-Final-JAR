@@ -130,7 +130,6 @@ export const ComponentHome = () => {
             { title: "Design and Creativity", img: "https://skye-studio.com/wp-content/uploads/2023/04/5-Steps-to-Design-Your-Career-Using-Design-Thinking-1024x585.jpg" },
             { title: "Technology and Development", img: "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
             { title: "Health and Wellness", img: "https://img.freepik.com/foto-gratis/doctor-estetoscopio-cerca_23-2149191355.jpg?semt=ais_hybrid&w=740" },
-            { title: "Marketing and Sales", img: "https://demandscience.com/wp-content/uploads/2024/05/feature-image_sales-and-marketing-dont-always-meet-eye-to-eye.jpg" },
             { title: "Administration and Office", img: "https://img.freepik.com/foto-gratis/especialista-incorporacion-al-centro-llamadas-tutoria-interno-sobre-como-usar-sistema-csm_482257-117972.jpg?semt=ais_hybrid&w=740" },
             { title: "Legal and Financial Services", img: "https://www.rug.nl/rechten/images/shutterstock-financial-law.jpg" },
             { title: "Logistics and Transportation", img: "https://www.monedaunica.net/wp-content/uploads/2023/07/el-sector-de-la-logistica-y-transporte-motor-de-la-economia-espanola.jpg" },
